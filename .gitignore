@@ -9,6 +9,7 @@
 
 # Exclude folders
 !nvim/
+!alacritty/
 
 
 # Compiled output
