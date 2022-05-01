@@ -52,7 +52,10 @@ return packer.startup(function(use)
   use "lunarvim/colorschemes" -- A bunch of colorschemes to try out
   use "folke/tokyonight.nvim"
 
--- cmp plugins
+  -- Prettier UI
+  use "lukas-reineke/indent-blankline.nvim" -- Indent guides and invisible character support
+
+  -- cmp plugins
   use "hrsh7th/nvim-cmp" -- The completion plugin
   use "hrsh7th/cmp-buffer" -- buffer completions
   use "hrsh7th/cmp-path" -- path completions
@@ -71,12 +74,25 @@ return packer.startup(function(use)
 
   -- Telescope
   use {
-  	'nvim-telescope/telescope.nvim',
+  	'nvim-telescope/telescope.nvim', -- fuzzy file/text finder UI
   	requires = {
 		{'nvim-lua/plenary.nvim'},
+		-- extensions
 		{'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
 	}
   }
+
+  -- Treesitter
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate",
+	requires = {
+		-- extensions
+		{"p00f/nvim-ts-rainbow"}, -- rainbow parenthesis
+		-- {"nvim-treesitter/playground"}, -- useful for creating parsers/extensions
+	}
+  }
+
 
 
   -- Automatically set up your configuration after cloning packer.nvim
