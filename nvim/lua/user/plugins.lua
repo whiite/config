@@ -93,6 +93,9 @@ return packer.startup(function(use)
 	}
   }
 
+  -- Git
+  use 'lewis6991/gitsigns.nvim' -- git info in the gutter (like VSCode)
+
 
 
   -- Automatically set up your configuration after cloning packer.nvim
