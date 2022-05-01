@@ -96,6 +96,14 @@ return packer.startup(function(use)
   -- Git
   use 'lewis6991/gitsigns.nvim' -- git info in the gutter (like VSCode)
 
+  -- File explorer
+  use {
+    'kyazdani42/nvim-tree.lua',
+    requires = {
+    	'kyazdani42/nvim-web-devicons', -- file icons
+    }
+  }
+
 
 
   -- Automatically set up your configuration after cloning packer.nvim
