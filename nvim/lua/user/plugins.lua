@@ -48,6 +48,12 @@ return packer.startup(function(use)
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used lots of plugins
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
+  use {
+	"numToStr/Comment.nvim", -- Easily comment stuff
+	requires = {
+		'JoosepAlviste/nvim-ts-context-commentstring'
+	}
+  }
 
   -- Colorschemes
   use "lunarvim/colorschemes" -- A bunch of colorschemes to try out
@@ -57,13 +63,17 @@ return packer.startup(function(use)
   use "lukas-reineke/indent-blankline.nvim" -- Indent guides and invisible character support
 
   -- cmp plugins
-  use "hrsh7th/nvim-cmp" -- The completion plugin
-  use "hrsh7th/cmp-buffer" -- buffer completions
-  use "hrsh7th/cmp-path" -- path completions
-  use "hrsh7th/cmp-cmdline" -- cmdline completions
-  use "saadparwaiz1/cmp_luasnip" -- snippet completions
-  use "hrsh7th/cmp-nvim-lsp" -- LSP completions
-  use "hrsh7th/cmp-nvim-lua" -- Neovim completions for lua
+  use {
+	"hrsh7th/nvim-cmp", -- The completion plugin
+	requires = {
+	  "hrsh7th/cmp-buffer", -- buffer completions
+	  "hrsh7th/cmp-path", -- path completions
+	  "hrsh7th/cmp-cmdline", -- cmdline completions
+	  "saadparwaiz1/cmp_luasnip", -- snippet completions
+	  "hrsh7th/cmp-nvim-lsp", -- LSP completions
+	  "hrsh7th/cmp-nvim-lua", -- Neovim completions for lua
+	}
+  }
 
   -- snippets
   use "L3MON4D3/LuaSnip" --snippet engine
@@ -91,6 +101,7 @@ return packer.startup(function(use)
 		-- extensions
 		{"p00f/nvim-ts-rainbow"}, -- rainbow parenthesis
 		-- {"nvim-treesitter/playground"}, -- useful for creating parsers/extensions
+		{'JoosepAlviste/nvim-ts-context-commentstring'}
 	}
   }
 
