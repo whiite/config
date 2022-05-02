@@ -7,6 +7,9 @@ configs.setup {
   ensure_installed = "all", -- "all" or list of languages
   sync_install = false, -- install languages synchronously
   ignore_install = { "phpdoc" }, -- List of parsers to ignore installing
+  autopairs = {
+	enable = true,
+  },
   highlight = {
     enable = true, -- false will disable the whole extension
     disable = { "" }, -- list of language that will be disabled

@@ -47,6 +47,7 @@ return packer.startup(function(use)
   -- Plugin installs --
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used lots of plugins
+  use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
 
   -- Colorschemes
   use "lunarvim/colorschemes" -- A bunch of colorschemes to try out
