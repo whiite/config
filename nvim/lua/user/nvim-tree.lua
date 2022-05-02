@@ -40,6 +40,13 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	desc = "Auto close the file explorer when it's the last window",
 })
 
+local config_status_ok, nvim_tree_config = pcall(require, "nvim-tree.config")
+if not config_status_ok then
+  return
+end
+
+local tree_cb = nvim_tree_config.nvim_tree_callback
+
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
 nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
   auto_reload_on_write = true,
@@ -65,7 +72,9 @@ nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
     mappings = {
       custom_only = false,
       list = {
-        -- user mappings go here
+		{ key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
+        { key = "h", cb = tree_cb "close_node" },
+        { key = "v", cb = tree_cb "vsplit" },
       },
     },
   },
