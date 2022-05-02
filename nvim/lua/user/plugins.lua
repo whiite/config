@@ -54,6 +54,10 @@ return packer.startup(function(use)
 		'JoosepAlviste/nvim-ts-context-commentstring'
 	}
   }
+  use {
+  	'nvim-lualine/lualine.nvim',
+  	requires = { 'kyazdani42/nvim-web-devicons' }
+  }
 
   -- Colorschemes
   use "lunarvim/colorschemes" -- A bunch of colorschemes to try out
