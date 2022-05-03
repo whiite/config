@@ -58,6 +58,14 @@ return packer.startup(function(use)
   	'nvim-lualine/lualine.nvim',
   	requires = { 'kyazdani42/nvim-web-devicons' }
   }
+  use {
+	'akinsho/bufferline.nvim', -- Pretty tab bar
+	tag = "v2.*",
+	requires = {
+		'kyazdani42/nvim-web-devicons',
+		"moll/vim-bbye" -- Bbye allows you to do delete buffers (close files) without closing your windows or messing up your layout.
+	}
+  }
 
   -- Colorschemes
   use "lunarvim/colorschemes" -- A bunch of colorschemes to try out
