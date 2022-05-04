@@ -66,6 +66,7 @@ return packer.startup(function(use)
 		"moll/vim-bbye" -- Bbye allows you to do delete buffers (close files) without closing your windows or messing up your layout.
 	}
   }
+  use "akinsho/toggleterm.nvim"
 
   -- Colorschemes
   use "lunarvim/colorschemes" -- A bunch of colorschemes to try out
