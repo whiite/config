@@ -10,6 +10,7 @@
 # Exclude folders
 !nvim/
 !alacritty/
+!kitty/
 
 
 # Compiled output
