@@ -84,6 +84,7 @@ return packer.startup(function(use)
   -- Prettier UI
   use "lukas-reineke/indent-blankline.nvim" -- Indent guides and invisible character support
   use "norcalli/nvim-colorizer.lua"
+  use {'edluffy/specs.nvim'}
 
   -- cmp plugins
   use {
