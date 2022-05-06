@@ -44,7 +44,7 @@ return packer.startup(function(use)
   use "wbthomason/packer.nvim"
 
 
-  -- Plugin installs --
+  -- General --
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used lots of plugins
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
@@ -67,6 +67,15 @@ return packer.startup(function(use)
 	}
   }
   use "akinsho/toggleterm.nvim"
+  use {
+	'nacro90/numb.nvim',
+	config = require('numb').setup {
+	  show_numbers = true, -- Enable 'number' for the window while peeking
+	  show_cursorline = true, -- Enable 'cursorline' for the window while peeking
+	  number_only = false, -- Peek only when the command is only a number instead of when it starts with a number
+	  centered_peeking = true, -- Peeked line will be centered relative to window
+	}
+  }
 
   -- Colorschemes
   use "lunarvim/colorschemes" -- A bunch of colorschemes to try out
