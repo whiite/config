@@ -96,6 +96,11 @@ return packer.startup(function(use)
   -- LSP
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
+  use {
+	'filipdutescu/renamer.nvim',
+	branch = 'master',
+	requires = { {'nvim-lua/plenary.nvim'} }
+  }
 
   -- Telescope
   use {

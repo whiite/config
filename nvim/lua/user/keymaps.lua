@@ -98,3 +98,15 @@ keymap(
 -- Nvimtree --
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
 
+-- Renamer --
+keymap('i', '<F2>', '<cmd>lua require("renamer").rename()<cr>', opts)
+keymap('i', '<F2>', function ()
+	require("renamer").rename()
+end, opts)
+keymap('n', '<leader>rn', function ()
+	require("renamer").rename()
+end, opts)
+keymap('v', '<leader>rn', function()
+	require("renamer").rename()
+end, opts)
+
