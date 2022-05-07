@@ -67,15 +67,7 @@ return packer.startup(function(use)
 	}
   }
   use "akinsho/toggleterm.nvim"
-  use {
-	'nacro90/numb.nvim',
-	config = require('numb').setup {
-	  show_numbers = true, -- Enable 'number' for the window while peeking
-	  show_cursorline = true, -- Enable 'cursorline' for the window while peeking
-	  number_only = false, -- Peek only when the command is only a number instead of when it starts with a number
-	  centered_peeking = true, -- Peeked line will be centered relative to window
-	}
-  }
+  use { 'nacro90/numb.nvim' }
 
   -- Colorschemes
   use "lunarvim/colorschemes" -- A bunch of colorschemes to try out
@@ -86,6 +78,10 @@ return packer.startup(function(use)
   use "norcalli/nvim-colorizer.lua"
   use {'edluffy/specs.nvim'}
   use 'karb94/neoscroll.nvim'
+  use {
+    'goolord/alpha-nvim', -- Dashboard on startup
+    requires = { 'kyazdani42/nvim-web-devicons' },
+  }
 
   -- cmp plugins
   use {
