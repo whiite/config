@@ -68,6 +68,7 @@ return packer.startup(function(use)
   }
   use "akinsho/toggleterm.nvim"
   use { 'nacro90/numb.nvim' }
+  use "ahmedkhalf/project.nvim"
 
   -- Colorschemes
   use "lunarvim/colorschemes" -- A bunch of colorschemes to try out

@@ -94,6 +94,7 @@ keymap(
 	end,
 	opts
 )
+keymap("n", "<leader>p", ":Telescope projects <CR>", opts)
 
 -- Nvimtree --
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
