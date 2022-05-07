@@ -70,8 +70,8 @@ return packer.startup(function(use)
   use { 'nacro90/numb.nvim' }
   use "ahmedkhalf/project.nvim"
 
-  -- Colorschemes
-  use "lunarvim/colorschemes" -- A bunch of colorschemes to try out
+  -- Color schemes
+  use "lunarvim/colorschemes" -- A bunch of color schemes to try out
   use "folke/tokyonight.nvim"
 
   -- Prettier UI
@@ -86,7 +86,7 @@ return packer.startup(function(use)
 
   -- cmp plugins
   use {
-	"hrsh7th/nvim-cmp", -- The completion plugin
+	"hrsh7th/nvim-cmp", -- The completions plugin
 	requires = {
 	  "hrsh7th/cmp-buffer", -- buffer completions
 	  "hrsh7th/cmp-path", -- path completions
@@ -128,7 +128,8 @@ return packer.startup(function(use)
 		-- extensions
 		{"p00f/nvim-ts-rainbow"}, -- rainbow parenthesis
 		-- {"nvim-treesitter/playground"}, -- useful for creating parsers/extensions
-		{'JoosepAlviste/nvim-ts-context-commentstring'}
+		{'JoosepAlviste/nvim-ts-context-commentstring'},
+		{'lewis6991/spellsitter.nvim'} -- spellchecker
 	}
   }
 
