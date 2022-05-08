@@ -91,7 +91,7 @@ local mappings = {
   ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
   ["f"] = {
-    "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
+    "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown())<cr>",
     "Find files",
   },
   ["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
@@ -104,6 +104,15 @@ local mappings = {
     s = { "<cmd>PackerSync<cr>", "Sync" },
     S = { "<cmd>PackerStatus<cr>", "Status" },
     u = { "<cmd>PackerUpdate<cr>", "Update" },
+  },
+
+  x = {
+	name = "Trouble",
+	x = {"<cmd>TroubleToggle<cr>", "Toggle diagnostics"},
+	w = {"<cmd>Trouble workspace_diagnostics<cr>", "Workspace diagnostics"},
+	d = {"<cmd>Trouble document_diagnostics<cr>", "Document diagnostics"},
+	l = {"<cmd>Trouble loclist<cr>", "Items from the window location list"},
+	q = {"<cmd>Trouble quickfix<cr>", "Quickfix items"},
   },
 
   g = {

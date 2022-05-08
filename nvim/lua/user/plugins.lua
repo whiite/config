@@ -110,6 +110,10 @@ return packer.startup(function(use)
 	branch = 'master',
 	requires = { {'nvim-lua/plenary.nvim'} }
   }
+  use {
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+  }
 
   -- Telescope
   use {
