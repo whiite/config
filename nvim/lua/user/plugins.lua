@@ -83,6 +83,7 @@ return packer.startup(function(use)
     'goolord/alpha-nvim', -- Dashboard on startup
     requires = { 'kyazdani42/nvim-web-devicons' },
   }
+  use "folke/which-key.nvim"
 
   -- cmp plugins
   use {
