@@ -106,6 +106,10 @@ return packer.startup(function(use)
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use {
+	"jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
+	requires = { {'nvim-lua/plenary.nvim'} },
+  }
+  use {
 	'filipdutescu/renamer.nvim',
 	branch = 'master',
 	requires = { {'nvim-lua/plenary.nvim'} }
