@@ -26,6 +26,7 @@ function M.setup(on_attach)
 
 			-- Diagnostics
 			diagnostics.cspell.with({
+				disabled_filetypes = { "NvimTree" },
 				diagnostics_postprocess = function(diagnostic)
 					diagnostic.severity = vim.diagnostic.severity.HINT
 				end,
