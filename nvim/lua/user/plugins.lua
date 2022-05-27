@@ -83,6 +83,7 @@ return packer.startup(function(use)
 		requires = { "kyazdani42/nvim-web-devicons" },
 	})
 	use("folke/which-key.nvim")
+	use("rcarriga/nvim-notify")
 
 	-- cmp plugins
 	use({
