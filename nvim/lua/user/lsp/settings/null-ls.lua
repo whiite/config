@@ -14,14 +14,21 @@ function M.setup(on_attach)
 	null_ls.setup({
 		debug = false,
 		sources = {
+			-- Formatters
 			formatting.prettier.with({
 				condition = function(utils)
 					return utils.root_has_file("package.json")
 				end,
 			}),
 			formatting.black.with({ extra_args = { "--fast" } }),
-			-- formatting.yapf
 			formatting.stylua,
+
+			-- Diagnostics
+			diagnostics.cspell.with({
+				diagnostics_postprocess = function(diagnostic)
+					diagnostic.severity = vim.diagnostic.severity.HINT
+				end,
+			}),
 			diagnostics.flake8,
 		},
 		on_attach = on_attach,
