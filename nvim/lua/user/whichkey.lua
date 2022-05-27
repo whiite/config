@@ -99,7 +99,7 @@ local mappings = {
 		"<cmd>Format<cr>",
 		"Format current buffer",
 	},
-	["t"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
+	["T"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
 	["P"] = { "<cmd>Telescope projects<cr>", "Projects" },
 
 	p = {
