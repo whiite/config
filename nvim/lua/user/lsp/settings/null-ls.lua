@@ -22,6 +22,7 @@ function M.setup(on_attach)
 			}),
 			formatting.black.with({ extra_args = { "--fast" } }),
 			formatting.stylua,
+			formatting.fish_indent,
 
 			-- Diagnostics
 			diagnostics.cspell.with({
@@ -29,6 +30,7 @@ function M.setup(on_attach)
 					diagnostic.severity = vim.diagnostic.severity.HINT
 				end,
 			}),
+			diagnostics.fish,
 			diagnostics.flake8,
 		},
 		on_attach = on_attach,
