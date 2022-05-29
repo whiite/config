@@ -58,7 +58,7 @@ function _DENO_TOGGLE()
 	deno:toggle()
 end
 
-local python = Terminal:new({ cmd = "python", hidden = false })
+local python = Terminal:new({ cmd = "python3", hidden = false })
 
 function _PYTHON_TOGGLE()
 	python:toggle()

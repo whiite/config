@@ -46,16 +46,27 @@ return packer.startup(function(use)
 	-- General --
 	use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
 	use("nvim-lua/plenary.nvim") -- Useful lua functions used lots of plugins
-	use("windwp/nvim-autopairs") -- Autopairs, integrates with both cmp and treesitter
+	use({
+		"windwp/nvim-autopairs",
+		config = function()
+			require("user.plugins.autopairs")
+		end,
+	}) -- Autopairs, integrates with both cmp and treesitter
 	use({
 		"numToStr/Comment.nvim", -- Easily comment stuff
 		requires = {
 			"JoosepAlviste/nvim-ts-context-commentstring",
 		},
+		config = function()
+			require("user.plugins.comment")
+		end,
 	})
 	use({
 		"nvim-lualine/lualine.nvim",
 		requires = { "kyazdani42/nvim-web-devicons" },
+		config = function()
+			require("user.plugins.lualine")
+		end,
 	})
 	use({
 		"akinsho/bufferline.nvim", -- Pretty tab bar
@@ -64,10 +75,29 @@ return packer.startup(function(use)
 			"kyazdani42/nvim-web-devicons",
 			"moll/vim-bbye", -- Bbye allows you to do delete buffers (close files) without closing your windows or messing up your layout.
 		},
+		config = function()
+			require("user.plugins.bufferline")
+		end,
 	})
-	use("akinsho/toggleterm.nvim")
-	use({ "nacro90/numb.nvim" })
-	use("ahmedkhalf/project.nvim")
+	use({
+		"akinsho/toggleterm.nvim",
+		config = function()
+			require("user.plugins.toggleterm")
+		end,
+	})
+	use({
+		"nacro90/numb.nvim",
+		config = function()
+			require("user.plugins.numb")
+		end,
+	})
+	use({
+		"ahmedkhalf/project.nvim",
+		config = function()
+			require("user.plugins.project")
+		end,
+	})
+	use("tpope/vim-surround")
 
 	-- Color schemes
 	use("lunarvim/colorschemes") -- A bunch of color schemes to try out
@@ -75,15 +105,43 @@ return packer.startup(function(use)
 
 	-- Prettier UI
 	use("lukas-reineke/indent-blankline.nvim") -- Indent guides and invisible character support
-	use("norcalli/nvim-colorizer.lua")
-	use({ "edluffy/specs.nvim" })
-	use("karb94/neoscroll.nvim")
+	use({
+		"norcalli/nvim-colorizer.lua",
+		config = function()
+			require("user.plugins.nvim-colorizer")
+		end,
+	})
+	use({
+		"edluffy/specs.nvim",
+		config = function()
+			require("user.plugins.specs")
+		end,
+	})
+	use({
+		"karb94/neoscroll.nvim",
+		config = function()
+			require("user.plugins.neoscroll")
+		end,
+	})
 	use({
 		"goolord/alpha-nvim", -- Dashboard on startup
 		requires = { "kyazdani42/nvim-web-devicons" },
+		config = function()
+			require("user.plugins.alpha")
+		end,
 	})
-	use("folke/which-key.nvim")
-	use("rcarriga/nvim-notify")
+	use({
+		"folke/which-key.nvim",
+		config = function()
+			require("user.plugins.whichkey")
+		end,
+	})
+	use({
+		"rcarriga/nvim-notify",
+		config = function()
+			require("user.plugins.nvim-notify")
+		end,
+	})
 
 	-- cmp plugins
 	use({
@@ -113,10 +171,16 @@ return packer.startup(function(use)
 		"filipdutescu/renamer.nvim",
 		branch = "master",
 		requires = { { "nvim-lua/plenary.nvim" } },
+		config = function()
+			require("user.plugins.renamer")
+		end,
 	})
 	use({
 		"folke/trouble.nvim",
 		requires = "kyazdani42/nvim-web-devicons",
+		config = function()
+			require("user.plugins.trouble")
+		end,
 	})
 
 	-- Telescope
@@ -127,6 +191,9 @@ return packer.startup(function(use)
 			-- extensions
 			{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
 		},
+		config = function()
+			require("user.plugins.telescope")
+		end,
 	})
 
 	-- Treesitter
@@ -140,10 +207,18 @@ return packer.startup(function(use)
 			{ "JoosepAlviste/nvim-ts-context-commentstring" },
 			{ "lewis6991/spellsitter.nvim" }, -- spellchecker
 		},
+		config = function()
+			require("user.plugins.treesitter")
+		end,
 	})
 
 	-- Git
-	use("lewis6991/gitsigns.nvim") -- git info in the gutter (like VSCode)
+	use({
+		"lewis6991/gitsigns.nvim",
+		config = function()
+			require("user.plugins.gitsigns")
+		end,
+	}) -- git info in the gutter (like VSCode)
 
 	-- File explorer
 	use({
@@ -151,6 +226,9 @@ return packer.startup(function(use)
 		requires = {
 			"kyazdani42/nvim-web-devicons", -- file icons
 		},
+		config = function()
+			require("user.plugins.nvim-tree")
+		end,
 	})
 
 	-- Automatically set up your configuration after cloning packer.nvim

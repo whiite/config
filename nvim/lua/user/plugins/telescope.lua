@@ -5,6 +5,7 @@ end
 
 -- Extensions
 telescope.load_extension("fzf")
+telescope.load_extension("notify")
 
 local actions = require("telescope.actions")
 
