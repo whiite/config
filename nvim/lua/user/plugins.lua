@@ -155,6 +155,9 @@ return packer.startup(function(use)
 			"hrsh7th/cmp-nvim-lsp", -- LSP completions
 			"hrsh7th/cmp-nvim-lua", -- Neovim completions for lua
 		},
+		config = function()
+			require("user.plugins.cmp")
+		end,
 	})
 
 	-- snippets
