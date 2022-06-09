@@ -102,6 +102,17 @@ local mappings = {
 	["T"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
 	["P"] = { "<cmd>Telescope projects<cr>", "Projects" },
 
+	d = {
+		name = "Debug",
+		d = { "<cmd>lua require 'dapui'.toggle()<cr>", "Breakpoint toggle" },
+		b = { "<cmd>DapToggleBreakpoint<cr>", "Breakpoint toggle" },
+		c = { "<cmd>DapContinue<cr>", "Continue" },
+		r = { "<cmd>DapToggleRepl<cr>", "REPL Toggle" },
+		o = { "<cmd>DapStepOver<cr>", "Step over" },
+		i = { "<cmd>DapStepInto<cr>", "Step into" },
+		O = { "<cmd>DapStepOut<cr>", "Step out" },
+		q = { "<cmd>DapTerminate<cr>", "Stop/Terminate" },
+	},
 	p = {
 		name = "Packer",
 		c = { "<cmd>PackerCompile<cr>", "Compile" },

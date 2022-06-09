@@ -100,6 +100,28 @@ return packer.startup(function(use)
 	})
 	use("tpope/vim-surround")
 
+	-- Debugging
+	use({
+		"mfussenegger/nvim-dap",
+		config = function()
+			require("user.plugins.nvim-dap")
+		end,
+	})
+	use({
+		"rcarriga/nvim-dap-ui",
+		requires = { "mfussenegger/nvim-dap" },
+		config = function()
+			require("user.plugins.nvim-dap-ui")
+		end,
+	})
+	use({
+		"leoluz/nvim-dap-go",
+		requires = { "mfussenegger/nvim-dap" },
+		config = function()
+			require("dap-go").setup()
+		end,
+	})
+
 	-- Color schemes
 	use("lunarvim/colorschemes") -- A bunch of color schemes to try out
 	use("folke/tokyonight.nvim")
