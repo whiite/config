@@ -92,6 +92,7 @@ end
 local format_exclude = {
 	"tsserver",
 	"sumneko_lua",
+	"jsonls",
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
