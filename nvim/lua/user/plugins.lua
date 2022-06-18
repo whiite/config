@@ -125,6 +125,7 @@ return packer.startup(function(use)
 	-- Color schemes
 	use("lunarvim/colorschemes") -- A bunch of color schemes to try out
 	use("folke/tokyonight.nvim")
+	use("Mofiqul/dracula.nvim")
 
 	-- Prettier UI
 	use("lukas-reineke/indent-blankline.nvim") -- Indent guides and invisible character support
