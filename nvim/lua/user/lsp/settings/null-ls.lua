@@ -15,9 +15,9 @@ function M.setup(on_attach)
 		debug = false,
 		sources = {
 			-- Formatters
-			formatting.prettier.with({
+			formatting.prettierd.with({
 				condition = function(utils)
-					return utils.root_has_file("package.json")
+					return utils.root_has_file("deno.json")
 				end,
 			}),
 			formatting.black.with({ extra_args = { "--fast" } }),
