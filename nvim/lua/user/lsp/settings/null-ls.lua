@@ -25,7 +25,6 @@ function M.setup(on_attach)
 			formatting.fish_indent,
 
 			-- Diagnostics
-			diagnostics.eslint,
 			diagnostics.cspell.with({
 				disabled_filetypes = { "NvimTree" },
 				diagnostics_postprocess = function(diagnostic)
