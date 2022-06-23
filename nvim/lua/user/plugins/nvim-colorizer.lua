@@ -17,15 +17,20 @@ end
 --  }
 
 colorizer.setup({
+	sass = {
+		css = true,
+	},
+	scss = {
+		css = true,
+	},
 	css = {
-		css = true
+		css = true,
 	},
 	html = {
-		css = true
+		css = true,
 	},
-	'javascript',
-	'typescript'
-}, {
-}, {
-	names = false
+	"javascript",
+	"typescript",
+}, {}, {
+	names = false,
 })
