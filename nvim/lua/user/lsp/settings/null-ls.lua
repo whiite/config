@@ -17,7 +17,7 @@ function M.setup(on_attach)
 			-- Formatters
 			formatting.prettierd.with({
 				condition = function(utils)
-					return utils.root_has_file("deno.json")
+					return not utils.root_has_file("deno.json")
 				end,
 			}),
 			formatting.black.with({ extra_args = { "--fast" } }),
