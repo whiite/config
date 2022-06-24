@@ -178,6 +178,7 @@ return packer.startup(function(use)
 			"hrsh7th/cmp-nvim-lsp", -- LSP completions
 			"hrsh7th/cmp-nvim-lua", -- Neovim completions for lua
 			"onsails/lspkind.nvim", -- vscode-like pictograms to built-in lsp
+			"David-Kunz/cmp-npm", -- package.json package names and versions
 		},
 		config = function()
 			require("user.plugins.cmp")

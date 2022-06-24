@@ -46,6 +46,9 @@ local kind_icons = {
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
 local lspkind = require("lspkind")
+require("cmp-npm").setup({
+	only_semantic_versions = true,
+})
 cmp.setup({
 	snippet = {
 		expand = function(args)
@@ -143,6 +146,7 @@ cmp.setup({
 		{ name = "luasnip" },
 		{ name = "buffer" },
 		{ name = "path" },
+		{ name = "npm", keyword_length = 4 },
 	},
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,
