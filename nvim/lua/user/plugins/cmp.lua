@@ -45,18 +45,18 @@ local kind_icons = {
 }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
+local lspkind = require("lspkind")
 cmp.setup({
 	snippet = {
 		expand = function(args)
 			luasnip.lsp_expand(args.body) -- For `luasnip` users.
 		end,
 	},
-	window = {
-		documentation = cmp.config.window.bordered(),
-	},
 	mapping = {
 		["<C-k>"] = cmp.mapping.select_prev_item(),
+		["<C-p>"] = cmp.mapping.select_prev_item(),
 		["<C-j>"] = cmp.mapping.select_next_item(),
+		["<C-n>"] = cmp.mapping.select_next_item(),
 		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
 		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
 		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
@@ -97,21 +97,45 @@ cmp.setup({
 			"s",
 		}),
 	},
+	window = {
+		winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+		documentation = cmp.config.window.bordered(),
+	},
 	formatting = {
 		fields = { "kind", "abbr", "menu" },
 		format = function(entry, vim_item)
-			-- Kind icons
-			vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-			-- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-			vim_item.menu = ({
-				nvim_lsp = "[LSP]",
-				nvim_lua = "[NVim Lua]",
-				luasnip = "[Snippet]",
-				buffer = "[Buffer]",
-				path = "[Path]",
-			})[entry.source.name]
-			return vim_item
+			local kind = require("lspkind").cmp_format({
+				mode = "symbol_text",
+				maxwidth = 50,
+				menu = {
+					nvim_lsp = "[LSP]",
+					nvim_lua = "[NVim Lua]",
+					luasnip = "[Snippet]",
+					buffer = "[Buffer]",
+					path = "[Path]",
+				},
+			})(entry, vim_item)
+			local strings = vim.split(kind.kind, "%s", { trimempty = true })
+			kind.kind = " " .. strings[1] .. " "
+			kind.menu = "    (" .. strings[2] .. ")"
+
+			return kind
 		end,
+
+		-- Fallback option:
+		-- 	format = function(entry, vim_item)
+		-- 		-- Kind icons
+		-- 		vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
+		-- 		-- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+		-- 		vim_item.menu = ({
+		-- 			nvim_lsp = "[LSP]",
+		-- 			nvim_lua = "[NVim Lua]",
+		-- 			luasnip = "[Snippet]",
+		-- 			buffer = "[Buffer]",
+		-- 			path = "[Path]",
+		-- 		})[entry.source.name]
+		-- 		return vim_item
+		-- 	end,
 	},
 	sources = {
 		{ name = "nvim_lsp" },
@@ -125,7 +149,7 @@ cmp.setup({
 		select = false,
 	},
 	view = {
-		entries = "native",
+		-- entries = "native",
 	},
 	-- documentation = {
 	-- border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },

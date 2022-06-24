@@ -177,6 +177,7 @@ return packer.startup(function(use)
 			"saadparwaiz1/cmp_luasnip", -- snippet completions
 			"hrsh7th/cmp-nvim-lsp", -- LSP completions
 			"hrsh7th/cmp-nvim-lua", -- Neovim completions for lua
+			"onsails/lspkind.nvim", -- vscode-like pictograms to built-in lsp
 		},
 		config = function()
 			require("user.plugins.cmp")
