@@ -10,12 +10,13 @@ end
 local diff = {
 	"diff",
 	colored = true,
-	diff_color = {
-		added = "DiffAdd", -- Changes the diff's added color
-		modified = "DiffChange", -- Changes the diff's modified color
-		removed = "DiffDelete", -- Changes the diff's removed color you
-	},
-	symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
+	-- diff_color = {
+	-- 	added = "DiffAdd", -- Changes the diff's added color
+	-- 	modified = "DiffChange", -- Changes the diff's modified color
+	-- 	removed = "DiffDelete", -- Changes the diff's removed color you
+	-- },
+	-- symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
+	-- symbols = { added = "[+] ", modified = "[~] ", removed = "[-] " }, -- changes diff symbols
 	cond = hide_in_width,
 }
 
