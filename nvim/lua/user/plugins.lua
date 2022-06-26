@@ -44,6 +44,9 @@ return packer.startup(function(use)
 	-- Have packer manage itself
 	use("wbthomason/packer.nvim")
 
+	-- Optimisation
+	use("lewis6991/impatient.nvim") -- Speeds up lua module loading to improve startup time
+
 	-- General --
 	use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
 	use("nvim-lua/plenary.nvim") -- Useful lua functions used lots of plugins
