@@ -29,6 +29,9 @@ colorizer.setup({
 	html = {
 		css = true,
 	},
+	svg = {
+		css = true,
+	},
 	"javascript",
 	"typescript",
 }, {}, {
