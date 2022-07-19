@@ -30,8 +30,11 @@ keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
+-- Move lines under cursor
 keymap("n", "<A-j>", ":m .+1<CR>==", opts)
 keymap("n", "<A-k>", ":m .-2<CR>==", opts)
+keymap("n", "∆", ":m .+1<CR>==", opts) -- ∆ = alt+j
+keymap("n", "˚", ":m .-2<CR>==", opts) -- ˚ = alt+k
 
 keymap("n", "<leader>e", ":Lex 30<cr>", opts)
 
