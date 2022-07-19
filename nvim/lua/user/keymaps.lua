@@ -36,7 +36,10 @@ keymap("n", "<A-k>", ":m .-2<CR>==", opts)
 keymap("n", "∆", ":m .+1<CR>==", opts) -- ∆ = alt+j
 keymap("n", "˚", ":m .-2<CR>==", opts) -- ˚ = alt+k
 
+-- Explorer
 keymap("n", "<leader>e", ":Lex 30<cr>", opts)
+-- Toggle Comment
+keymap("n", "<C-/>", "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", opts)
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize +2<CR>", opts)
@@ -52,6 +55,8 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 -- Press jk fast to exit escape
 keymap("i", "jk", "<ESC>", opts)
 keymap("i", "kj", "<ESC>", opts)
+-- Toggle Comment
+keymap("i", "<C-/>", "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", opts)
 
 -- Visual --
 -- Stay in indent mode
