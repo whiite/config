@@ -9,6 +9,7 @@ local M = {}
 local formatting = null_ls.builtins.formatting
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
 local diagnostics = null_ls.builtins.diagnostics
+local actions = null_ls.builtins.code_actions
 
 function M.setup(on_attach)
 	null_ls.setup({
@@ -33,6 +34,9 @@ function M.setup(on_attach)
 			}),
 			diagnostics.fish,
 			diagnostics.flake8,
+
+			-- Actions
+			actions.gitsigns,
 		},
 		on_attach = on_attach,
 	})
