@@ -58,10 +58,11 @@ nvim_tree.setup({ -- BEGIN_DEFAULT_OPTS
 		highlight_opened_files = "all", -- Folder and file icon highlight for opened files/directories
 		indent_markers = {
 			enable = true,
+			inline_arrows = true,
 			icons = {
-				corner = "└ ",
-				edge = "│ ",
-				none = "  ",
+				corner = "└",
+				edge = "│",
+				none = " ",
 			},
 		},
 		icons = {
