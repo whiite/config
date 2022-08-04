@@ -3,11 +3,7 @@ if not status_ok then
 	return
 end
 
-local opts = {
-	root_dir = lspconfig.util.root_pattern("deno.json"),
-	init_options = {
-		lint = true,
-	},
+return {
+	root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+	single_file_support = false,
 }
-
-return opts
