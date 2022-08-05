@@ -1,7 +1,11 @@
-local status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
+local status_ok, mason = pcall(require, "mason")
 if not status_ok then
 	return
 end
+mason.setup()
+
+local mason_lspconfig = require("mason-lspconfig")
+mason_lspconfig.setup()
 
 local on_attach = require("user.lsp.handlers").on_attach
 require("user.lsp.settings.null-ls").setup(on_attach)
@@ -20,15 +24,13 @@ local function create_lsp_opts(settings_dir, server_name)
 	return vim.tbl_deep_extend("force", lsp_opts, opts)
 end
 
-lsp_installer.setup()
-
 local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
 if not lspconfig_status_ok then
 	return
 end
 
-local servers = lsp_installer.get_installed_servers()
-for _, server in pairs(servers) do
-	local opts = create_lsp_opts("user.lsp.settings", server.name)
-	lspconfig[server.name].setup(opts)
+local server_list = mason_lspconfig.get_installed_servers()
+for _, server_name in pairs(server_list) do
+	local opts = create_lsp_opts("user.lsp.settings", server_name)
+	lspconfig[server_name].setup(opts)
 end
