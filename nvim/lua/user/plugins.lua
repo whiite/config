@@ -51,11 +51,11 @@ return packer.startup(function(use)
 	use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
 	use("nvim-lua/plenary.nvim") -- Useful lua functions used lots of plugins
 	use({
-		"windwp/nvim-autopairs",
+		"windwp/nvim-autopairs", -- Autopairs, integrates with both cmp and treesitter
 		config = function()
 			require("user.plugins.autopairs")
 		end,
-	}) -- Autopairs, integrates with both cmp and treesitter
+	})
 	use({
 		"numToStr/Comment.nvim", -- Easily comment stuff
 		requires = {
@@ -66,7 +66,7 @@ return packer.startup(function(use)
 		end,
 	})
 	use({
-		"nvim-lualine/lualine.nvim",
+		"nvim-lualine/lualine.nvim", -- Status line at the bottom of the window
 		requires = { "kyazdani42/nvim-web-devicons" },
 		config = function()
 			require("user.plugins.lualine")
@@ -84,13 +84,13 @@ return packer.startup(function(use)
 		end,
 	})
 	use({
-		"akinsho/toggleterm.nvim",
+		"akinsho/toggleterm.nvim", -- Toggle terminals (float or split)
 		config = function()
 			require("user.plugins.toggleterm")
 		end,
 	})
 	use({
-		"nacro90/numb.nvim",
+		"nacro90/numb.nvim", -- Preview number lines by typing :<line-number>
 		config = function()
 			require("user.plugins.numb")
 		end,
@@ -169,6 +169,13 @@ return packer.startup(function(use)
 			require("user.plugins.nvim-notify")
 		end,
 	})
+	use({
+		"hood/popui.nvim",
+		requires = { "RishabhRD/popfix" },
+		config = function()
+			require("user.plugins.popui")
+		end,
+	})
 
 	-- cmp plugins
 	use({
@@ -194,20 +201,26 @@ return packer.startup(function(use)
 
 	-- LSP
 	use("neovim/nvim-lspconfig") -- enable LSP
-	use({ "williamboman/mason.nvim" })
-	use({ "williamboman/mason-lspconfig.nvim" })
+	use({ "williamboman/mason.nvim" }) -- LSP/lint and debug manager
+	use({ "williamboman/mason-lspconfig.nvim" }) -- lspconfig compatibility
 	use({
 		"jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
 	use({
-		"filipdutescu/renamer.nvim",
-		branch = "master",
-		requires = { { "nvim-lua/plenary.nvim" } },
+		"simrat39/rust-tools.nvim", -- Rust LSP and debug support
 		config = function()
-			require("user.plugins.renamer")
+			require("user.plugins.rust-tools")
 		end,
 	})
+	-- use({
+	-- 	"filipdutescu/renamer.nvim",
+	-- 	branch = "master",
+	-- 	requires = { { "nvim-lua/plenary.nvim" } },
+	-- 	config = function()
+	-- 		require("user.plugins.renamer")
+	-- 	end,
+	-- })
 	use({
 		"folke/trouble.nvim",
 		requires = "kyazdani42/nvim-web-devicons",
