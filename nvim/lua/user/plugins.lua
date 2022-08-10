@@ -206,14 +206,14 @@ return packer.startup(function(use)
 			require("user.plugins.rust-tools")
 		end,
 	})
-	-- use({
-	-- 	"filipdutescu/renamer.nvim",
-	-- 	branch = "master",
-	-- 	requires = { { "nvim-lua/plenary.nvim" } },
-	-- 	config = function()
-	-- 		require("user.plugins.renamer")
-	-- 	end,
-	-- })
+	use({
+		"filipdutescu/renamer.nvim",
+		branch = "master",
+		requires = { { "nvim-lua/plenary.nvim" } },
+		config = function()
+			require("user.plugins.renamer")
+		end,
+	})
 	use({
 		"folke/trouble.nvim",
 		requires = "kyazdani42/nvim-web-devicons",
