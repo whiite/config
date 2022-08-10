@@ -3,11 +3,8 @@ if not status_ok then
 	return
 end
 
--- Extensions
-telescope.load_extension("fzf")
-telescope.load_extension("notify")
-
 local actions = require("telescope.actions")
+local themes = require("telescope.themes")
 
 -- Settings
 telescope.setup({
@@ -86,9 +83,6 @@ telescope.setup({
 		},
 	},
 	pickers = {
-		find_files = {
-			hidden = true,
-		},
 		-- Default configuration for builtin pickers goes here:
 		-- picker_name = {
 		--   picker_config_key = value,
@@ -96,8 +90,16 @@ telescope.setup({
 		-- }
 		-- Now the picker_config_key will be applied every time you call this
 		-- builtin picker
+		find_files = {
+			hidden = true,
+		},
 	},
 	extensions = {
+		-- Your extension configuration goes here:
+		-- extension_name = {
+		--   extension_config_key = value,
+		-- }
+		-- please take a look at the readme of the extension you want to configure
 		fzf = {
 			fuzzy = true, -- false will only do exact matching
 			override_generic_sorter = true, -- override the generic sorter
@@ -106,10 +108,15 @@ telescope.setup({
 			-- the default case_mode is "smart_case"
 		},
 		notify = {},
-		-- Your extension configuration goes here:
-		-- extension_name = {
-		--   extension_config_key = value,
-		-- }
-		-- please take a look at the readme of the extension you want to configure
+		["ui-select"] = {
+			themes.get_dropdown({
+				previewer = false,
+			}),
+		},
 	},
 })
+
+-- Extensions
+telescope.load_extension("fzf")
+telescope.load_extension("notify")
+telescope.load_extension("ui-select")

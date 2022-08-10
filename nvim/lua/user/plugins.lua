@@ -169,13 +169,6 @@ return packer.startup(function(use)
 			require("user.plugins.nvim-notify")
 		end,
 	})
-	use({
-		"hood/popui.nvim",
-		requires = { "RishabhRD/popfix" },
-		config = function()
-			require("user.plugins.popui")
-		end,
-	})
 
 	-- cmp plugins
 	use({
@@ -236,6 +229,7 @@ return packer.startup(function(use)
 			{ "nvim-lua/plenary.nvim" },
 			-- extensions
 			{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+			{ "nvim-telescope/telescope-ui-select.nvim" },
 		},
 		config = function()
 			require("user.plugins.telescope")
