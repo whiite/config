@@ -10,7 +10,8 @@ local themes = require("telescope.themes")
 telescope.setup({
 	defaults = {
 
-		prompt_prefix = " ",
+		-- prompt_prefix = " ",
+		prompt_prefix = " ",
 		selection_caret = " ",
 		path_display = { "smart" },
 
@@ -24,6 +25,7 @@ telescope.setup({
 				["<C-j>"] = actions.move_selection_next,
 				["<C-k>"] = actions.move_selection_previous,
 
+				["<esc>"] = actions.close,
 				["<C-c>"] = actions.close,
 
 				["<Down>"] = actions.move_selection_next,
@@ -109,7 +111,7 @@ telescope.setup({
 		},
 		notify = {},
 		["ui-select"] = {
-			themes.get_dropdown({
+			themes.get_cursor({
 				previewer = false,
 			}),
 		},
