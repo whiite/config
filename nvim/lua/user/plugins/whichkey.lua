@@ -90,6 +90,7 @@ local mappings = {
 	["w"] = { "<cmd>w!<CR>", "Save" },
 	["q"] = { "<cmd>q!<CR>", "Quit" },
 	["c"] = { "<cmd>Bdelete!<cr>", "Close Buffer" },
+	["C"] = { "<cmd>%bd! | NvimTree<cr>", "Close All Buffers" },
 	["h"] = { "<cmd>lua vim.opt.hlsearch = not vim.opt.hlsearch:get()<cr>", "Toggle Highlight Search" },
 	["f"] = {
 		"<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown())<cr>",
