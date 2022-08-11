@@ -47,7 +47,7 @@ local setup = {
 		position = "bottom", -- bottom, top
 		margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
 		padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
-		winblend = 0,
+		winblend = 10,
 	},
 	layout = {
 		height = { min = 4, max = 25 }, -- min and max height of the columns
@@ -82,15 +82,11 @@ local mappings = {
 	["/"] = { '<cmd>lua require("Comment.api").toggle_current_linewise()<cr>', "Comment" },
 	["rn"] = { '<cmd>lua require("renamer").rename()<cr>', "Rename symbol" },
 	["a"] = { "<cmd>Alpha<cr>", "Alpha" },
-	["b"] = {
-		"<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-		"Buffers",
-	},
 	["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
 	["w"] = { "<cmd>w!<CR>", "Save" },
 	["q"] = { "<cmd>q!<CR>", "Quit" },
 	["c"] = { "<cmd>Bdelete!<cr>", "Close Buffer" },
-	["C"] = { "<cmd>%bd! | NvimTree<cr>", "Close All Buffers" },
+	["C"] = { "<cmd>BufferLineCloseLeft | BufferLineCloseRight | <cr>", "Close All Buffers" },
 	["h"] = { "<cmd>lua vim.opt.hlsearch = not vim.opt.hlsearch:get()<cr>", "Toggle Highlight Search" },
 	["f"] = {
 		"<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown())<cr>",
@@ -103,6 +99,20 @@ local mappings = {
 	},
 	["T"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
 	["P"] = { "<cmd>Telescope projects<cr>", "Projects" },
+
+	b = {
+		name = "Buffers",
+		c = { "<cmd>Bdelete!<CR>", "Close current buffer" },
+		C = { "<cmd>BufferLineCloseLeft<cr><cmd>BufferLineCloseRight<cr><cmd>Bdelete!<cr>", "Close All Buffers" },
+		f = {
+			"<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
+			"Find buffer",
+		},
+		p = { "<cmd>BufferLinePick<CR>", "Pick buffer" },
+		P = { "<cmd>BufferLineTogglePin<CR>", "Pin buffer" },
+		L = { "<cmd>BufferLineCloseLeft<CR>", "Close left buffers" },
+		R = { "<cmd>BufferLineCloseRight<CR>", "Close right buffers" },
+	},
 
 	d = {
 		name = "Debug",
