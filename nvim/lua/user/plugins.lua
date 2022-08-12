@@ -85,6 +85,7 @@ return packer.startup(function(use)
 	})
 	use({
 		"akinsho/toggleterm.nvim", -- Toggle terminals (float or split)
+		tag = "v2.*",
 		config = function()
 			require("user.plugins.toggleterm")
 		end,
