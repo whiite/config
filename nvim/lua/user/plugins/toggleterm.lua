@@ -35,31 +35,29 @@ function _G.set_terminal_keymaps()
 	vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
 	vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
 	vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
+	vim.api.nvim_buf_set_keymap(0, "t", "<C-q>", [[<cmd>bdelete!<cr>]], opts)
 end
 
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
 local Terminal = require("toggleterm.terminal").Terminal
-local lazygit = Terminal:new({ cmd = "lazygit", hidden = false })
 
+local lazygit = Terminal:new({ cmd = "lazygit", hidden = false })
 function _LAZYGIT_TOGGLE()
 	lazygit:toggle()
 end
 
 local node = Terminal:new({ cmd = "node", hidden = false })
-
 function _NODE_TOGGLE()
 	node:toggle()
 end
 
 local deno = Terminal:new({ cmd = "deno", hidden = false })
-
 function _DENO_TOGGLE()
 	deno:toggle()
 end
 
 local python = Terminal:new({ cmd = "python3", hidden = false })
-
 function _PYTHON_TOGGLE()
 	python:toggle()
 end
