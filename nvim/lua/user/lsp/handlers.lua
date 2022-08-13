@@ -113,6 +113,10 @@ M.on_attach = function(client, bufnr)
 		})
 	end
 
+	if client.name == "angularls" then
+		client.server_capabilities.renameProvider = false
+	end
+
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
 end
