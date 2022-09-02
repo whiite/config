@@ -243,6 +243,9 @@ return packer.startup(function(use)
 		run = ":TSUpdate",
 		requires = {
 			-- extensions
+			{ "nvim-treesitter/nvim-treesitter-context", config = function ()
+				require("user.plugins.nvim-treesitter-context")
+			end },
 			{ "p00f/nvim-ts-rainbow" }, -- rainbow parenthesis
 			-- {"nvim-treesitter/playground"}, -- useful for creating parsers/extensions
 			{ "JoosepAlviste/nvim-ts-context-commentstring" },
