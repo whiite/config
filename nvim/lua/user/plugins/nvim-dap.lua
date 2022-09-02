@@ -16,7 +16,32 @@ dap.adapters.node2 = {
 	args = { os.getenv("HOME") .. "/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js" },
 }
 
+dap.adapters.chrome = {
+	-- executable: launch the remote debug adapter - server: connect to an already running debug adapter
+	type = "executable",
+	-- command to launch the debug adapter - used only on executable type
+	-- command = "chrome-debug-adaptor",
+	command = os.getenv("HOME") .. "/.local/share/nvim/mason/bin/chrome-debug-adapter",
+}
+
 -- Configurations --
+dap.configurations.typescript = {
+	{
+		name = "Debug (Attach) - Remote",
+		type = "chrome",
+		request = "attach",
+		-- program = "${file}",
+		-- cwd = vim.fn.getcwd(),
+		sourceMaps = true,
+		--      reAttach = true,
+		trace = true,
+		-- protocol = "inspector",
+		-- hostName = "127.0.0.1",
+		port = 9222,
+		webRoot = "${workspaceFolder}",
+	},
+}
+
 dap.configurations.javascript = {
 	{
 		name = "Launch",
