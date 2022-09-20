@@ -1,18 +1,20 @@
-local fn = vim.fn
-
 -- Automatically install packer
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-	PACKER_BOOTSTRAP = fn.system({
-		"git",
-		"clone",
-		"--depth",
-		"1",
-		"https://github.com/wbthomason/packer.nvim",
-		install_path,
-	})
-	print("Installing packer close and reopen Neovim...")
-	vim.cmd([[packadd packer.nvim]])
+local ensure_packer = function()
+	local fn = vim.fn
+	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+	if fn.empty(fn.glob(install_path)) > 0 then
+		fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+		vim.cmd([[packadd packer.nvim]])
+		return true
+	end
+	return false
+end
+local packer_bootstrap = ensure_packer()
+
+-- Use a protected call so we don't error out on first use
+local status_ok, packer = pcall(require, "packer")
+if not status_ok then
+	return
 end
 
 -- Auto command that reloads neovim whenever you save the plugins.lua file
@@ -23,12 +25,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	pattern = { "plugins.lua" },
 	command = "source <afile> | PackerSync",
 })
-
--- Use a protected call so we don't error out on first use
-local status_ok, packer = pcall(require, "packer")
-if not status_ok then
-	return
-end
 
 -- Have packer use a popup window
 packer.init({
@@ -127,9 +123,8 @@ return packer.startup(function(use)
 	})
 
 	-- Color schemes
-	use("lunarvim/colorschemes") -- A bunch of color schemes to try out
+	-- use("lunarvim/colorschemes") -- A bunch of color schemes to try out
 	use("folke/tokyonight.nvim")
-	use("Mofiqul/dracula.nvim")
 
 	-- Prettier UI
 	use("lukas-reineke/indent-blankline.nvim") -- Indent guides and invisible character support
@@ -208,14 +203,6 @@ return packer.startup(function(use)
 		end,
 	})
 	use({
-		"filipdutescu/renamer.nvim",
-		branch = "master",
-		requires = { { "nvim-lua/plenary.nvim" } },
-		config = function()
-			require("user.plugins.renamer")
-		end,
-	})
-	use({
 		"folke/trouble.nvim",
 		requires = "kyazdani42/nvim-web-devicons",
 		config = function()
@@ -228,14 +215,14 @@ return packer.startup(function(use)
 		"nvim-telescope/telescope.nvim", -- fuzzy file/text finder UI
 		requires = {
 			{ "nvim-lua/plenary.nvim" },
-			-- extensions
-			{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-			{ "nvim-telescope/telescope-ui-select.nvim" },
 		},
 		config = function()
 			require("user.plugins.telescope")
 		end,
 	})
+	-- Telescope extensions
+	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
+	use({ "nvim-telescope/telescope-ui-select.nvim" })
 
 	-- Treesitter
 	use({
@@ -243,13 +230,15 @@ return packer.startup(function(use)
 		run = ":TSUpdate",
 		requires = {
 			-- extensions
-			{ "nvim-treesitter/nvim-treesitter-context", config = function ()
-				require("user.plugins.nvim-treesitter-context")
-			end },
+			{
+				"nvim-treesitter/nvim-treesitter-context",
+				config = function()
+					require("user.plugins.nvim-treesitter-context")
+				end,
+			},
 			{ "p00f/nvim-ts-rainbow" }, -- rainbow parenthesis
 			-- {"nvim-treesitter/playground"}, -- useful for creating parsers/extensions
 			{ "JoosepAlviste/nvim-ts-context-commentstring" },
-			{ "lewis6991/spellsitter.nvim" }, -- spellchecker
 		},
 		config = function()
 			require("user.plugins.treesitter")
@@ -277,7 +266,7 @@ return packer.startup(function(use)
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
-	if PACKER_BOOTSTRAP then
+	if packer_bootstrap then
 		require("packer").sync()
 	end
 end)
