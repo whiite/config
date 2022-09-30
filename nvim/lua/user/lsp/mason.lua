@@ -8,7 +8,6 @@ local mason_lspconfig = require("mason-lspconfig")
 mason_lspconfig.setup()
 
 local on_attach = require("user.lsp.handlers").on_attach
-require("user.lsp.settings.null-ls").setup(on_attach)
 
 local function create_lsp_opts(settings_dir, server_name)
 	local opts = {
@@ -34,3 +33,4 @@ for _, server_name in pairs(server_list) do
 	local opts = create_lsp_opts("user.lsp.settings", server_name)
 	lspconfig[server_name].setup(opts)
 end
+require("user.lsp.settings.null-ls").setup(on_attach)
