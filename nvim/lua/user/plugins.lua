@@ -199,7 +199,7 @@ return packer.startup(function(use)
 	use({
 		"simrat39/rust-tools.nvim", -- Rust LSP and debug support
 		config = function()
-			require("user.plugins.rust-tools")
+			require("user.lsp.rust-tools")
 		end,
 	})
 	use({
