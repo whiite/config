@@ -38,9 +38,6 @@ local options = {
 	foldexpr = "nvim_treesitter#foldexpr()",
 	foldenable = false,
 }
--- Faster filetype detection (will become the default in future versions)
-vim.g.do_filetype_lua = 1
-vim.g.did_load_filetypes = 0
 
 vim.opt.shortmess:append("c")
 
