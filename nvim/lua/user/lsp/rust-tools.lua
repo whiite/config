@@ -8,5 +8,6 @@ local lsp_handlers = require("user.lsp.handlers")
 rust_tools.setup({
 	server = {
 		on_attach = lsp_handlers.on_attach,
+		capabilities = lsp_handlers.capabilities,
 	},
 })
