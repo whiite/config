@@ -94,6 +94,7 @@ local mappings = {
 		"Find files",
 	},
 	["m"] = { "<cmd>Mason<cr>", "Open Mason Installer" },
+	["r"] = { "<cmd>lua vim.opt.relativenumber = not vim.opt.relativenumber:get()<cr>", "Toggle relative line numbers" },
 	["F"] = {
 		"<cmd>Format<cr>",
 		"Format current buffer",
