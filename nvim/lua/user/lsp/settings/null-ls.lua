@@ -11,6 +11,7 @@ local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
 local actions = null_ls.builtins.code_actions
 
+-- baaad name
 function M.setup(on_attach)
 	null_ls.setup({
 		debug = false,
@@ -37,6 +38,7 @@ function M.setup(on_attach)
 
 			-- Actions
 			actions.gitsigns,
+			actions.cspell,
 		},
 		on_attach = on_attach,
 	})
