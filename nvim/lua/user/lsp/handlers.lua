@@ -98,7 +98,7 @@ local format_exclude = {
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 M.on_attach = function(client, bufnr)
 	if vim.tbl_contains(format_exclude, client.name) then
-		client.server_capabilities.document_formatting = false
+		client.server_capabilities.documentFormattingProvider = false
 	end
 
 	if client.supports_method("textDocument/formatting") then
