@@ -82,7 +82,7 @@ local function lsp_keymaps(bufnr)
 	vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 	vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 	vim.api.nvim_create_user_command("Format", function()
-		vim.lsp.buf.formatting()
+		vim.lsp.buf.format({ async = true })
 	end, {
 		nargs = "*",
 		desc = "Format the current file using the language server",
