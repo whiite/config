@@ -34,13 +34,13 @@ nvim_tree.setup({ -- BEGIN_DEFAULT_OPTS
 	sort_by = "name",
 	update_cwd = true,
 	view = {
-		width = 30,
+		width = 40,
 		centralize_selection = true,
 		hide_root_folder = false,
-		side = "left",
-		preserve_window_proportions = false,
 		number = false,
+		preserve_window_proportions = false,
 		relativenumber = false,
+		side = "left",
 		signcolumn = "yes",
 		mappings = {
 			custom_only = false,
@@ -52,6 +52,7 @@ nvim_tree.setup({ -- BEGIN_DEFAULT_OPTS
 		},
 	},
 	renderer = {
+		add_trailing = true,
 		highlight_git = true, -- Highlight file names with git changes
 		group_empty = true, -- Compact folders that only contain a single folder into one node in the file tree
 		highlight_opened_files = "all", -- Folder and file icon highlight for opened files/directories
@@ -67,7 +68,7 @@ nvim_tree.setup({ -- BEGIN_DEFAULT_OPTS
 		icons = {
 			webdev_colors = true,
 			glyphs = {
-				default = "",
+				default = "",
 				symlink = "",
 				git = {
 					unstaged = "",
@@ -94,7 +95,7 @@ nvim_tree.setup({ -- BEGIN_DEFAULT_OPTS
 	},
 	update_focused_file = {
 		enable = true,
-		update_cwd = false,
+		update_root = false,
 		ignore_list = {},
 	},
 	ignore_ft_on_setup = {},
@@ -120,6 +121,7 @@ nvim_tree.setup({ -- BEGIN_DEFAULT_OPTS
 	git = {
 		enable = true,
 		ignore = false,
+		show_on_dirs = true,
 		timeout = 400,
 	},
 	actions = {
@@ -131,7 +133,7 @@ nvim_tree.setup({ -- BEGIN_DEFAULT_OPTS
 		},
 		open_file = {
 			quit_on_open = false,
-			resize_window = false,
+			resize_window = true,
 			window_picker = {
 				enable = true,
 				chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
