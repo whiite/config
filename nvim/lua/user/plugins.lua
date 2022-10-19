@@ -92,12 +92,6 @@ return packer.startup(function(use)
 			require("user.plugins.numb")
 		end,
 	})
-	use({
-		"ahmedkhalf/project.nvim",
-		config = function()
-			require("user.plugins.project")
-		end,
-	})
 	use("tpope/vim-surround")
 
 	-- Debugging
@@ -125,6 +119,7 @@ return packer.startup(function(use)
 	-- Color schemes
 	-- use("lunarvim/colorschemes") -- A bunch of color schemes to try out
 	use("folke/tokyonight.nvim")
+	use({ "catppuccin/nvim", as = "catppuccin" })
 
 	-- Prettier UI
 	use("lukas-reineke/indent-blankline.nvim") -- Indent guides and invisible character support
