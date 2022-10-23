@@ -121,10 +121,14 @@ return packer.startup(function(use)
 	use({
 		"folke/tokyonight.nvim",
 		config = function()
-			vim.g.tokyonight_style = "storm" -- "storm" | "night" | "day"
-			vim.g.tokyonight_lualine_bold = true
-			vim.g.tokyonight_dark_sidebar = true
-			vim.g.tokyonight_transparent_sidebar = false
+			require("tokyonight").setup({
+				style = "moon", -- "storm" | "moon" | "night" | "day"
+				styles = {
+					sidebars = "dark",
+				},
+				lualine_bold = true,
+				transparent = false,
+			})
 			-- require("user.utils.colorscheme").set_colorscheme("tokyonight")
 		end,
 	})
