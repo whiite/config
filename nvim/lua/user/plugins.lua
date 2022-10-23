@@ -118,8 +118,25 @@ return packer.startup(function(use)
 
 	-- Color schemes
 	-- use("lunarvim/colorschemes") -- A bunch of color schemes to try out
-	use("folke/tokyonight.nvim")
-	use({ "catppuccin/nvim", as = "catppuccin" })
+	use({
+		"folke/tokyonight.nvim",
+		config = function()
+			vim.g.tokyonight_style = "storm" -- "storm" | "night" | "day"
+			vim.g.tokyonight_lualine_bold = true
+			vim.g.tokyonight_dark_sidebar = true
+			vim.g.tokyonight_transparent_sidebar = false
+			-- require("user.utils.colorscheme").set_colorscheme("tokyonight")
+		end,
+	})
+	use({
+		"catppuccin/nvim",
+		as = "catppuccin",
+		config = function()
+			vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
+			require("catppuccin").setup()
+			require("user.utils.colorscheme").set_colorscheme("catppuccin")
+		end,
+	})
 
 	-- Prettier UI
 	use("lukas-reineke/indent-blankline.nvim") -- Indent guides and invisible character support
