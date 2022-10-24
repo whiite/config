@@ -71,6 +71,7 @@ return packer.startup(function(use)
 	use({
 		"akinsho/bufferline.nvim", -- Pretty tab bar
 		tag = "v2.*",
+		after = "catppuccin",
 		requires = {
 			"kyazdani42/nvim-web-devicons",
 			"moll/vim-bbye", -- Bbye allows you to do delete buffers (close files) without closing your windows or messing up your layout.
@@ -136,8 +137,9 @@ return packer.startup(function(use)
 		"catppuccin/nvim",
 		as = "catppuccin",
 		config = function()
-			vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
-			require("catppuccin").setup()
+			require("catppuccin").setup({
+				flavour = "macchiato", -- mocha, macchiato, frappe, latte
+			})
 			require("user.utils.colorscheme").set_colorscheme("catppuccin")
 		end,
 	})
