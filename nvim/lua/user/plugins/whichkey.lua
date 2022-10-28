@@ -239,3 +239,11 @@ local vmappings = {
 which_key.setup(setup)
 which_key.register(mappings, opts)
 which_key.register(vmappings, vopts)
+which_key.register({
+	d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "Go to definition" },
+	D = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "Go to declaration" },
+	l = { "<cmd>lua vim.diagnostic.open_float()<cr>", "Show diagnostics" },
+	i = { "<cmd>lua vim.lsp.implementation()<cr>", "Show all implementations for symbol" },
+	s = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Show signature help for symbol" },
+	r = { "<cmd>lua vim.lsp.buf.references()<cr>", "Show all references to symbol" },
+}, { mode = "n", prefix = "g" })
