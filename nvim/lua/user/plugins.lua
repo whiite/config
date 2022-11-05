@@ -137,10 +137,11 @@ return packer.startup(function(use)
 		"catppuccin/nvim",
 		as = "catppuccin",
 		config = function()
+			local flavour = "macchiato" -- mocha, macchiato, frappe, latte
 			require("catppuccin").setup({
-				flavour = "macchiato", -- mocha, macchiato, frappe, latte
+				flavour = flavour, -- mocha, macchiato, frappe, latte
 			})
-			require("user.utils.colorscheme").set_colorscheme("catppuccin")
+			require("user.utils.colorscheme").set_colorscheme("catppuccin-" .. flavour)
 		end,
 	})
 
