@@ -4,7 +4,7 @@ if not status_ok then
 end
 
 return {
-	single_file_support = false,
+	single_file_support = true,
 	root_dir = lspconfig.util.root_pattern("!package.json"),
 	init_options = {
 		lint = true,

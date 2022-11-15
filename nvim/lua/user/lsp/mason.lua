@@ -9,18 +9,23 @@ mason_lspconfig.setup()
 
 local on_attach = require("user.lsp.handlers").on_attach
 
+---Load server settings
+---@param settings_dir string
+---@param server_name string
+---@return table
 local function create_lsp_opts(settings_dir, server_name)
 	local opts = {
 		on_attach = on_attach,
 		capabilities = require("user.lsp.handlers").capabilities,
 	}
 
-	local lsp_settings_ok, lsp_opts = pcall(require, settings_dir .. "." .. server_name)
+	local server_settings_path = settings_dir .. "." .. server_name
+	local lsp_settings_ok, lsp_opts = pcall(require, server_settings_path)
 	if not lsp_settings_ok then
 		return opts
 	end
 
-	return vim.tbl_deep_extend("force", lsp_opts, opts)
+	return vim.tbl_deep_extend("keep", lsp_opts, opts)
 end
 
 local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
