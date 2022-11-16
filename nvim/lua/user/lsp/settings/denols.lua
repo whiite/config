@@ -5,6 +5,7 @@ end
 
 return {
 	single_file_support = false,
+	root_dir = util.root_pattern("deno.json", "deno.jsonc"),
 	init_options = {
 		lint = true,
 	},
