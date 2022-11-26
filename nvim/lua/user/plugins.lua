@@ -94,6 +94,12 @@ return packer.startup(function(use)
 		end,
 	})
 	use("tpope/vim-surround")
+	use({
+		"ggandor/leap.nvim", -- Fast movement by uisng 's' followed by characters you wish to leap to
+		config = function()
+			require("leap").add_default_mappings()
+		end,
+	})
 
 	-- Debugging
 	use({
