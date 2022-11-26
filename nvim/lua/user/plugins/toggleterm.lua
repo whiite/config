@@ -40,6 +40,27 @@ end
 
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
+--[[ local auto_group = "toggleterm_config"
+vim.api.nvim_create_augroup(auto_group, { clear = true })
+vim.api.nvim_create_autocmd("TermOpen", {
+	group = auto_group,
+	pattern = { "term://*" },
+	callback = function()
+		local status_ok, action_state = pcall(require, "telescope.actions.state")
+		if not status_ok then
+			return
+		end
+		local actions = require("telescope.actions")
+		local prompt_bufnr = vim.api.nvim_get_current_buf()
+		local current_picker = action_state.get_current_picker(prompt_bufnr)
+		local close_ok, _
+		pcall(actions.close, prompt_bufnr)
+		if close_ok then
+			print("Closed telescope")
+		end
+	end,
+}) ]]
+
 local Terminal = require("toggleterm.terminal").Terminal
 
 local lazygit = Terminal:new({ cmd = "lazygit", hidden = false })
