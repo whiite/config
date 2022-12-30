@@ -200,6 +200,7 @@ local mappings = {
 			"Workspace Symbols",
 		},
 	},
+
 	s = {
 		name = "Search",
 		b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },

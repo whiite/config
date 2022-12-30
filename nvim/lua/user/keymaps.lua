@@ -35,6 +35,9 @@ keymap("n", "<A-j>", ":m .+1<CR>==", opts)
 keymap("n", "<A-k>", ":m .-2<CR>==", opts)
 keymap("n", "∆", ":m .+1<CR>==", opts) -- ∆ = alt+j
 keymap("n", "˚", ":m .-2<CR>==", opts) -- ˚ = alt+k
+-- Keep searches in the center of the screen
+keymap("n", "n", "nzzzv")
+keymap("n", "N", "Nzzzv")
 
 -- Explorer
 keymap("n", "<leader>e", ":Lex 30<cr>", opts)
@@ -64,6 +67,8 @@ keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
 -- Move text up and down
+keymap("v", "J", ":move '>+1<CR>gv-gv", opts)
+keymap("v", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("v", "<A-j>", ":m .+1<CR>==", opts)
 keymap("v", "<A-k>", ":m .-2<CR>==", opts)
 keymap("v", "p", '"_dP', opts) -- Don't 'yank' replaced text when pasting a selection

@@ -8,13 +8,15 @@ configs.setup({
 	sync_install = false, -- install languages synchronously
 	auto_install = true,
 	-- ignore_install = { "phpdoc" }, -- List of parsers to ignore installing
-	autopairs = {
-		enable = true,
-	},
 	highlight = {
 		enable = true, -- false will disable the whole extension
 		disable = { "" }, -- list of language that will be disabled
 		additional_vim_regex_highlighting = false,
+	},
+
+	-- Extensions
+	autopairs = {
+		enable = true,
 	},
 	indent = {
 		enable = true,
