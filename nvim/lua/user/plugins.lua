@@ -45,7 +45,7 @@ return packer.startup(function(use)
 
 	-- General --
 	use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
-	use("nvim-lua/plenary.nvim") -- Useful lua functions used lots of plugins
+	use("nvim-lua/plenary.nvim") -- Useful lua functions used by lots of plugins
 	use({
 		"windwp/nvim-autopairs", -- Autopairs, integrates with both cmp and treesitter
 		config = function()
@@ -93,7 +93,8 @@ return packer.startup(function(use)
 			require("user.plugins.numb")
 		end,
 	})
-	use("tpope/vim-surround")
+	use("tpope/vim-surround") -- Easily modify surrounding characters
+	use("tpope/vim-sleuth") -- Auto detect indentation and tabstop (tab/space)
 	use({
 		"ggandor/leap.nvim", -- Fast movement by uisng 's' followed by characters you wish to leap to
 		config = function()
