@@ -234,6 +234,7 @@ return packer.startup(function(use)
 			require("user.plugins.trouble")
 		end,
 	})
+	use("folke/neodev.nvim") -- lua langauge server extension for neovim config
 
 	-- Telescope
 	use({
