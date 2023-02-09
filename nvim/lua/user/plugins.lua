@@ -137,7 +137,7 @@ return packer.startup(function(use)
 				lualine_bold = true,
 				transparent = false,
 			})
-			-- require("user.utils.colorscheme").set_colorscheme("tokyonight")
+			require("user.utils.colorscheme").set_colorscheme("tokyonight")
 		end,
 	})
 	use({
@@ -148,7 +148,7 @@ return packer.startup(function(use)
 			require("catppuccin").setup({
 				flavour = flavour, -- mocha, macchiato, frappe, latte
 			})
-			require("user.utils.colorscheme").set_colorscheme("catppuccin-" .. flavour)
+			-- require("user.utils.colorscheme").set_colorscheme("catppuccin-" .. flavour)
 		end,
 	})
 
