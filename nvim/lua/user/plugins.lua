@@ -71,7 +71,7 @@ return packer.startup(function(use)
 	use({
 		"akinsho/bufferline.nvim", -- Pretty tab bar
 		tag = "v2.*",
-		after = "catppuccin",
+		after = { "catppuccin", "tokyonight" },
 		requires = {
 			"kyazdani42/nvim-web-devicons",
 			"moll/vim-bbye", -- Bbye allows you to do delete buffers (close files) without closing your windows or messing up your layout.
@@ -128,9 +128,10 @@ return packer.startup(function(use)
 	-- use("lunarvim/colorschemes") -- A bunch of color schemes to try out
 	use({
 		"folke/tokyonight.nvim",
+		as = "tokyonight",
 		config = function()
 			require("tokyonight").setup({
-				style = "moon", -- "storm" | "moon" | "night" | "day"
+				style = "storm", -- "storm" | "moon" | "night" | "day"
 				styles = {
 					sidebars = "dark",
 				},
@@ -240,6 +241,7 @@ return packer.startup(function(use)
 	-- Telescope
 	use({
 		"nvim-telescope/telescope.nvim", -- fuzzy file/text finder UI
+		after = { "catppuccin", "tokyonight" },
 		requires = {
 			{ "nvim-lua/plenary.nvim" },
 		},
