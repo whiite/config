@@ -53,7 +53,7 @@ return packer.startup(function(use)
 		end,
 	})
 	use({
-		"numToStr/Comment.nvim", -- Easily comment stuff
+		"numToStr/Comment.nvim", -- Easily comment lines
 		requires = {
 			"JoosepAlviste/nvim-ts-context-commentstring",
 		},
@@ -63,7 +63,7 @@ return packer.startup(function(use)
 	})
 	use({
 		"nvim-lualine/lualine.nvim", -- Status line at the bottom of the window
-		requires = { "kyazdani42/nvim-web-devicons" },
+		requires = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			require("user.plugins.lualine")
 		end,
@@ -73,7 +73,7 @@ return packer.startup(function(use)
 		tag = "v2.*",
 		after = { "catppuccin", "tokyonight" },
 		requires = {
-			"kyazdani42/nvim-web-devicons",
+			"nvim-tree/nvim-web-devicons",
 			"moll/vim-bbye", -- Bbye allows you to do delete buffers (close files) without closing your windows or messing up your layout.
 		},
 		config = function()
@@ -175,7 +175,7 @@ return packer.startup(function(use)
 	})
 	use({
 		"goolord/alpha-nvim", -- Dashboard on startup
-		requires = { "kyazdani42/nvim-web-devicons" },
+		requires = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			require("user.plugins.alpha")
 		end,
@@ -204,7 +204,6 @@ return packer.startup(function(use)
 			"hrsh7th/cmp-nvim-lsp", -- LSP completions
 			"hrsh7th/cmp-nvim-lua", -- Neovim completions for lua
 			"onsails/lspkind.nvim", -- vscode-like pictograms to built-in lsp
-			"David-Kunz/cmp-npm", -- package.json package names and versions
 		},
 		config = function()
 			require("user.plugins.cmp")
@@ -231,7 +230,7 @@ return packer.startup(function(use)
 	})
 	use({
 		"folke/trouble.nvim",
-		requires = "kyazdani42/nvim-web-devicons",
+		requires = "nvim-tree/nvim-web-devicons",
 		config = function()
 			require("user.plugins.trouble")
 		end,
@@ -287,9 +286,9 @@ return packer.startup(function(use)
 
 	-- File explorer
 	use({
-		"kyazdani42/nvim-tree.lua",
+		"nvim-tree/nvim-tree.lua",
 		requires = {
-			"kyazdani42/nvim-web-devicons", -- file icons
+			"nvim-tree/nvim-web-devicons", -- file icons
 		},
 		config = function()
 			require("user.plugins.nvim-tree")

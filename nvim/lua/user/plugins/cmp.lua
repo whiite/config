@@ -46,9 +46,6 @@ local kind_icons = {
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
 local lspkind = require("lspkind")
-require("cmp-npm").setup({
-	only_semantic_versions = true,
-})
 cmp.setup({
 	snippet = {
 		expand = function(args)
