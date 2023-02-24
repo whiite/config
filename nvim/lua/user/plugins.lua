@@ -283,6 +283,13 @@ return packer.startup(function(use)
 			require("user.plugins.gitsigns")
 		end,
 	}) -- git info in the gutter (like VSCode)
+	use({
+		"akinsho/git-conflict.nvim",
+		tag = "*",
+		config = function()
+			require("git-conflict").setup()
+		end,
+	}) -- show and resolve git conflicts within files
 
 	-- File explorer
 	use({
