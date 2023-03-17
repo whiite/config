@@ -29,6 +29,7 @@ toggleterm.setup({
 
 function _G.set_terminal_keymaps()
 	local opts = { noremap = true }
+	vim.api.nvim_buf_set_keymap(0, "t", "<esc>", [[<esc>]], opts)
 	vim.api.nvim_buf_set_keymap(0, "t", "<C-[>", [[<C-\><C-n>]], opts)
 	vim.api.nvim_buf_set_keymap(0, "n", "<C-c>", [[<C-\><C-n>i<C-c>]], opts)
 	vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
@@ -60,7 +61,6 @@ vim.api.nvim_create_autocmd("TermOpen", {
 		end
 	end,
 }) ]]
-
 local Terminal = require("toggleterm.terminal").Terminal
 
 local lazygit = Terminal:new({ cmd = "lazygit", hidden = false })
