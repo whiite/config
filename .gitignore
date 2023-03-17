@@ -13,6 +13,7 @@ lazygit/state.yml
 !alacritty/
 !kitty/
 !lazygit/
+!git/
 
 
 # Compiled output
