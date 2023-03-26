@@ -90,7 +90,7 @@ local mappings = {
 	["C"] = { "<cmd>BufferLineCloseLeft | BufferLineCloseRight | <cr>", "Close All Buffers" },
 	["h"] = { "<cmd>lua vim.opt.hlsearch = not vim.opt.hlsearch:get()<cr>", "Toggle Highlight Search" },
 	["f"] = {
-		"<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown())<cr>",
+		"<cmd>lua require('telescope.builtin').find_files()<cr>",
 		"Find files",
 	},
 	["m"] = { "<cmd>Mason<cr>", "Open Mason Installer" },
@@ -101,7 +101,6 @@ local mappings = {
 	},
 	["T"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
 	["P"] = { "<cmd>Telescope projects<cr>", "Projects" },
-
 	b = {
 		name = "Buffers",
 		c = { "<cmd>Bdelete!<CR>", "Close current buffer" },
@@ -115,7 +114,6 @@ local mappings = {
 		L = { "<cmd>BufferLineCloseLeft<CR>", "Close left buffers" },
 		R = { "<cmd>BufferLineCloseRight<CR>", "Close right buffers" },
 	},
-
 	d = {
 		name = "Debug",
 		d = { "<cmd>lua require 'dapui'.toggle()<cr>", "Breakpoint toggle" },
@@ -135,7 +133,6 @@ local mappings = {
 		S = { "<cmd>PackerStatus<cr>", "Status" },
 		u = { "<cmd>PackerUpdate<cr>", "Update" },
 	},
-
 	x = {
 		name = "Trouble",
 		x = { "<cmd>TroubleToggle<cr>", "Toggle diagnostics" },
@@ -144,7 +141,6 @@ local mappings = {
 		l = { "<cmd>Trouble loclist<cr>", "Items from the window location list" },
 		q = { "<cmd>Trouble quickfix<cr>", "Quickfix items" },
 	},
-
 	g = {
 		name = "Git",
 		g = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "Lazygit" },
@@ -167,7 +163,6 @@ local mappings = {
 			"Diff",
 		},
 	},
-
 	l = {
 		name = "LSP",
 		a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
@@ -200,7 +195,6 @@ local mappings = {
 			"Workspace Symbols",
 		},
 	},
-
 	s = {
 		name = "Search",
 		b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
@@ -212,7 +206,6 @@ local mappings = {
 		k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
 		C = { "<cmd>Telescope commands<cr>", "Commands" },
 	},
-
 	t = {
 		name = "Terminal",
 		n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
