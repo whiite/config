@@ -240,5 +240,8 @@ which_key.register({
 	i = { "<cmd>lua vim.lsp.implementation()<cr>", "Show all implementations for symbol" },
 	-- s = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Show signature help for symbol" },
 	s = "Leap over splits",
-	r = { "<cmd>lua vim.lsp.buf.references()<cr>", "Show all references to symbol" },
+	r = {
+		"<cmd>lua require('telescope.builtin').lsp_references(require('telescope.themes').get_ivy())<cr>",
+		"Find all references to symbol",
+	},
 }, { mode = "n", prefix = "g" })
