@@ -234,14 +234,17 @@ which_key.setup(setup)
 which_key.register(mappings, opts)
 which_key.register(vmappings, vopts)
 which_key.register({
-	d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "Go to definition" },
+	d = {
+		"<cmd>lua require('telescope.builtin').lsp_definitions()<cr>",
+		"Go to definition",
+	},
 	D = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "Go to declaration" },
 	l = { "<cmd>lua vim.diagnostic.open_float()<cr>", "Show diagnostics" },
 	i = { "<cmd>lua vim.lsp.implementation()<cr>", "Show all implementations for symbol" },
 	-- s = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Show signature help for symbol" },
 	s = "Leap over splits",
 	r = {
-		"<cmd>lua require('telescope.builtin').lsp_references(require('telescope.themes').get_ivy())<cr>",
+		"<cmd>lua require('telescope.builtin').lsp_references()<cr>",
 		"Find all references to symbol",
 	},
 }, { mode = "n", prefix = "g" })
