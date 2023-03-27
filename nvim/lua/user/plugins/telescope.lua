@@ -14,7 +14,23 @@ telescope.setup({
 		prompt_prefix = " ",
 		selection_caret = " ",
 		path_display = { "smart" },
-		-- Default bindings
+		border = true,
+		file_ignore_patterns = { "^.git$", "node_modules" },
+		sorting_strategy = "ascending",
+		layout_strategy = "horizontal",
+		layout_config = {
+			horizontal = {
+				prompt_position = "top",
+				preview_width = 0.55,
+				results_width = 0.8,
+			},
+			vertical = {
+				mirror = false,
+			},
+			width = 0.87,
+			height = 0.80,
+			preview_cutoff = 120,
+		},
 		mappings = {
 			-- Insert mode
 			i = {
@@ -102,7 +118,7 @@ telescope.setup({
 		-- }
 		-- please take a look at the readme of the extension you want to configure
 		fzf = {
-			fuzzy = true,          -- false will only do exact matching
+			fuzzy = true, -- false will only do exact matching
 			override_generic_sorter = true, -- override the generic sorter
 			override_file_sorter = true, -- override the file sorter
 			case_mode = "smart_case", -- or "ignore_case" or "respect_case"
