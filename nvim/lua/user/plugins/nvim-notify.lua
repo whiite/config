@@ -4,8 +4,8 @@ if not status_ok then
 end
 
 notify.setup({
-	background_colour = "Normal",
-	fps = 30,
+	background_colour = "NotifyBackground",
+	fps = 60,
 	icons = {
 		DEBUG = "",
 		ERROR = "",
@@ -15,7 +15,7 @@ notify.setup({
 	},
 	level = "info",
 	minimum_width = 50,
-	render = "default",
+	render = "compact",
 	stages = "fade_in_slide_out",
 	timeout = 5000,
 })
