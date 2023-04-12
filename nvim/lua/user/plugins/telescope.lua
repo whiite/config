@@ -15,7 +15,7 @@ telescope.setup({
 		selection_caret = " ",
 		path_display = { "smart" },
 		border = true,
-		file_ignore_patterns = { ".git", "node_modules" },
+		file_ignore_patterns = { "^%.git/", "node_modules" },
 		sorting_strategy = "ascending",
 		layout_strategy = "horizontal",
 		layout_config = {
@@ -118,7 +118,7 @@ telescope.setup({
 		-- }
 		-- please take a look at the readme of the extension you want to configure
 		fzf = {
-			fuzzy = true, -- false will only do exact matching
+			fuzzy = true,          -- false will only do exact matching
 			override_generic_sorter = true, -- override the generic sorter
 			override_file_sorter = true, -- override the file sorter
 			case_mode = "smart_case", -- or "ignore_case" or "respect_case"
