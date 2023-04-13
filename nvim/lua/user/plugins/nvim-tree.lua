@@ -44,9 +44,6 @@ nvim_tree.setup({
 	hijack_netrw = true,
 	hijack_cursor = true,
 	hijack_unnamed_buffer_when_opening = false,
-	ignore_buffer_on_setup = false,
-	open_on_setup = false,
-	open_on_setup_file = false,
 	open_on_tab = false,
 	sort_by = "name",
 	update_cwd = true,
@@ -62,8 +59,8 @@ nvim_tree.setup({
 	},
 	renderer = {
 		add_trailing = true,
-		highlight_git = true,     -- Highlight file names with git changes
-		group_empty = true,       -- Compact folders that only contain a single folder into one node in the file tree
+		highlight_git = true, -- Highlight file names with git changes
+		group_empty = true, -- Compact folders that only contain a single folder into one node in the file tree
 		highlight_opened_files = "all", -- Folder and file icon highlight for opened files/directories
 		indent_markers = {
 			enable = true,
@@ -107,7 +104,6 @@ nvim_tree.setup({
 		update_root = false,
 		ignore_list = {},
 	},
-	ignore_ft_on_setup = {},
 	system_open = {
 		cmd = "",
 		args = {},
