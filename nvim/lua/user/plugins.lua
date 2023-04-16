@@ -190,7 +190,7 @@ return packer.startup(function(use)
 	-- Prettier UI
 	use("lukas-reineke/indent-blankline.nvim") -- Indent guides and invisible character support
 	use({
-		"norcalli/nvim-colorizer.lua",
+		"NvChad/nvim-colorizer.lua",
 		config = function()
 			require("user.plugins.nvim-colorizer")
 		end,
