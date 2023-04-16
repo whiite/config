@@ -123,7 +123,6 @@ cmp.setup({
 
 			return kind
 		end,
-
 		-- Fallback option:
 		-- 	format = function(entry, vim_item)
 		-- 		-- Kind icons
@@ -141,22 +140,17 @@ cmp.setup({
 	},
 	sources = {
 		{ name = "nvim_lsp" },
+		{ name = "nvim_lsp_signature_help" },
 		{ name = "nvim_lua" },
 		{ name = "luasnip" },
 		{ name = "buffer" },
 		{ name = "path" },
-		{ name = "npm", keyword_length = 4 },
+		{ name = "calc" }, -- Source for math calculations
 	},
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,
 		select = false,
 	},
-	view = {
-		-- entries = "native",
-	},
-	-- documentation = {
-	-- border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-	-- },
 	experimental = {
 		ghost_text = true,
 	},
