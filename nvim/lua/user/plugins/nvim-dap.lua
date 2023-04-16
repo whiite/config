@@ -3,12 +3,16 @@ if not status_ok then
 	return
 end
 
+-- Icons --
+vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "Error", linehl = "", numhl = "" })
+
 -- Adapters --
-dap.adapters.lldb = {
-	type = "executable",
-	command = os.getenv("HOME") .. ".homebrew/opt/llvm/bin/lldb-vscode",
-	name = "lldb",
-}
+local extension_path = require("mason-registry").get_package("codelldb"):get_install_path() .. "/extension"
+local codelldb_path = extension_path .. "/adapter/codelldb"
+local liblldb_path = extension_path .. "/lldb/lib/liblldb.dylib"
+
+-- Configure the LLDB adapter
+dap.adapters.codelldb = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path)
 
 dap.adapters.node2 = {
 	type = "executable",
@@ -24,8 +28,24 @@ dap.adapters.chrome = {
 	command = os.getenv("HOME") .. "/.local/share/nvim/mason/bin/chrome-debug-adapter",
 }
 
+dap.adapters.firefox = {
+	-- executable: launch the remote debug adapter - server: connect to an already running debug adapter
+	type = "executable",
+	-- command to launch the debug adapter - used only on executable type
+	command = require("mason-registry").get_package("firefox-debug-adapter"):get_install_path()
+		.. "firefox-debug-adapter",
+}
+
 -- Configurations --
 dap.configurations.typescript = {
+	{
+		name = "Debug (Attach) - Remote",
+		type = "firefox",
+		request = "attach",
+		sourceMaps = true,
+		trace = true,
+		webRoot = "${workspaceFolder}",
+	},
 	{
 		name = "Debug (Attach) - Remote",
 		type = "chrome",
@@ -74,7 +94,6 @@ dap.configurations.cpp = {
 		cwd = "${workspaceFolder}",
 		stopOnEntry = false,
 		args = {},
-
 		-- 💀
 		-- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
 		--
@@ -89,8 +108,4 @@ dap.configurations.cpp = {
 		-- runInTerminal = false,
 	},
 }
-
--- If you want to use this for Rust and C, add something like this:
-
 dap.configurations.c = dap.configurations.cpp
-dap.configurations.rust = dap.configurations.cpp

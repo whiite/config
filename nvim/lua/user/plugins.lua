@@ -108,6 +108,9 @@ return packer.startup(function(use)
 		config = function()
 			require("user.plugins.nvim-dap")
 		end,
+		requires = {
+			"simrat39/rust-tools.nvim", -- Rust LSP and debug support
+		},
 	})
 	use({
 		"rcarriga/nvim-dap-ui",
@@ -233,6 +236,7 @@ return packer.startup(function(use)
 			"hrsh7th/cmp-cmdline", -- cmdline completions
 			"saadparwaiz1/cmp_luasnip", -- snippet completions
 			"hrsh7th/cmp-nvim-lsp", -- LSP completions
+			"hrsh7th/cmp-nvim-lsp-signature-help", -- Function signature completions
 			"hrsh7th/cmp-nvim-lua", -- Neovim completions for lua
 			"onsails/lspkind.nvim", -- vscode-like pictograms to built-in lsp
 		},
