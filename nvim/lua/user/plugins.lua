@@ -226,6 +226,13 @@ return packer.startup(function(use)
 			require("user.plugins.nvim-notify")
 		end,
 	})
+	use({
+		"Fildo7525/pretty_hover",
+		config = function()
+			require("pretty_hover").setup()
+			vim.lsp.buf.hover = require("pretty_hover").hover
+		end,
+	})
 
 	-- cmp plugins
 	use({
