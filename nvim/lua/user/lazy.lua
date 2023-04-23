@@ -26,7 +26,7 @@ require("lazy").setup({
 	{
 		"numToStr/Comment.nvim", -- Easily comment lines
 		lazy = true,
-		event = "ModeChanged",
+		event = { "BufReadPre", "BufNewFile" },
 		keys = {
 			"gc",
 			"gb",
@@ -101,21 +101,21 @@ require("lazy").setup({
 	{ "lukas-reineke/indent-blankline.nvim" }, -- Indent guides and invisible character support
 	{
 		"NvChad/nvim-colorizer.lua",
-		event = "VeryLazy",
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("user.plugins.nvim-colorizer")
 		end,
 	},
 	{
 		"edluffy/specs.nvim",
-		event = "VeryLazy",
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("user.plugins.specs")
 		end,
 	},
 	{
 		"karb94/neoscroll.nvim",
-		event = "VeryLazy",
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("user.plugins.neoscroll")
 		end,
@@ -141,7 +141,7 @@ require("lazy").setup({
 	},
 	{
 		"Fildo7525/pretty_hover",
-		event = "VeryLazy",
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("pretty_hover").setup()
 			vim.lsp.buf.hover = require("pretty_hover").hover
@@ -299,6 +299,7 @@ require("lazy").setup({
 	-- Treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
+		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			-- extensions
 			{
@@ -323,12 +324,14 @@ require("lazy").setup({
 	-- Git
 	{
 		"lewis6991/gitsigns.nvim",
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("user.plugins.gitsigns")
 		end,
 	}, -- git info in the gutter (like VSCode)
 	{
 		"akinsho/git-conflict.nvim",
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("git-conflict").setup()
 		end,
