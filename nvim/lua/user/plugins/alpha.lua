@@ -50,7 +50,7 @@ dashboard.section.buttons.val = {
 }
 
 local function footer()
-	local total_plugins = #vim.tbl_keys(packer_plugins)
+	local total_plugins = require("lazy").stats().count
 	local datetime = os.date(" %d-%m-%Y")
 	local version = vim.version()
 	local nvim_version_info = "   v" .. version.major .. "." .. version.minor .. "." .. version.patch
