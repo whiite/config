@@ -141,6 +141,8 @@ require("lazy").setup({
 	},
 	{
 		"Fildo7525/pretty_hover",
+		lazy = true,
+		enabled = false,
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("pretty_hover").setup()
@@ -275,7 +277,7 @@ require("lazy").setup({
 	},
 
 	-- LSP
-	{ "neovim/nvim-lspconfig" }, -- enable LSP
+	{ "neovim/nvim-lspconfig", lazy = true }, -- enable LSP
 	{
 		"williamboman/mason.nvim",
 		build = ":MasonUpdate", -- :MasonUpdate updates registry contents
@@ -312,10 +314,7 @@ require("lazy").setup({
 			-- {"nvim-treesitter/playground"}, -- useful for creating parsers/extensions
 			"JoosepAlviste/nvim-ts-context-commentstring",
 		},
-		build = function()
-			local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
-			ts_update()
-		end,
+		build = ":TSUpdate",
 		config = function()
 			require("user.plugins.treesitter")
 		end,
