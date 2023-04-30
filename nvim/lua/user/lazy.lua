@@ -27,10 +27,6 @@ require("lazy").setup({
 		"numToStr/Comment.nvim", -- Easily comment lines
 		lazy = true,
 		event = { "BufReadPre", "BufNewFile" },
-		keys = {
-			"gc",
-			"gb",
-		},
 		dependencies = {
 			"JoosepAlviste/nvim-ts-context-commentstring",
 		},
@@ -57,6 +53,20 @@ require("lazy").setup({
 	},
 	{
 		"akinsho/toggleterm.nvim", -- Toggle terminals (float or split)
+		-- keys = {
+		-- 	[[<c-\>]],
+		-- 	"<leader>t",
+		-- 	"<leader>g",
+		-- },
+		-- cmd = {
+		-- 	"ToggleTerm",
+		-- 	"ToggleTermToggleAll",
+		-- 	"TermExec",
+		-- 	"ToggleTermSetName",
+		-- 	"ToggleTermSendCurrentLine",
+		-- 	"ToggleTermSendVisualLines",
+		-- 	"ToggleTermSendVisualSelection",
+		-- },
 		version = "*",
 		config = function()
 			require("user.plugins.toggleterm")
@@ -69,10 +79,11 @@ require("lazy").setup({
 			require("user.plugins.numb")
 		end,
 	},
-	{ "tpope/vim-surround" }, -- Easily modify surrounding characters
-	{ "tpope/vim-sleuth" }, -- Auto detect indentation and tabstop (tab/space)
+	{ "tpope/vim-surround", event = { "BufReadPre", "BufNewFile" } }, -- Easily modify surrounding characters
+	{ "tpope/vim-sleuth", event = { "BufReadPre", "BufNewFile" } }, -- Auto detect indentation and tabstop (tab/space)
 	{
 		"ggandor/leap.nvim", -- Fast movement by uisng 's' followed by characters you wish to leap to
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("leap").add_default_mappings()
 		end,
@@ -98,7 +109,10 @@ require("lazy").setup({
 	},
 
 	-- Prettier UI
-	{ "lukas-reineke/indent-blankline.nvim" }, -- Indent guides and invisible character support
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+	}, -- Indent guides and invisible character support
 	{
 		"NvChad/nvim-colorizer.lua",
 		event = { "BufReadPre", "BufNewFile" },
@@ -215,7 +229,15 @@ require("lazy").setup({
 	-- Debugging
 	{
 		"mfussenegger/nvim-dap",
-		event = "VeryLazy",
+		cmd = {
+			"DapToggleBreakpoint",
+			"DapContinue",
+			"DapToggleRepl",
+			"DapStepOver",
+			"DapStepInto",
+			"DapStepOut",
+			"DapTerminate",
+		},
 		dependencies = { "williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim" },
 		config = function()
 			require("user.plugins.nvim-dap")
@@ -332,7 +354,7 @@ require("lazy").setup({
 		"akinsho/git-conflict.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
-			require("git-conflict").setup()
+			require("git-conflict").setup({})
 		end,
 	}, -- show and resolve git conflicts within files
 })
