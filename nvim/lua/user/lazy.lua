@@ -323,7 +323,6 @@ require("lazy").setup({
 	-- Treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
-		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			-- extensions
 			{
