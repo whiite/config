@@ -5,7 +5,7 @@ Stores configuration files I share across machines.
 I only keep track of configs within `~/.config` and use `stow` to link
 the contents of this repo into the right place
 
-## Setup
+## Setup
 
 ### Manual
 
