@@ -1,20 +1,6 @@
-# Blacklist files/folders in same directory as the .gitignore file
-/*
-lazygit/state.yml
-
-
-# Whitelist files
-!.gitignore
-!README.md
-
-
-# Exclude folders
-!nvim/
-!alacritty/
-!kitty/
-!lazygit/
-!git/
-
+# Misc
+.DS_Store
 
 # Compiled output
 nvim/plugin/packer_compiled.lua
+

@@ -1,0 +1,27 @@
+- hosts: localhost
+  # become: true
+  tasks:
+    - name: Create ~/.config
+      file:
+        path: ~/.config
+        state: directory
+    - name: Link nvim config
+      file:
+        src: "{{ playbook_dir }}/nvim"
+        dest: ~/.config/nvim
+        state: link
+    - name: Link git config
+      file:
+        src: "{{ playbook_dir }}/git"
+        dest: ~/.config/git
+        state: link
+    - name: Link kitty config
+      file:
+        src: "{{ playbook_dir }}/kitty"
+        dest: ~/.config/kitty
+        state: link
+    - name: Link lazygit config
+      file:
+        src: "{{ playbook_dir }}/lazygit"
+        dest: ~/.config/lazygit
+        state: link
