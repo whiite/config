@@ -15,7 +15,7 @@ Will need to install `stow` then:
 # Ensure ~/.config exists if not already
 mkdir ~/.config
 
-# Within the route of this repo run:
+# Within the root of this repo run:
 stow -vR --target $HOME/.config .
 ```
 
