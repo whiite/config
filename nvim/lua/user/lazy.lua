@@ -80,9 +80,9 @@ require("lazy").setup({
 		end,
 	},
 	{ "tpope/vim-surround", event = { "BufReadPre", "BufNewFile" } }, -- Easily modify surrounding characters
-	{ "tpope/vim-sleuth",   event = { "BufReadPre", "BufNewFile" } }, -- Auto detect indentation and tabstop (tab/space)
+	{ "tpope/vim-sleuth", event = { "BufReadPre", "BufNewFile" } }, -- Auto detect indentation and tabstop (tab/space)
 	{
-		"ggandor/leap.nvim",                                       -- Fast movement by uisng 's' followed by characters you wish to leap to
+		"ggandor/leap.nvim", -- Fast movement by uisng 's' followed by characters you wish to leap to
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("leap").add_default_mappings()
@@ -94,14 +94,14 @@ require("lazy").setup({
 		"hrsh7th/nvim-cmp", -- The completions plugin
 		event = { "InsertEnter", "CmdlineEnter" },
 		dependencies = {
-			"hrsh7th/cmp-buffer",         -- buffer completions
-			"hrsh7th/cmp-path",           -- path completions
-			"hrsh7th/cmp-cmdline",        -- cmdline completions
-			"saadparwaiz1/cmp_luasnip",   -- snippet completions
-			"hrsh7th/cmp-nvim-lsp",       -- LSP completions
+			"hrsh7th/cmp-buffer", -- buffer completions
+			"hrsh7th/cmp-path", -- path completions
+			"hrsh7th/cmp-cmdline", -- cmdline completions
+			"saadparwaiz1/cmp_luasnip", -- snippet completions
+			"hrsh7th/cmp-nvim-lsp", -- LSP completions
 			"hrsh7th/cmp-nvim-lsp-signature-help", -- Function signature completions
-			"hrsh7th/cmp-nvim-lua",       -- Neovim completions for lua
-			"onsails/lspkind.nvim",       -- vscode-like pictograms to built-in lsp
+			"hrsh7th/cmp-nvim-lua", -- Neovim completions for lua
+			"onsails/lspkind.nvim", -- vscode-like pictograms to built-in lsp
 		},
 		config = function()
 			require("user.plugins.cmp")
@@ -165,7 +165,7 @@ require("lazy").setup({
 	},
 	{
 		"edluffy/hologram.nvim",
-		lazy = false,
+		ft = "md",
 		opts = { auto_display = true },
 	},
 
@@ -271,7 +271,7 @@ require("lazy").setup({
 	},
 
 	-- snippets
-	{ "L3MON4D3/LuaSnip",             lazy = true }, --snippet engine
+	{ "L3MON4D3/LuaSnip", lazy = true }, --snippet engine
 	{ "rafamadriz/friendly-snippets", lazy = true }, -- a bunch of snippets to use
 
 	-- Telescope
@@ -304,11 +304,11 @@ require("lazy").setup({
 	},
 
 	-- LSP
-	{ "neovim/nvim-lspconfig",            lazy = true }, -- enable LSP
+	{ "neovim/nvim-lspconfig", lazy = true }, -- enable LSP
 	{
 		"williamboman/mason.nvim",
-		build = ":MasonUpdate",           -- :MasonUpdate updates registry contents
-	},                                    -- LSP/lint and debug manager
+		build = ":MasonUpdate", -- :MasonUpdate updates registry contents
+	}, -- LSP/lint and debug manager
 	{ "williamboman/mason-lspconfig.nvim" }, -- lspconfig compatibility
 	{
 		"jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
