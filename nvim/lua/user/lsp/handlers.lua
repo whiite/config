@@ -1,14 +1,13 @@
 -- 'M' nvim plugin convention
 local M = {}
 
--- TODO: backfill this to template
 M.setup = function()
-	-- Diganostic sign setup
+	-- Diagnostic sign setup
 	local signs = {
 		{ name = "DiagnosticSignError", text = "" },
 		{ name = "DiagnosticSignWarn", text = "" },
-		{ name = "DiagnosticSignHint", text = "" },
-		{ name = "DiagnosticSignInfo", text = "" },
+		{ name = "DiagnosticSignInfo", text = "" },
+		{ name = "DiagnosticSignHint", text = "󰌶" },
 	}
 
 	for _, sign in ipairs(signs) do
@@ -54,18 +53,15 @@ end
 
 -- Highlights tokens under the cursor
 local function lsp_highlight_document(client)
-	-- Set autocommands conditional on server_capabilities
+	-- Set auto-commands conditional on server_capabilities
 	if client.server_capabilities.document_highlight then
-		vim.api.nvim_exec(
-			[[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]],
-			false
-		)
+		vim.api.nvim_exec2([[
+		    augroup lsp_document_highlight
+			    autocmd! * <buffer>
+				autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+				autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+		    augroup END
+		]])
 	end
 end
 
