@@ -168,6 +168,13 @@ require("lazy").setup({
 		ft = "md",
 		opts = { auto_display = true },
 	},
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("todo-comments").setup()
+		end,
+	},
 
 	-- Color schemes
 	-- use("lunarvim/colorschemes") -- A bunch of color schemes to try out
