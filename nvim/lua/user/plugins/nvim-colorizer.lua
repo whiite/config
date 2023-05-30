@@ -21,20 +21,16 @@ colorizer.setup({
 		"javascript",
 		"typescript",
 		sass = {
-			css = true,
+			names = true,
 		},
 		scss = {
-			css = true,
+			names = true,
 		},
 		css = {
-			css = true,
+			names = true,
 		},
-		html = {
-			css = true,
-		},
-		svg = {
-			css = true,
-		},
+		html = {},
+		svg = {},
 	},
-	user_default_options = { names = false },
+	user_default_options = { names = false, css = true },
 })
