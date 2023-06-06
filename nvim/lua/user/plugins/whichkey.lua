@@ -173,9 +173,17 @@ local mappings = {
 			"<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.INFO } })<CR>",
 			"Next Diagnostic",
 		},
+		J = {
+			"<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.INFO }, cursor_position = {0, 0} })<CR>",
+			"Last Diagnostic",
+		},
 		k = {
 			"<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.INFO } })<cr>",
 			"Prev Diagnostic",
+		},
+		K = {
+			"<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.INFO }, cursor_position = {0, 0} })<cr>",
+			"First Diagnostic",
 		},
 		l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
 		q = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Quickfix" },
