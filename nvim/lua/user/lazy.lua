@@ -285,6 +285,7 @@ require("lazy").setup({
 	{
 		"nvim-telescope/telescope.nvim", -- fuzzy file/text finder UI
 		lazy = true,
+		event = { "BufReadPre", "BufNewFile" },
 		cmd = "Telescope",
 		dependencies = {
 			{ "nvim-lua/plenary.nvim" },
