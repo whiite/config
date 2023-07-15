@@ -86,7 +86,7 @@ local mappings = {
 	["w"] = { "<cmd>w!<CR>", "Save" },
 	["q"] = { "<cmd>q!<CR>", "Quit" },
 	["c"] = { "<cmd>Bdelete!<cr>", "Close Buffer" },
-	["C"] = { "<cmd>BufferLineCloseLeft | BufferLineCloseRight | <cr>", "Close All Buffers" },
+	["C"] = { "<cmd>BufferLineCloseOthers<cr><cmd>Bdelete!<cr>", "Close All Buffers" },
 	["h"] = { "<cmd>lua vim.opt.hlsearch = not vim.opt.hlsearch:get()<cr>", "Toggle Highlight Search" },
 	["f"] = {
 		"<cmd>lua require('telescope.builtin').find_files()<cr>",
@@ -103,7 +103,8 @@ local mappings = {
 	b = {
 		name = "Buffers",
 		c = { "<cmd>Bdelete!<CR>", "Close current buffer" },
-		C = { "<cmd>BufferLineCloseLeft<cr><cmd>BufferLineCloseRight<cr><cmd>Bdelete!<cr>", "Close All Buffers" },
+		C = { "<cmd>BufferLineCloseOthers<cr><cmd>Bdelete!<cr>", "Close All Buffers" },
+		o = { "<cmd>BufferLineCloseOthers<cr>", "Close All Other Buffers" },
 		f = {
 			"<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
 			"Find buffer",
