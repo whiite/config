@@ -155,6 +155,16 @@ local mappings = {
 			"<cmd>Gitsigns diffthis HEAD<cr>",
 			"Diff",
 		},
+		C = {
+			name = "Conflict",
+			j = { "<cmd>GitConflictNextConflict<cr>", "Next conflict" },
+			k = { "<cmd>GitConflictPrevConflict<cr>", "Previous conflict" },
+			o = { "<cmd>GitConflictChooseOurs<cr>", "Choose ours" },
+			t = { "<cmd>GitConflictChooseTheirs<cr>", "Choose theirs" },
+			n = { "<cmd>GitConflictChooseNone<cr>", "Choose none" },
+			B = { "<cmd>GitConflictChooseBase<cr>", "Choose base" },
+			r = { "<cmd>GitConflictRefresh<cr>", "Refresh" },
+		},
 	},
 	l = {
 		name = "LSP",
