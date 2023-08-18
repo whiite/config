@@ -301,8 +301,7 @@ require("lazy").setup({
 	{
 		"nvim-tree/nvim-tree.lua",
 		version = "*",
-		lazy = true,
-		cmd = { "NvimTreeToggle", "NvimTreeFocus", "NvimTreeFindFile", "NvimTreeCollapse" },
+		lazy = false,
 		dependencies = {
 			"nvim-tree/nvim-web-devicons", -- file icons
 		},

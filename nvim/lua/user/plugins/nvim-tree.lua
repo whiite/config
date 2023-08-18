@@ -1,8 +1,3 @@
-local status_ok, nvim_tree = pcall(require, "nvim-tree")
-if not status_ok then
-	return
-end
-
 vim.api.nvim_create_autocmd("BufEnter", {
 	nested = true,
 	callback = function()
@@ -12,13 +7,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 	desc = "Auto close the file explorer when it's the last window",
 })
-
-local config_status_ok, nvim_tree_config = pcall(require, "nvim-tree.config")
-if not config_status_ok then
-	return
-end
-
-local tree_cb = nvim_tree_config.nvim_tree_callback
 
 local function on_attach(bufnr)
 	local api = require("nvim-tree.api")
@@ -37,7 +25,7 @@ local function on_attach(bufnr)
 end
 
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
-nvim_tree.setup({
+require("nvim-tree").setup({
 	on_attach = on_attach,
 	auto_reload_on_write = true,
 	disable_netrw = true,
@@ -156,17 +144,5 @@ nvim_tree.setup({
 	trash = {
 		cmd = "trash",
 		require_confirm = true,
-	},
-	log = {
-		enable = false,
-		truncate = false,
-		types = {
-			all = false,
-			config = false,
-			copy_paste = false,
-			diagnostics = false,
-			git = false,
-			profile = false,
-		},
 	},
 })
