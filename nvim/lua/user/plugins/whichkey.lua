@@ -80,7 +80,6 @@ local opts = {
 
 local mappings = {
 	["rn"] = { '<cmd>lua require("renamer").rename()<cr>', "Rename symbol" },
-	["a"] = { "<cmd>Alpha<cr>", "Alpha" },
 	["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
 	["E"] = { "<cmd>NvimTreeFocus<cr>", "Focus on explorer" },
 	["w"] = { "<cmd>w!<CR>", "Save" },

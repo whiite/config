@@ -135,13 +135,6 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"goolord/alpha-nvim", -- Dashboard on startup
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			require("user.plugins.alpha")
-		end,
-	},
-	{
 		"folke/which-key.nvim",
 		config = function()
 			require("user.plugins.whichkey")
