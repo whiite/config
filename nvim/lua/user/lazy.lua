@@ -323,7 +323,7 @@ require("lazy").setup({
 			require("user.plugins.trouble")
 		end,
 	},
-	{ "folke/neodev.nvim", lazy = true }, -- lua langauge server extension for neovim config
+	{ "folke/neodev.nvim", lazy = true }, -- lua language server extension for neovim config
 
 	-- Treesitter
 	{

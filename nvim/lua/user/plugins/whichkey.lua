@@ -79,26 +79,37 @@ local opts = {
 }
 
 local mappings = {
-	["rn"] = { '<cmd>lua require("renamer").rename()<cr>', "Rename symbol" },
-	["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
-	["E"] = { "<cmd>NvimTreeFocus<cr>", "Focus on explorer" },
-	["w"] = { "<cmd>w!<CR>", "Save" },
-	["q"] = { "<cmd>q!<CR>", "Quit" },
-	["c"] = { "<cmd>Bdelete!<cr>", "Close Buffer" },
-	["C"] = { "<cmd>BufferLineCloseOthers<cr><cmd>Bdelete!<cr>", "Close All Buffers" },
-	["h"] = { "<cmd>lua vim.opt.hlsearch = not vim.opt.hlsearch:get()<cr>", "Toggle Highlight Search" },
-	["f"] = {
-		"<cmd>lua require('telescope.builtin').find_files()<cr>",
-		"Find files",
+	rn = { '<cmd>lua require("renamer").rename()<cr>', "Rename symbol" },
+	e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
+	E = { "<cmd>NvimTreeFocus<cr>", "Focus on explorer" },
+	w = { "<cmd>w!<CR>", "Save" },
+	q = { "<cmd>q!<CR>", "Quit" },
+	c = { "<cmd>Bdelete!<cr>", "Close Buffer" },
+	C = { "<cmd>BufferLineCloseOthers<cr><cmd>Bdelete!<cr>", "Close All Buffers" },
+	h = { "<cmd>lua vim.opt.hlsearch = not vim.opt.hlsearch:get()<cr>", "Toggle Highlight Search" },
+	f = {
+		name = "Find",
+		f = { "<cmd>lua require('telescope.builtin').find_files()<cr>", "Find files" },
+		t = {
+			"<cmd>lua require('telescope.builtin').live_grep(require('telescope.themes').get_ivy())<cr>",
+			"Find text",
+		},
+		T = { "<cmd>lua require('telescope.builtin').treesitter()<cr>", "Find in treesitter" },
+		b = {
+			"<cmd>lua require('telescope.builtin').git_branches()<cr>",
+			"Find branch",
+		},
+		g = { "<cmd>lua require('telescope.builtin').git_files()<cr>", "Find git files" },
+		R = { "<cmd>lua require('telescope.builtin').resume()<cr>", "Resume Telescope" },
+		c = { "<cmd>lua require('telescope.builtin').commands()<cr>", "Find commands" },
+		C = { "<cmd>lua require('telescope.builtin').colorscheme()<cr>", "Find colorscheme" },
 	},
-	["m"] = { "<cmd>Mason<cr>", "Open Mason Installer" },
-	["r"] = { "<cmd>lua vim.opt.relativenumber = not vim.opt.relativenumber:get()<cr>", "Toggle relative line numbers" },
-	["F"] = {
+	m = { "<cmd>Mason<cr>", "Open Mason Installer" },
+	r = { "<cmd>lua vim.opt.relativenumber = not vim.opt.relativenumber:get()<cr>", "Toggle relative line numbers" },
+	F = {
 		"<cmd>Format<cr>",
 		"Format current buffer",
 	},
-	["T"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
-	["P"] = { "<cmd>Telescope projects<cr>", "Projects" },
 	b = {
 		name = "Buffers",
 		c = { "<cmd>Bdelete!<CR>", "Close current buffer" },
