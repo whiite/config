@@ -33,7 +33,10 @@ require("nvim-tree").setup({
 	hijack_cursor = true,
 	hijack_unnamed_buffer_when_opening = false,
 	open_on_tab = false,
-	sort_by = "name",
+	sort = {
+		sorter = "name",
+		folders_first = true,
+	},
 	update_cwd = true,
 	view = {
 		width = 40,
@@ -142,7 +145,6 @@ require("nvim-tree").setup({
 		},
 	},
 	trash = {
-		cmd = "trash",
-		require_confirm = true,
+		cmd = "gio trash",
 	},
 })
