@@ -43,6 +43,7 @@ require("lazy").setup({
 	},
 	{
 		"akinsho/bufferline.nvim", -- Pretty tab bar
+		version = "*",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 			"moll/vim-bbye", -- Bbye allows you to do delete buffers (close files) without closing your windows or messing up your layout.
