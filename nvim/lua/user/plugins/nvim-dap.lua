@@ -29,6 +29,7 @@ dap.configurations.typescript = {
 		request = "launch",
 		name = "Launch JS-Debug",
 		cwd = "${workspaceFolder}",
+		program = "${file}",
 	},
 }
 dap.configurations.javascript = dap.configurations.typescript
