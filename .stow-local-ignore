@@ -1,5 +1,6 @@
 \.git
 \.gitignore
+\.DS_Store
 README.md
 setup.yaml
 cspell.json
