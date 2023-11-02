@@ -25,6 +25,14 @@ Unsure why but on MacOS the lazygit config may be needed in a different director
 cp lazygit/config.yaml ~/Library/Application\ Support/lazygit/config.yml
 ```
 
+Configs for lazygit, neovim and kitty depend are setup to use nerd font icons.
+
+Homebrew install
+
+```bash
+brew install --cask font-symbols-only-nerd-font
+```
+
 ### Ansible (WIP)
 
 _Still figuring out this approach - do not use_
