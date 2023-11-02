@@ -19,6 +19,12 @@ mkdir ~/.config
 stow -vR --target $HOME/.config .
 ```
 
+Unsure why but on MacOS the lazygit config may be needed in a different directory
+
+```bash
+cp lazygit/config.yaml ~/Library/Application\ Support/lazygit/config.yml
+```
+
 ### Ansible (WIP)
 
 _Still figuring out this approach - do not use_
