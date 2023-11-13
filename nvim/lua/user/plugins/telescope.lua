@@ -7,6 +7,20 @@ local actions = require("telescope.actions")
 local themes = require("telescope.themes")
 local action_layout = require("telescope.actions.layout")
 
+local file_ignore_common = { "^%.git/", "node_modules", "target" }
+
+---@param t1 table
+---@param t2 table
+local function list_extend(t1, t2)
+	local merged_list = {}
+	for _, tbl in ipairs({ t1, t2 }) do
+		for _, val in ipairs(tbl) do
+			table.insert(merged_list, val)
+		end
+	end
+	return merged_list
+end
+
 -- Settings
 telescope.setup({
 	defaults = {
@@ -15,7 +29,7 @@ telescope.setup({
 		selection_caret = " ",
 		path_display = { "smart" },
 		border = true,
-		file_ignore_patterns = { "^%.git/", "node_modules" },
+		file_ignore_patterns = file_ignore_common,
 		sorting_strategy = "ascending",
 		layout_strategy = "horizontal",
 		layout_config = {
@@ -101,6 +115,9 @@ telescope.setup({
 		-- builtin picker
 		find_files = {
 			hidden = true,
+		},
+		live_grep = {
+			file_ignore_patterns = list_extend(file_ignore_common, { ".*-lock%..+$", ".%.lock.?$" }),
 		},
 		lsp_references = {
 			theme = "cursor",
