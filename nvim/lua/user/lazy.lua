@@ -338,6 +338,7 @@ require("lazy").setup({
 				end,
 			},
 			"JoosepAlviste/nvim-ts-context-commentstring",
+			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
 		build = ":TSUpdate",
 		config = function()
