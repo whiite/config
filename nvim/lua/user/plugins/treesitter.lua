@@ -28,10 +28,6 @@ configs.setup({
 		-- colors = {}, -- table of hex strings
 		-- termcolors = {} -- table of colour name strings
 	},
-	context_commentstring = {
-		enable = true,
-		enable_autocmd = false,
-	},
 	textobjects = {
 		select = {
 			enable = true,
