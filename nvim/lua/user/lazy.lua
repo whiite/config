@@ -63,20 +63,6 @@ require("lazy").setup({
 	},
 	{
 		"akinsho/toggleterm.nvim", -- Toggle terminals (float or split)
-		-- keys = {
-		-- 	[[<c-\>]],
-		-- 	"<leader>t",
-		-- 	"<leader>g",
-		-- },
-		-- cmd = {
-		-- 	"ToggleTerm",
-		-- 	"ToggleTermToggleAll",
-		-- 	"TermExec",
-		-- 	"ToggleTermSetName",
-		-- 	"ToggleTermSendCurrentLine",
-		-- 	"ToggleTermSendVisualLines",
-		-- 	"ToggleTermSendVisualSelection",
-		-- },
 		version = "*",
 		config = function()
 			require("user.plugins.toggleterm")
@@ -85,14 +71,17 @@ require("lazy").setup({
 	{
 		"nacro90/numb.nvim", -- Preview number lines by typing :<line-number>
 		event = "CmdlineEnter",
-		config = function()
-			require("user.plugins.numb")
-		end,
+		opts = {
+			show_numbers = true, -- Enable 'number' for the window while peeking
+			show_cursorline = true, -- Enable 'cursorline' for the window while peeking
+			number_only = false, -- Peek only when the command is only a number instead of when it starts with a number
+			centered_peeking = true, -- Peeked line will be centered relative to window
+		},
 	},
 	{ "tpope/vim-surround", event = { "BufReadPre", "BufNewFile" } }, -- Easily modify surrounding characters
 	{ "tpope/vim-sleuth", event = { "BufReadPre", "BufNewFile" } }, -- Auto detect indentation and tabstop (tab/space)
 	{
-		"ggandor/leap.nvim", -- Fast movement by uisng 's' followed by characters you wish to leap to
+		"ggandor/leap.nvim", -- Fast movement by using 's'/'S' followed by characters you wish to leap to
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("leap").add_default_mappings()
@@ -122,6 +111,8 @@ require("lazy").setup({
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		event = { "BufReadPre", "BufNewFile" },
+		main = "ibl",
+		opts = {},
 	}, -- Indent guides and invisible character support
 	{
 		"NvChad/nvim-colorizer.lua",
