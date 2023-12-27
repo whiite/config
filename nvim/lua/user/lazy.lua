@@ -323,7 +323,7 @@ require("lazy").setup({
 			require("user.plugins.trouble")
 		end,
 	},
-	{ "folke/neodev.nvim", lazy = true }, -- lua language server extension for neovim config
+	{ "folke/neodev.nvim", opts = {} }, -- lua language server extension for neovim config
 
 	-- Treesitter
 	{
@@ -349,6 +349,7 @@ require("lazy").setup({
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
 			local rainbow_delimiters = require("rainbow-delimiters")
+			---@type rainbow_delimiters.config
 			vim.g.rainbow_delimiters = {
 				strategy = {
 					[""] = rainbow_delimiters.strategy["global"],
@@ -381,9 +382,8 @@ require("lazy").setup({
 	}, -- git info in the gutter (like VSCode)
 	{
 		"akinsho/git-conflict.nvim",
+		version = "*",
 		event = { "BufReadPre", "BufNewFile" },
-		config = function()
-			require("git-conflict").setup({})
-		end,
+		config = true,
 	}, -- show and resolve git conflicts within files
 })
