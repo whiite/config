@@ -151,7 +151,7 @@ require("lazy").setup({
 		"Fildo7525/pretty_hover",
 		lazy = true,
 		enabled = false,
-		event = { "BufReadPre", "BufNewFile" },
+		event = "LspAttach",
 		config = function()
 			require("pretty_hover").setup()
 			vim.lsp.buf.hover = require("pretty_hover").hover
@@ -282,9 +282,9 @@ require("lazy").setup({
 		event = { "BufReadPre", "BufNewFile" },
 		cmd = "Telescope",
 		dependencies = {
-			{ "nvim-lua/plenary.nvim" },
+			"nvim-lua/plenary.nvim",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-			{ "nvim-telescope/telescope-ui-select.nvim" },
+			"nvim-telescope/telescope-ui-select.nvim",
 		},
 		config = function()
 			require("user.plugins.telescope")
@@ -308,11 +308,10 @@ require("lazy").setup({
 	{ "neovim/nvim-lspconfig", lazy = true }, -- enable LSP
 	{
 		"williamboman/mason.nvim",
-		build = ":MasonUpdate", -- :MasonUpdate updates registry contents
 	}, -- LSP/lint and debug manager
 	{ "williamboman/mason-lspconfig.nvim" }, -- lspconfig compatibility
 	{
-		"jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
+		"nvimtools/none-ls.nvim", -- for formatters and linters
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 	{
