@@ -264,15 +264,24 @@ require("lazy").setup({
 		opt = {},
 	},
 	{
-		"simrat39/rust-tools.nvim", -- Rust LSP and debug support
+		"mrcjkb/rustaceanvim", -- Rust LSP and DAP support
+		version = "^3",
 		ft = "rust",
 		config = function()
-			require("user.lsp.rust-tools")
+			require("user.lsp.rustaceanvim")
+		end,
+	},
+	{
+		"saecki/crates.nvim", -- Manage Rust dependencies inside Cargo.toml
+		tag = "stable",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("crates").setup()
 		end,
 	},
 
 	-- snippets
-	{ "L3MON4D3/LuaSnip", lazy = true }, --snippet engine
+	{ "L3MON4D3/LuaSnip", lazy = true }, -- snippet engine
 	{ "rafamadriz/friendly-snippets", lazy = true }, -- a bunch of snippets to use
 
 	-- Telescope

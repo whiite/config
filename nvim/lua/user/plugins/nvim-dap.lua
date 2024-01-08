@@ -7,12 +7,6 @@ end
 vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "Error", linehl = "", numhl = "" })
 
 -- Adapters --
-local codelldb_extension_path = require("mason-registry").get_package("codelldb"):get_install_path() .. "/extension"
-local codelldb_path = codelldb_extension_path .. "/adapter/codelldb"
-local liblldb_path = codelldb_extension_path .. "/lldb/lib/liblldb.dylib"
-
-dap.adapters.codelldb = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path)
-
 dap.adapters["pwa-node"] = {
 	type = "server",
 	host = "localhost",
