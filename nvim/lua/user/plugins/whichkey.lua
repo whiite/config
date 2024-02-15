@@ -100,6 +100,7 @@ local mappings = {
 			"Find branch",
 		},
 		g = { "<cmd>lua require('telescope.builtin').git_files()<cr>", "Find git files" },
+		s = { "<cmd>lua require('telescope.builtin').git_status()<cr>", "Find git status files" },
 		R = { "<cmd>lua require('telescope.builtin').resume()<cr>", "Resume Telescope" },
 		c = { "<cmd>lua require('telescope.builtin').commands()<cr>", "Find commands" },
 		C = { "<cmd>lua require('telescope.builtin').colorscheme()<cr>", "Find colorscheme" },
