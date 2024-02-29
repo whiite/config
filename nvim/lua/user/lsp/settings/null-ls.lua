@@ -13,6 +13,13 @@ local diagnostics = null_ls.builtins.diagnostics
 local actions = null_ls.builtins.code_actions
 
 function M.setup(on_attach)
+	local cspell = require("cspell")
+	local cspell_config = {
+		disabled_filetypes = { "NvimTree", "toggleterm" },
+		diagnostics_postprocess = function(diagnostic)
+			diagnostic.severity = vim.diagnostic.severity.HINT
+		end,
+	}
 	null_ls.setup({
 		debug = false,
 		sources = {
@@ -27,18 +34,12 @@ function M.setup(on_attach)
 			formatting.fish_indent,
 
 			-- Diagnostics
-			diagnostics.cspell.with({
-				disabled_filetypes = { "NvimTree", "toggleterm" },
-				diagnostics_postprocess = function(diagnostic)
-					diagnostic.severity = vim.diagnostic.severity.HINT
-				end,
-			}),
+			cspell.diagnostics.with(cspell_config),
 			diagnostics.fish,
-			diagnostics.flake8,
 
 			-- Actions
 			actions.gitsigns,
-			actions.cspell,
+			cspell.code_actions.with(cspell_config),
 		},
 		on_attach = on_attach,
 	})

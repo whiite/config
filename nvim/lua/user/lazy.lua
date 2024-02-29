@@ -122,13 +122,6 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"edluffy/specs.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		config = function()
-			require("user.plugins.specs")
-		end,
-	},
-	{
 		"karb94/neoscroll.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
@@ -321,7 +314,7 @@ require("lazy").setup({
 	{ "williamboman/mason-lspconfig.nvim" }, -- lspconfig compatibility
 	{
 		"nvimtools/none-ls.nvim", -- for formatters and linters
-		dependencies = { "nvim-lua/plenary.nvim" },
+		dependencies = { "nvim-lua/plenary.nvim", "davidmh/cspell.nvim" },
 	},
 	{
 		"folke/trouble.nvim",
