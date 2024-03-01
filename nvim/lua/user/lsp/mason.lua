@@ -33,7 +33,7 @@ if not lspconfig_status_ok then
 	return
 end
 
--- Useful for allowing plugins to configer and setup a server instead
+-- Useful for allowing plugins to configure and setup a server instead
 local server_exclude = {
 	"rust_analyzer", -- Handled by rustaceanvim
 }
