@@ -33,7 +33,14 @@ if not lspconfig_status_ok then
 	return
 end
 
-local server_list = mason_lspconfig.get_installed_servers()
+-- Useful for allowing plugins to configer and setup a server instead
+local server_exclude = {
+	"rust_analyzer", -- Handled by rustaceanvim
+}
+local server_list = vim.tbl_filter(function(item)
+	return not vim.tbl_contains(server_exclude, item)
+end, mason_lspconfig.get_installed_servers())
+
 for _, server_name in pairs(server_list) do
 	local opts = create_lsp_opts("user.lsp.settings", server_name)
 	lspconfig[server_name].setup(opts)

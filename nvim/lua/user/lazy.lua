@@ -258,7 +258,7 @@ require("lazy").setup({
 	},
 	{
 		"mrcjkb/rustaceanvim", -- Rust LSP and DAP support
-		version = "^3",
+		version = "^4",
 		ft = "rust",
 		config = function()
 			require("user.lsp.rustaceanvim")

@@ -9,21 +9,27 @@ vim.g.rustaceanvim = function()
 		server = {
 			on_attach = lsp_handlers.on_attach,
 			capabilities = lsp_handlers.capabilities,
-			settings = {
-				["rust-analyzer"] = {
-					rustfmt = {
-						overrideCommand = { "leptosfmt", "--stdin", "--rustfmt" },
-					},
-					-- procMacro = {
-					-- 	ignored = {
-					-- 		leptos_macro = {
-					-- 			"component",
-					-- 			"server",
-					-- 		},
-					-- 	},
-					-- },
-				},
-			},
+			settings = function(project_root)
+				local ra = require("rustaceanvim.config.server")
+				return ra.load_rust_analyzer_settings(project_root, {
+					settings_file_pattern = "rust-analyzer.json",
+				})
+			end,
+			-- settings = {
+			-- 	["rust-analyzer"] = {
+			-- rustfmt = {
+			-- 	overrideCommand = { "leptosfmt", "--stdin", "--rustfmt" },
+			-- },
+			-- procMacro = {
+			-- 	ignored = {
+			-- 		leptos_macro = {
+			-- 			"component",
+			-- 			"server",
+			-- 		},
+			-- 	},
+			-- },
+			-- 	},
+			-- },
 		},
 		dap = {
 			adapter = rust_config.get_codelldb_adapter(codelldb_path, liblldb_path),
