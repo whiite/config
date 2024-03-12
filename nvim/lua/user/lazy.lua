@@ -91,6 +91,25 @@ require("lazy").setup({
 			require("leap").add_default_mappings()
 		end,
 	},
+	{
+		"michaelrommel/nvim-silicon",
+		lazy = true,
+		cmd = "Silicon",
+		config = function()
+			require("silicon").setup({
+				font = "Fira Code=34",
+				theme = "Dracula",
+				background = "#333",
+				no_window_controls = true,
+				pad_horiz = 0,
+				pad_vert = 0,
+				no_round_corner = true,
+				output = function()
+					return "~/Downloads/" .. os.date("!%Y-%m-%dT%H-%M-%S") .. "_code_screenshot.png"
+				end,
+			})
+		end,
+	},
 
 	-- cmp plugins
 	{
