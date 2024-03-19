@@ -15,21 +15,6 @@ vim.g.rustaceanvim = function()
 					settings_file_pattern = "rust-analyzer.json",
 				})
 			end,
-			-- settings = {
-			-- 	["rust-analyzer"] = {
-			-- rustfmt = {
-			-- 	overrideCommand = { "leptosfmt", "--stdin", "--rustfmt" },
-			-- },
-			-- procMacro = {
-			-- 	ignored = {
-			-- 		leptos_macro = {
-			-- 			"component",
-			-- 			"server",
-			-- 		},
-			-- 	},
-			-- },
-			-- 	},
-			-- },
 		},
 		dap = {
 			adapter = rust_config.get_codelldb_adapter(codelldb_path, liblldb_path),
