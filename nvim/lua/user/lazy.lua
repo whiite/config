@@ -119,7 +119,6 @@ require("lazy").setup({
 			"hrsh7th/cmp-buffer", -- buffer completions
 			"hrsh7th/cmp-path", -- path completions
 			"hrsh7th/cmp-cmdline", -- cmdline completions
-			"saadparwaiz1/cmp_luasnip", -- snippet completions
 			"hrsh7th/cmp-nvim-lsp", -- LSP completions
 			"hrsh7th/cmp-nvim-lsp-signature-help", -- Function signature completions
 			"hrsh7th/cmp-nvim-lua", -- Neovim completions for lua
@@ -342,10 +341,6 @@ require("lazy").setup({
 			require("crates").setup()
 		end,
 	},
-
-	-- snippets
-	{ "L3MON4D3/LuaSnip", lazy = true }, -- snippet engine
-	{ "rafamadriz/friendly-snippets", lazy = true }, -- a bunch of snippets to use
 
 	-- Telescope
 	{
