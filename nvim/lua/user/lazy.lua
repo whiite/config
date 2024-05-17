@@ -23,16 +23,6 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"JoosepAlviste/nvim-ts-context-commentstring",
-		config = function()
-			vim.g.skip_ts_context_commentstring_module = true
-			require("ts_context_commentstring").setup({
-				enable_autocmd = false,
-			})
-		end,
-	},
-
-	{
 		"numToStr/Comment.nvim", -- Easily comment lines
 		lazy = true,
 		event = { "BufReadPre", "BufNewFile" },
@@ -46,6 +36,16 @@ require("lazy").setup({
 		end,
 	},
 	{
+		"JoosepAlviste/nvim-ts-context-commentstring",
+		lazy = true,
+		config = function()
+			vim.g.skip_ts_context_commentstring_module = true
+			require("ts_context_commentstring").setup({
+				enable_autocmd = false,
+			})
+		end,
+	},
+	{
 		"nvim-lualine/lualine.nvim", -- Status line at the bottom of the window
 		version = "*",
 		lazy = false,
@@ -56,7 +56,6 @@ require("lazy").setup({
 	},
 	{
 		"akinsho/bufferline.nvim", -- Pretty tab bar
-		version = "*",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 			"moll/vim-bbye", -- Bbye allows you to do delete buffers (close files) without closing your windows or messing up your layout.
@@ -404,7 +403,7 @@ require("lazy").setup({
 				end,
 			},
 			"JoosepAlviste/nvim-ts-context-commentstring",
-			"nvim-treesitter/nvim-treesitter-textobjects",
+			-- "nvim-treesitter/nvim-treesitter-textobjects",
 		},
 		build = ":TSUpdate",
 		config = function()

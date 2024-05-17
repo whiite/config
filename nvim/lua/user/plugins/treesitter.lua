@@ -30,7 +30,7 @@ configs.setup({
 	},
 	textobjects = {
 		select = {
-			enable = true,
+			enable = false,
 
 			-- Automatically jump forward to textobj, similar to targets.vim
 			lookahead = true,
