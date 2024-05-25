@@ -184,9 +184,10 @@ require("lazy").setup({
 	{
 		"karb94/neoscroll.nvim",
 		event = { "BufReadPre", "BufNewFile" },
-		config = function()
-			require("user.plugins.neoscroll")
-		end,
+		opts = {
+			easing = "linear", -- linear, quadratic, cubic, quartic, quintic, circular, sine
+			respect_scrolloff = true,
+		},
 	},
 	{
 		"folke/which-key.nvim",
