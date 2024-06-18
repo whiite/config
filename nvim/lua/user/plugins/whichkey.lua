@@ -81,6 +81,7 @@ local mappings = {
 	f = {
 		name = "Find",
 		f = { "<cmd>lua require('telescope.builtin').find_files()<cr>", "Find files" },
+		g = { "<cmd>lua require('telescope.builtin').git_files()<cr>", "Find git files" },
 		t = {
 			"<cmd>lua require('telescope.builtin').live_grep(require('telescope.themes').get_ivy())<cr>",
 			"Find text",
@@ -90,10 +91,10 @@ local mappings = {
 			"<cmd>lua require('telescope.builtin').git_branches()<cr>",
 			"Find branch",
 		},
-		g = { "<cmd>lua require('telescope.builtin').git_files()<cr>", "Find git files" },
 		s = { "<cmd>lua require('telescope.builtin').git_status()<cr>", "Find git status files" },
 		R = { "<cmd>lua require('telescope.builtin').resume()<cr>", "Resume Telescope" },
-		c = { "<cmd>lua require('telescope.builtin').commands()<cr>", "Find commands" },
+		c = { "<cmd>TodoTelescope<cr>", "Find todo comments" },
+		[">"] = { "<cmd>lua require('telescope.builtin').commands()<cr>", "Find commands" },
 		C = { "<cmd>lua require('telescope.builtin').colorscheme()<cr>", "Find colorscheme" },
 	},
 	m = { "<cmd>Mason<cr>", "Open Mason Installer" },
