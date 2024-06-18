@@ -163,6 +163,7 @@ local mappings = {
 			k = { "<cmd>GitConflictPrevConflict<cr>", "Previous conflict" },
 			o = { "<cmd>GitConflictChooseOurs<cr>", "Choose ours" },
 			t = { "<cmd>GitConflictChooseTheirs<cr>", "Choose theirs" },
+			b = { "<cmd>GitConflictChooseBoth<cr>", "Choose both" },
 			n = { "<cmd>GitConflictChooseNone<cr>", "Choose none" },
 			B = { "<cmd>GitConflictChooseBase<cr>", "Choose base" },
 			r = { "<cmd>GitConflictRefresh<cr>", "Refresh" },
