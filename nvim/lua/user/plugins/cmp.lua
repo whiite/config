@@ -123,6 +123,10 @@ cmp.setup({
 		{ name = "buffer" },
 		{ name = "path" },
 		{ name = "calc" }, -- Source for math calculations
+		{
+			name = "lazydev",
+			group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+		},
 	},
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,

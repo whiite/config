@@ -390,8 +390,17 @@ require("lazy").setup({
 			require("user.plugins.trouble")
 		end,
 	},
-	{ "folke/neodev.nvim", ft = "lua", opts = {} }, -- lua language server extension for neovim config
-
+	{
+		"folke/lazydev.nvim",
+		ft = "lua",
+		opts = {
+			library = {
+				"LazyVim",
+				{ path = "luvit-meta/library", words = { "vim%.uv" } },
+			},
+		},
+	}, -- typings for neovim within lua files
+	{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
 	-- Treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
