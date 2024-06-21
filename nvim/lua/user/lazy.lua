@@ -19,7 +19,31 @@ require("lazy").setup({
 		"windwp/nvim-autopairs", -- Autopairs, integrates with both cmp and treesitter
 		event = "InsertEnter",
 		config = function()
-			require("user.plugins.autopairs")
+			require("nvim-autopairs").setup({
+				check_ts = true,
+				ts_config = {
+					lua = { "string", "source" },
+					javascript = { "string", "template_string" },
+					java = false,
+				},
+				disable_filetype = { "TelescopePrompt", "spectre_panel" }, -- find file type with: `echo &ft`
+				fast_wrap = {
+					map = "<M-e>", -- 'M' = modifier = alt
+					chars = { "{", "[", "(", '"', "'", "`", "<" },
+					pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
+					offset = 0, -- Offset from pattern match
+					end_key = "$",
+					keys = "qwertyuiopzxcvbnmasdfghjkl",
+					check_comma = true,
+					highlight = "PmenuSel",
+					highlight_grey = "LineNr",
+				},
+			})
+
+			require("cmp").event:on(
+				"confirm_done",
+				require("nvim-autopairs.completion.cmp").on_confirm_done({ map_char = { tex = "" } })
+			)
 		end,
 	},
 	{
@@ -38,11 +62,11 @@ require("lazy").setup({
 	{
 		"JoosepAlviste/nvim-ts-context-commentstring",
 		lazy = true,
-		config = function()
+		opts = function()
 			vim.g.skip_ts_context_commentstring_module = true
-			require("ts_context_commentstring").setup({
+			return {
 				enable_autocmd = false,
-			})
+			}
 		end,
 	},
 	{
@@ -94,20 +118,18 @@ require("lazy").setup({
 		"michaelrommel/nvim-silicon",
 		lazy = true,
 		cmd = "Silicon",
-		config = function()
-			require("silicon").setup({
-				font = "Fira Code=34",
-				theme = "Dracula",
-				background = "#333",
-				no_window_controls = true,
-				pad_horiz = 0,
-				pad_vert = 0,
-				no_round_corner = true,
-				output = function()
-					return "~/Downloads/" .. os.date("!%Y-%m-%dT%H-%M-%S") .. "_code_screenshot.png"
-				end,
-			})
-		end,
+		opts = {
+			font = "Fira Code=34",
+			theme = "Dracula",
+			background = "#333",
+			no_window_controls = true,
+			pad_horiz = 0,
+			pad_vert = 0,
+			no_round_corner = true,
+			output = function()
+				return "~/Downloads/" .. os.date("!%Y-%m-%dT%H-%M-%S") .. "_code_screenshot.png"
+			end,
+		},
 	},
 
 	-- cmp plugins
@@ -177,9 +199,24 @@ require("lazy").setup({
 	{
 		"NvChad/nvim-colorizer.lua",
 		event = { "BufReadPre", "BufNewFile" },
-		config = function()
-			require("user.plugins.nvim-colorizer")
-		end,
+		opts = {
+			filetypes = {
+				"javascript",
+				"typescript",
+				sass = {
+					names = true,
+				},
+				scss = {
+					names = true,
+				},
+				css = {
+					names = true,
+				},
+				html = {},
+				svg = {},
+			},
+			user_default_options = { names = false, css = true },
+		},
 	},
 	{
 		"karb94/neoscroll.nvim",
@@ -404,12 +441,7 @@ require("lazy").setup({
 		"nvim-treesitter/nvim-treesitter",
 		dependencies = {
 			-- extensions
-			{
-				"nvim-treesitter/nvim-treesitter-context",
-				config = function()
-					require("user.plugins.nvim-treesitter-context")
-				end,
-			},
+			"nvim-treesitter/nvim-treesitter-context",
 			"JoosepAlviste/nvim-ts-context-commentstring",
 			-- "nvim-treesitter/nvim-treesitter-textobjects",
 		},
@@ -417,6 +449,67 @@ require("lazy").setup({
 		config = function()
 			require("user.plugins.treesitter")
 		end,
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		opts = {
+			enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+			max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+			trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+			patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+				-- For all filetypes
+				-- Note that setting an entry here replaces all other patterns for this entry.
+				-- By setting the 'default' entry below, you can control which nodes you want to
+				-- appear in the context window.
+				default = {
+					"class",
+					"function",
+					"method",
+					"for",
+					"while",
+					"if",
+					"switch",
+					"case",
+				},
+				-- Patterns for specific filetypes
+				-- If a pattern is missing, *open a PR* so everyone can benefit.
+				tex = {
+					"chapter",
+					"section",
+					"subsection",
+					"subsubsection",
+				},
+				rust = {
+					"impl_item",
+					"struct",
+					"enum",
+				},
+				scala = {
+					"object_definition",
+				},
+				vhdl = {
+					"process_statement",
+					"architecture_body",
+					"entity_declaration",
+				},
+				markdown = {
+					"section",
+				},
+			},
+			exact_patterns = {
+				-- Example for a specific filetype with Lua patterns
+				-- Treat patterns.rust as a Lua pattern (i.e "^impl_item$" will
+				-- exactly match "impl_item" only)
+				-- rust = true,
+			},
+
+			-- [!] The options below are exposed but shouldn't require your attention,
+			--     you can safely ignore them.
+
+			zindex = 20, -- The Z-index of the context window
+			mode = "topline", -- Line used to calculate context. Choices: 'cursor', 'topline'
+			separator = nil, -- Separator between context and content. Should be a single character string, like '-'.
+		},
 	},
 	{
 		"HiPhish/rainbow-delimiters.nvim",
