@@ -451,9 +451,22 @@ require("lazy").setup({
 	{
 		"lewis6991/gitsigns.nvim",
 		event = { "BufReadPre", "BufNewFile" },
-		config = function()
-			require("user.plugins.gitsigns")
-		end,
+		opts = {
+			watch_gitdir = {
+				interval = 1000,
+				follow_files = true,
+			},
+			attach_to_untracked = true,
+			current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+			current_line_blame_opts = {
+				virt_text = true,
+				virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
+				virt_text_priority = 100, -- 'eol' | 'overlay' | 'right_align'
+				ignore_whitespace = false,
+				delay = 500,
+			},
+			current_line_blame_formatter = "<author>, <author_time:%R> - <summary>",
+		},
 	}, -- git info in the gutter (like VSCode)
 	{
 		"akinsho/git-conflict.nvim",
