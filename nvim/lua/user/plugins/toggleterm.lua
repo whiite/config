@@ -41,44 +41,40 @@ end
 
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
---[[ local auto_group = "toggleterm_config"
-vim.api.nvim_create_augroup(auto_group, { clear = true })
-vim.api.nvim_create_autocmd("TermOpen", {
-	group = auto_group,
-	pattern = { "term://*" },
-	callback = function()
-		local status_ok, action_state = pcall(require, "telescope.actions.state")
-		if not status_ok then
-			return
-		end
-		local actions = require("telescope.actions")
-		local prompt_bufnr = vim.api.nvim_get_current_buf()
-		local current_picker = action_state.get_current_picker(prompt_bufnr)
-		local close_ok, _
-		pcall(actions.close, prompt_bufnr)
-		if close_ok then
-			print("Closed telescope")
-		end
-	end,
-}) ]]
+-- Toggle term shell keymaps
+vim.keymap.set("n", "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", { desc = "Toggle floating terminal" })
+vim.keymap.set(
+	"n",
+	"<leader>th",
+	"<cmd>ToggleTerm size=10 direction=horizontal<cr>",
+	{ desc = "Toggle horizontal terminal" }
+)
+vim.keymap.set(
+	"n",
+	"<leader>tv",
+	"<cmd>ToggleTerm size=80 direction=vertical<cr>",
+	{ desc = "Toggle vertial terminal" }
+)
+
+-- Toggle term program keymaps
 local Terminal = require("toggleterm.terminal").Terminal
 
 local lazygit = Terminal:new({ cmd = "lazygit", hidden = false })
-function _LAZYGIT_TOGGLE()
+vim.keymap.set("n", "<leader>gg", function()
 	lazygit:toggle()
-end
+end, { desc = "Toggle lazygit" })
 
 local node = Terminal:new({ cmd = "node", hidden = false })
-function _NODE_TOGGLE()
+vim.keymap.set("n", "<leader>tg", function()
 	node:toggle()
-end
+end, { desc = "Toggle Node REPL" })
 
 local deno = Terminal:new({ cmd = "deno", hidden = false })
-function _DENO_TOGGLE()
+vim.keymap.set("n", "<leader>tg", function()
 	deno:toggle()
-end
+end, { desc = "Toggle Deno REPL" })
 
 local python = Terminal:new({ cmd = "python3", hidden = false })
-function _PYTHON_TOGGLE()
+vim.keymap.set("n", "<leader>tg", function()
 	python:toggle()
-end
+end, { desc = "Toggle Python REPL" })

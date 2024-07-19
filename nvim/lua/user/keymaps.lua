@@ -38,11 +38,16 @@ keymap("n", "˚", ":m .-2<CR>==", opts) -- ˚ = alt+k
 -- Keep searches in the center of the screen
 keymap("n", "n", "nzzzv")
 keymap("n", "N", "Nzzzv")
+-- Option toggles
+keymap("n", "<leader>h", function()
+	vim.opt.hlsearch = not vim.opt.hlsearch:get()
+end, { desc = "Toggle highlight search" })
+keymap("n", "<leader>r", function()
+	vim.opt.relativenumber = not vim.opt.relativenumber:get()
+end, { desc = "Toggle relative line numbers" })
 
 -- Explorer
 keymap("n", "<leader>e", ":Lex 30<cr>", opts)
--- Toggle Comment
-keymap("n", "<C-/>", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", opts)
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize +2<CR>", opts)
@@ -53,14 +58,6 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 -- Navigate buffers -- Similar to file tabs
 keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
-
--- Insert --
--- Press jk fast to exit escape
--- keymap("i", "jk", "<ESC>", opts)
--- keymap("i", "kj", "<ESC>", opts)
-
--- Toggle Comment
-keymap("i", "<C-/>", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", opts)
 
 -- Visual --
 -- Stay in indent mode

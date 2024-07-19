@@ -11,6 +11,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.keymap.set("n", "<leader>p", "<cmd>Lazy<cr>", { desc = "Plugins" })
+
 -- Install your plugins here
 require("lazy").setup({
 	-- General --
@@ -58,6 +60,16 @@ require("lazy").setup({
 				pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
 			}
 		end,
+		keys = {
+			{
+				"<C-/>",
+				function()
+					require("Comment.api").toggle.linewise.current()
+				end,
+				desc = "Toggle comment",
+				mode = { "n", "i" },
+			},
+		},
 	},
 	{
 		"JoosepAlviste/nvim-ts-context-commentstring",
@@ -80,6 +92,7 @@ require("lazy").setup({
 	},
 	{
 		"akinsho/bufferline.nvim", -- Pretty tab bar
+		version = "*",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 			"moll/vim-bbye", -- Bbye allows you to do delete buffers (close files) without closing your windows or messing up your layout.
@@ -87,6 +100,30 @@ require("lazy").setup({
 		config = function()
 			require("user.plugins.bufferline")
 		end,
+		keys = {
+			{ "<leader>c", "<cmd>Bdelete!<cr>", desc = "Close Buffer" },
+			{
+				"<leader>C",
+				"<cmd>BufferLineCloseOthers<cr><cmd>Bdelete!<cr>",
+				desc = "Close All Buffers",
+			},
+			{ "<leader>bc", "<cmd>Bdelete!<CR>", desc = "Close current buffer" },
+			{ "<leader>bC", "<cmd>BufferLineCloseOthers<cr><cmd>Bdelete!<cr>", desc = "Close All Buffers" },
+			{ "<leader>bo", "<cmd>BufferLineCloseOthers<cr>", desc = "Close All Other Buffers" },
+			{
+				"<leader>bf",
+				function()
+					require("telescope.builtin").buffers(
+						require("telescope.themes").get_dropdown({ previewer = false })
+					)
+				end,
+				desc = "Find buffer",
+			},
+			{ "<leader>bp", "<cmd>BufferLinePick<CR>", desc = "Pick buffer" },
+			{ "<leader>bP", "<cmd>BufferLineTogglePin<CR>", desc = "Pin buffer" },
+			{ "<leader>bL", "<cmd>BufferLineCloseLeft<CR>", desc = "Close left buffers" },
+			{ "<leader>bR", "<cmd>BufferLineCloseRight<CR>", desc = "Close right buffers" },
+		},
 	},
 	{
 		"akinsho/toggleterm.nvim", -- Toggle terminals (float or split)
@@ -129,6 +166,10 @@ require("lazy").setup({
 			output = function()
 				return "~/Downloads/" .. os.date("!%Y-%m-%dT%H-%M-%S") .. "_code_screenshot.png"
 			end,
+		},
+		keys = {
+			{ "<leader>S", ":Silicon<cr>", desc = "Screenshot selected", mode = "v" },
+			{ "<leader>S", "<cmd>Silicon<cr>", desc = "Screenshot file" },
 		},
 	},
 
@@ -187,6 +228,7 @@ require("lazy").setup({
 	}, -- Indent guides and invisible character support
 	{
 		"b0o/incline.nvim",
+		event = "VeryLazy",
 		config = function()
 			require("incline").setup({
 				hide = {
@@ -194,7 +236,6 @@ require("lazy").setup({
 				},
 			})
 		end,
-		event = "VeryLazy",
 	},
 	{
 		"NvChad/nvim-colorizer.lua",
@@ -228,9 +269,8 @@ require("lazy").setup({
 	},
 	{
 		"folke/which-key.nvim",
-		config = function()
-			require("user.plugins.whichkey")
-		end,
+		event = "VeryLazy",
+		opts = {},
 	},
 	{
 		"rcarriga/nvim-notify",
@@ -262,12 +302,12 @@ require("lazy").setup({
 	},
 	{
 		"folke/todo-comments.nvim",
+		event = "LspAttach",
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {},
 	},
 
 	-- Color schemes
-	-- use("lunarvim/colorschemes") -- A bunch of color schemes to try out
 	{
 		"folke/tokyonight.nvim",
 		lazy = false,
@@ -331,6 +371,7 @@ require("lazy").setup({
 	-- Debugging
 	{
 		"mfussenegger/nvim-dap",
+		lazy = true,
 		cmd = {
 			"DapToggleBreakpoint",
 			"DapContinue",
@@ -344,6 +385,22 @@ require("lazy").setup({
 		config = function()
 			require("user.plugins.nvim-dap")
 		end,
+		keys = {
+			{
+				"<leader>dd",
+				function()
+					require("dapui").toggle()
+				end,
+				desc = "Breakpoint toggle",
+			},
+			{ "<leader>db", "<cmd>DapToggleBreakpoint<cr>", desc = "Breakpoint toggle" },
+			{ "<leader>dc", "<cmd>DapContinue<cr>", desc = "Continue" },
+			{ "<leader>dr", "<cmd>DapToggleRepl<cr>", desc = "REPL Toggle" },
+			{ "<leader>do", "<cmd>DapStepOver<cr>", desc = "Step over" },
+			{ "<leader>di", "<cmd>DapStepInto<cr>", desc = "Step into" },
+			{ "<leader>dO", "<cmd>DapStepOut<cr>", desc = "Step out" },
+			{ "<leader>dq", "<cmd>DapTerminate<cr>", desc = "Stop/Terminate" },
+		},
 	},
 	{
 		"rcarriga/nvim-dap-ui",
@@ -391,6 +448,66 @@ require("lazy").setup({
 		config = function()
 			require("user.plugins.telescope")
 		end,
+		keys = {
+			{
+				"<leader>ff",
+				function()
+					require("telescope.builtin").find_files()
+				end,
+				desc = "Find files",
+			},
+			{
+				"<leader>fg",
+				function()
+					require("telescope.builtin").git_files()
+				end,
+				desc = "Find git files",
+			},
+			{
+				"<leader>ft",
+				function()
+					require("telescope.builtin").live_grep(require("telescope.themes").get_ivy())
+				end,
+				desc = "Find text",
+			},
+			{ "<leader>fT", "<cmd>lua require('telescope.builtin').treesitter()<cr>", desc = "Find in treesitter" },
+			{
+				"<leader>fb",
+				function()
+					require("telescope.builtin").git_branches()
+				end,
+				desc = "Find branch",
+			},
+			{
+				"<leader>fs",
+				function()
+					require("telescope.builtin").git_status()
+				end,
+				desc = "Find git status files",
+			},
+			{
+				"<leader>fR",
+				function()
+					require("telescope.builtin").resume()
+				end,
+				desc = "Resume Telescope",
+			},
+			{ "<leader>fc", "<cmd>TodoTelescope<cr>", desc = "Find todo comments" },
+			{
+				"<leader>f>",
+				function()
+					require("telescope.builtin").commands()
+				end,
+				desc = "Find commands",
+			},
+			{
+				"<leader>fC",
+				function()
+					require("telescope.builtin").colorscheme()
+				end,
+				desc = "Find colorscheme",
+			},
+		},
 	},
 
 	-- File explorer
@@ -404,26 +521,51 @@ require("lazy").setup({
 		config = function()
 			require("user.plugins.nvim-tree")
 		end,
+		keys = {
+
+			{ "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Explorer" },
+			{ "<leader>E", "<cmd>NvimTreeFocus<cr>", desc = "Focus on explorer" },
+		},
 	},
 
 	-- LSP
 	{ "neovim/nvim-lspconfig", lazy = true }, -- enable LSP
 	{
 		"williamboman/mason.nvim",
+		keys = {
+			{ "<leader>m", "<cmd>Mason<cr>", desc = "Open Mason installer" },
+		},
 	}, -- LSP/lint and debug manager
 	{ "williamboman/mason-lspconfig.nvim" }, -- lspconfig compatibility
 	{
 		"nvimtools/none-ls.nvim", -- for formatters and linters
+		lazy = true,
 		dependencies = { "nvim-lua/plenary.nvim", "davidmh/cspell.nvim" },
 	},
 	{
 		"folke/trouble.nvim",
-		lazy = true,
-		cmd = { "TroubleToggle", "TroubleClose", "TroubleRefresh", "Trouble" },
-		dependencies = "nvim-tree/nvim-web-devicons",
-		config = function()
-			require("user.plugins.trouble")
-		end,
+		opts = {},
+		cmd = "Trouble",
+		keys = {
+			{ "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Toggle diagnostics" },
+			{ "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Toggle buffer diagnostics" },
+			{ "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)" },
+			{
+				"<leader>cl",
+				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+				desc = "LSP Definitions / references / ... (Trouble)",
+			},
+			{
+				"<leader>xL",
+				"<cmd>Trouble loclist toggle<cr>",
+				desc = "Location List (Trouble)",
+			},
+			{
+				"<leader>xQ",
+				"<cmd>Trouble qflist toggle<cr>",
+				desc = "Quickfix List (Trouble)",
+			},
+		},
 	},
 	{
 		"folke/lazydev.nvim",
@@ -560,11 +702,83 @@ require("lazy").setup({
 			},
 			current_line_blame_formatter = "<author>, <author_time:%R> - <summary>",
 		},
+		keys = {
+			{
+				"<leader>gj",
+				function()
+					require("gitsigns").next_hunk()
+				end,
+				desc = "Next Hunk",
+			},
+			{
+				"<leader>gk",
+				function()
+					require("gitsigns").prev_hunk()
+				end,
+				desc = "Prev Hunk",
+			},
+			{
+				"<leader>gB",
+				function()
+					require("gitsigns").blame_line()
+				end,
+				desc = "Blame",
+			},
+			{
+				"<leader>gp",
+				function()
+					require("gitsigns").preview_hunk()
+				end,
+				desc = "Preview Hunk",
+			},
+			{
+				"<leader>gr",
+				function()
+					require("gitsigns").reset_hunk()
+				end,
+				desc = "Reset Hunk",
+			},
+			{
+				"<leader>gR",
+				function()
+					require("gitsigns").reset_buffer()
+				end,
+				desc = "Reset Buffer",
+			},
+			{
+				"<leader>gs",
+				function()
+					require("gitsigns").stage_hunk()
+				end,
+				desc = "Stage Hunk",
+			},
+			{
+				"<leader>gu",
+				function()
+					require("gitsigns").undo_stage_hunk()
+				end,
+				desc = "Undo Stage Hunk",
+			},
+			{ "<leader>go", "<cmd>Telescope git_status<cr>", desc = "Open changed file" },
+			{ "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" },
+			{ "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Checkout commit" },
+			{ "<leader>gd", "<cmd>Gitsigns diffthis<cr>", desc = "Diff this" },
+		},
 	}, -- git info in the gutter (like VSCode)
 	{
 		"akinsho/git-conflict.nvim",
 		version = "*",
 		event = { "BufReadPre", "BufNewFile" },
 		config = true,
+		keys = {
+			{ "<leader>gCj", "<cmd>GitConflictNextConflict<cr>", desc = "Next conflict" },
+			{ "<leader>gCk", "<cmd>GitConflictPrevConflict<cr>", desc = "Previous conflict" },
+			{ "<leader>gCo", "<cmd>GitConflictChooseOurs<cr>", desc = "Choose ours" },
+			{ "<leader>gCt", "<cmd>GitConflictChooseTheirs<cr>", desc = "Choose theirs" },
+			{ "<leader>gCb", "<cmd>GitConflictChooseBoth<cr>", desc = "Choose both" },
+			{ "<leader>gCn", "<cmd>GitConflictChooseNone<cr>", desc = "Choose none" },
+			{ "<leader>gCB", "<cmd>GitConflictChooseBase<cr>", desc = "Choose base" },
+			{ "<leader>gCr", "<cmd>GitConflictRefresh<cr>", desc = "Refresh" },
+		},
 	}, -- show and resolve git conflicts within files
 })

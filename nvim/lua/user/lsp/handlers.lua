@@ -49,6 +49,29 @@ M.setup = function()
 	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
 		border = "rounded",
 	})
+
+	-- LSP bindings
+
+	vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, { desc = "Code Action" })
+	vim.keymap.set("n", "<leader>ld", "<cmd>Telescope lsp_document_diagnostics<cr>", { desc = "Document Diagnostics" })
+	vim.keymap.set(
+		"n",
+		"<leader>lw",
+		"<cmd>Telescope lsp_workspace_diagnostics<cr>",
+		{ desc = "Workspace Diagnostics" }
+	)
+	vim.keymap.set("n", "<leader>li", "<cmd>LspInfo<cr>", { desc = "Info" })
+	vim.keymap.set("n", "<leader>ll", vim.lsp.codelens.run, { desc = "CodeLens Action" })
+	vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist, { desc = "Quickfix" })
+	vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, { desc = "Rename" })
+	vim.keymap.set("n", "<leader>lR", "<cmd>LspRestart<cr>", { desc = "Restart Language Servers" })
+	vim.keymap.set("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<cr>", { desc = "Document Symbols" })
+	vim.keymap.set(
+		"n",
+		"<leader>lS",
+		"<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
+		{ desc = "Workspace Symbols" }
+	)
 end
 
 -- Highlights tokens under the cursor
@@ -67,29 +90,79 @@ end
 
 -- Keymaps specifically for LSP
 local function lsp_keymaps(bufnr)
-	local opts = { noremap = true, silent = true, buffer = bufnr }
-	-- NOTE: set under whichkey
-	-- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-	-- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-	-- vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-	-- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-	-- vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, opts)
-	-- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-	-- vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-	-- vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration", buffer = true })
+	vim.keymap.set("n", "gd", require("telescope.builtin").lsp_definitions, {
+		desc = "Go to definition",
+		buffer = bufnr,
+	})
+	vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Show diagnostics" })
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover", buffer = bufnr })
+	vim.keymap.set(
+		"n",
+		"gi",
+		vim.lsp.buf.implementation,
+		{ desc = "Show all implementations for symbol", buffer = bufnr }
+	)
+	vim.keymap.set("n", "gs", require("telescope.builtin").lsp_definitions, {
+		desc = "Go to definition",
+		buffer = bufnr,
+	})
+	vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, {
+		desc = "Find all references to symbol",
+		buffer = bufnr,
+	})
+
+	local diagnostic_severity = { min = vim.diagnostic.severity.INFO }
+	vim.keymap.set("n", "<leader>lk", function()
+		vim.diagnostic.goto_prev({
+			severity = diagnostic_severity,
+		})
+	end, {
+		desc = "Prev diagnostic",
+		buffer = bufnr,
+	})
+	vim.keymap.set("n", "<leader>lj", function()
+		vim.diagnostic.goto_next({
+			severity = diagnostic_severity,
+		})
+	end, {
+		desc = "Next diagnostic",
+		buffer = bufnr,
+	})
+	vim.keymap.set("n", "<leader>lK", function()
+		vim.diagnostic.goto_next({
+			severity = diagnostic_severity,
+			cursor_position = { 0, 0 },
+		})
+	end, {
+		desc = "First diagnostic",
+		buffer = bufnr,
+	})
+	vim.keymap.set("n", "<leader>lJ", function()
+		vim.diagnostic.goto_prev({
+			severity = diagnostic_severity,
+			cursor_position = { 0, 0 },
+		})
+	end, {
+		desc = "Last diagnostic",
+		buffer = bufnr,
+	})
+
 	vim.api.nvim_create_user_command("Format", function()
 		vim.lsp.buf.format({ async = true })
 	end, {
 		nargs = "*",
 		desc = "Format the current file using the language server",
 	})
+	vim.keymap.set("n", "<leader>F", "<cmd>Format<cr>", { desc = "Format buffer", buffer = bufnr })
 end
 
 local format_exclude = {
 	"tsserver",
-	"sumneko_lua",
+	"lua_ls",
 	"jsonls",
+	"html",
+	"somesass_ls",
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
