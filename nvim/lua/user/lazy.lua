@@ -100,7 +100,10 @@ require("lazy").setup({
 		},
 		opts = {
 			options = {
-				offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
+				offsets = {
+					{ filetype = "NvimTree", text = "", padding = 1 },
+					{ filetype = "neo-tree", text = "", padding = 1 },
+				},
 				buffer_close_icon = "󰅖",
 				modified_icon = "●",
 				close_icon = "",
@@ -524,19 +527,70 @@ require("lazy").setup({
 
 	-- File explorer
 	{
-		"nvim-tree/nvim-tree.lua",
-		version = "*",
-		lazy = false,
-		dependencies = {
-			"nvim-tree/nvim-web-devicons", -- file icons
+		"nvim-neo-tree/neo-tree.nvim",
+		lazy = true,
+		branch = "v3.x",
+		cmd = { "Neotree" },
+		opts = {
+			close_if_last_window = true,
+			filesystem = {
+				follow_current_file = {
+					enabled = true,
+					leave_dirs_open = false,
+				},
+				use_libuv_file_watcher = true,
+				group_empty_dirs = true,
+			},
+			event_handlers = {
+				{
+					event = "neo_tree_window_after_open",
+					handler = function(args)
+						if args.position == "left" or args.position == "right" then
+							vim.cmd("wincmd =")
+						end
+					end,
+				},
+				{
+					event = "neo_tree_window_after_close",
+					handler = function(args)
+						if args.position == "left" or args.position == "right" then
+							vim.cmd("wincmd =")
+						end
+					end,
+				},
+			},
+			window = {
+				mappings = {
+					["h"] = function(state)
+						local node = state.tree:get_node()
+						if node.type == "directory" and node:is_expanded() then
+							require("neo-tree.sources.filesystem").toggle_directory(state, node)
+						else
+							require("neo-tree.ui.renderer").focus_node(state, node:get_parent_id())
+						end
+					end,
+					["l"] = function(state)
+						local node = state.tree:get_node()
+						if node.type == "directory" then
+							if not node:is_expanded() then
+								require("neo-tree.sources.filesystem").toggle_directory(state, node)
+							elseif node:has_children() then
+								require("neo-tree.ui.renderer").focus_node(state, node:get_child_ids()[1])
+							end
+						end
+					end,
+				},
+			},
 		},
-		config = function()
-			require("user.plugins.nvim-tree")
-		end,
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
+			"3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+		},
 		keys = {
-
-			{ "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Explorer" },
-			{ "<leader>E", "<cmd>NvimTreeFocus<cr>", desc = "Focus on explorer" },
+			{ "<leader>e", "<cmd>Neotree toggle left<cr>", desc = "Explorer" },
+			{ "<leader>E", "<cmd>Neotree focus<cr>", desc = "Focus on explorer" },
 		},
 	},
 
