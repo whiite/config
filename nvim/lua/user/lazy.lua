@@ -116,14 +116,14 @@ require("lazy").setup({
 			},
 		},
 		keys = {
-			{ "<leader>c", "<cmd>Bdelete!<cr>", desc = "Close Buffer" },
+			{ "<leader>c", "<cmd>bdelete!<cr>", desc = "Close Buffer" },
 			{
 				"<leader>C",
-				"<cmd>BufferLineCloseOthers<cr><cmd>Bdelete!<cr>",
+				"<cmd>%bdelete<cr>",
 				desc = "Close All Buffers",
 			},
-			{ "<leader>bc", "<cmd>Bdelete!<CR>", desc = "Close current buffer" },
-			{ "<leader>bC", "<cmd>BufferLineCloseOthers<cr><cmd>Bdelete!<cr>", desc = "Close All Buffers" },
+			{ "<leader>bc", "<cmd>bdelete!<cr>", desc = "Close current buffer" },
+			{ "<leader>bC", "<cmd>%bdelete<cr>", desc = "Close All Buffers" },
 			{ "<leader>bo", "<cmd>BufferLineCloseOthers<cr>", desc = "Close All Other Buffers" },
 			{
 				"<leader>bf",
@@ -615,9 +615,9 @@ require("lazy").setup({
 		keys = {
 			{ "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Toggle diagnostics" },
 			{ "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Toggle buffer diagnostics" },
-			{ "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)" },
+			{ "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)" },
 			{
-				"<leader>cl",
+				"<leader>xl",
 				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
 				desc = "LSP Definitions / references / ... (Trouble)",
 			},
