@@ -158,7 +158,7 @@ local function lsp_keymaps(bufnr)
 end
 
 local format_exclude = {
-	"tsserver",
+	"ts_ls",
 	"lua_ls",
 	"jsonls",
 	"html",
