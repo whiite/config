@@ -96,7 +96,6 @@ require("lazy").setup({
 		version = "*",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
-			"moll/vim-bbye", -- Bbye allows you to do delete buffers (close files) without closing your windows or messing up your layout.
 		},
 		opts = {
 			options = {
@@ -116,13 +115,13 @@ require("lazy").setup({
 			},
 		},
 		keys = {
-			{ "<leader>c", "<cmd>bdelete!<cr>", desc = "Close Buffer" },
+			{ "<leader>c", "<cmd>bprevious<bar>bdelete!#<cr>", desc = "Close Buffer" },
 			{
 				"<leader>C",
 				"<cmd>%bdelete<cr>",
 				desc = "Close All Buffers",
 			},
-			{ "<leader>bc", "<cmd>bdelete!<cr>", desc = "Close current buffer" },
+			{ "<leader>bc", "<cmd>bprevious<bar>bdelete!#<cr>", desc = "Close current buffer" },
 			{ "<leader>bC", "<cmd>%bdelete<cr>", desc = "Close All Buffers" },
 			{ "<leader>bo", "<cmd>BufferLineCloseOthers<cr>", desc = "Close All Other Buffers" },
 			{
