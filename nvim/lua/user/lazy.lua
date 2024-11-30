@@ -432,8 +432,8 @@ require("lazy").setup({
 	},
 	{
 		"mrcjkb/rustaceanvim", -- Rust LSP and DAP support
-		version = "^4",
-		ft = "rust",
+		version = "^5",
+		lazy = false,
 		config = function()
 			require("user.lsp.rustaceanvim")
 		end,
@@ -441,8 +441,7 @@ require("lazy").setup({
 	{
 		"saecki/crates.nvim", -- Manage Rust dependencies inside Cargo.toml
 		tag = "stable",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		ft = "toml",
+		event = { "BufRead Cargo.toml" },
 		config = function()
 			require("crates").setup()
 		end,
@@ -686,11 +685,11 @@ require("lazy").setup({
 					"subsection",
 					"subsubsection",
 				},
-				rust = {
-					"impl_item",
-					"struct",
-					"enum",
-				},
+				-- rust = {
+				-- 	"impl_item",
+				-- 	"struct",
+				-- 	"enum",
+				-- },
 				scala = {
 					"object_definition",
 				},
