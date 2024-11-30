@@ -1,1 +1,7 @@
-{"flagWords":[],"version":"0.2","words":["augroup","autocmd","keymap","nvim","autocmds"],"language":"en"}
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "flagWords": [],
+  "version": "0.2",
+  "words": ["augroup", "autocmd", "keymap", "nvim", "autocmds", "lspconfig"],
+  "language": "en-GB"
+}
