@@ -649,7 +649,7 @@ require("lazy").setup({
 			-- extensions
 			"nvim-treesitter/nvim-treesitter-context",
 			"JoosepAlviste/nvim-ts-context-commentstring",
-			-- "nvim-treesitter/nvim-treesitter-textobjects",
+			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
 		build = ":TSUpdate",
 		config = function()
