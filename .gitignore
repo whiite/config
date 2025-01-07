@@ -4,3 +4,5 @@
 # Compiled output
 nvim/plugin/packer_compiled.lua
 
+# Shell
+fish/fish_variables
