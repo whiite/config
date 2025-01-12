@@ -84,11 +84,46 @@ require("lazy").setup({
 	{
 		"nvim-lualine/lualine.nvim", -- Status line at the bottom of the window
 		version = "*",
-		lazy = false,
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			require("user.plugins.lualine")
-		end,
+		opts = {
+			options = {
+				component_separators = { left = "", right = "" },
+				section_separators = { left = "", right = "" },
+				disabled_filetypes = { "statusline", "winbar" },
+				globalstatus = true,
+			},
+			sections = {
+				lualine_a = { "mode" },
+				lualine_b = {
+					"branch",
+					{
+						"diff",
+						colored = true,
+						cond = function()
+							return vim.fn.winwidth(0) > 80
+						end,
+					},
+					"diagnostics",
+				},
+				lualine_c = { "filename" },
+				lualine_x = { "encoding", "fileformat", "filetype" },
+				lualine_y = { "progress" },
+				lualine_z = { "location" },
+			},
+			inactive_sections = {
+				lualine_a = {},
+				lualine_b = {},
+				lualine_c = { "filename" },
+				lualine_x = { "location" },
+				lualine_y = {},
+				lualine_z = {},
+			},
+			extensions = {
+				"nvim-tree",
+				"toggleterm",
+				"nvim-dap-ui",
+			},
+		},
 	},
 	{
 		"akinsho/bufferline.nvim", -- Pretty tab bar
@@ -252,8 +287,8 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"NvChad/nvim-colorizer.lua",
-		event = { "BufReadPre", "BufNewFile" },
+		"catgoose/nvim-colorizer.lua",
+		event = "BufReadPre",
 		opts = {
 			filetypes = {
 				"javascript",
@@ -308,11 +343,6 @@ require("lazy").setup({
 			require("pretty_hover").setup()
 			vim.lsp.buf.hover = require("pretty_hover").hover
 		end,
-	},
-	{
-		"edluffy/hologram.nvim",
-		ft = "md",
-		opts = { auto_display = true },
 	},
 	{
 		"folke/todo-comments.nvim",
@@ -653,7 +683,53 @@ require("lazy").setup({
 		},
 		build = ":TSUpdate",
 		config = function()
-			require("user.plugins.treesitter")
+			require("nvim-treesitter.configs").setup({
+				auto_install = true,
+				highlight = {
+					enable = true,
+				},
+				-- Extensions
+				autopairs = {
+					enable = true,
+				},
+				indent = {
+					enable = true,
+					disable = { "yaml" },
+				},
+				rainbow = {
+					enable = true,
+					extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+					max_file_lines = nil, -- Do not enable for files with more than n lines, int
+				},
+				textobjects = {
+					select = {
+						enable = true,
+						lookahead = true,
+						keymaps = {
+							["af"] = { query = "@function.outer", desc = "Select outer part of a function" },
+							["if"] = { query = "@function.inner", desc = "Select inner part of a function" },
+							["ac"] = { query = "@class.outer", desc = "Select outer part of a class region" },
+							["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+							["as"] = {
+								query = "@scope.outer",
+								query_group = "locals",
+								desc = "Select inner language scope",
+							},
+							["is"] = {
+								query = "@scope.inner",
+								query_group = "locals",
+								desc = "Select outer language scope",
+							},
+						},
+						selection_modes = {
+							["@parameter.outer"] = "v", -- charwise
+							["@function.outer"] = "V", -- linewise
+							["@class.outer"] = "<c-v>", -- blockwise
+						},
+						include_surrounding_whitespace = true,
+					},
+				},
+			})
 		end,
 	},
 	{
