@@ -5,6 +5,8 @@ Stores configuration files I share across machines.
 I only keep track of configs within `~/.config` and use `stow` to link
 the contents of this repo into the right place
 
+[Mirrored on GitHub at `whiite/config`](https://github.com/whiite/config) from [GitLab at `monokuro/config`](https://gitlab.com/monokuro/config)
+
 ## Setup
 
 ### Manual
