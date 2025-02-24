@@ -36,6 +36,7 @@ function M.setup(on_attach)
 			-- Diagnostics
 			cspell.diagnostics.with(cspell_config),
 			diagnostics.fish,
+			diagnostics.actionlint,
 
 			-- Actions
 			actions.gitsigns,
