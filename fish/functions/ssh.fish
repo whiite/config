@@ -1,6 +1,6 @@
 #! fish
 function ssh --description "Wrapper around SSH to use the SSH kitten if available"
-    if type -q kitten
+    if is_kitty
         kitten ssh $argv
     else
         command ssh $argv
