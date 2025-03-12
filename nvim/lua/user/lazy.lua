@@ -562,6 +562,10 @@ require("lazy").setup({
 		opts = {
 			close_if_last_window = true,
 			filesystem = {
+				filtered_items = {
+					hide_dotfiles = false,
+					hide_gitignored = false,
+				},
 				follow_current_file = {
 					enabled = true,
 					leave_dirs_open = false,
@@ -584,6 +588,12 @@ require("lazy").setup({
 						if args.position == "left" or args.position == "right" then
 							vim.cmd("wincmd =")
 						end
+					end,
+				},
+				{
+					event = "file_open_requested",
+					handler = function()
+						require("neo-tree.command").execute({ action = "close" })
 					end,
 				},
 			},
