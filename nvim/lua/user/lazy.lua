@@ -106,8 +106,8 @@ require("lazy").setup({
 					"diagnostics",
 				},
 				lualine_c = { "filename" },
-				lualine_x = { "encoding", "fileformat", "filetype" },
-				lualine_y = { "progress" },
+				lualine_x = { "lsp_status" },
+				lualine_y = { "encoding", "filetype" },
 				lualine_z = { "location" },
 			},
 			inactive_sections = {
@@ -119,9 +119,8 @@ require("lazy").setup({
 				lualine_z = {},
 			},
 			extensions = {
-				"nvim-tree",
+				"neo-tree",
 				"toggleterm",
-				"nvim-dap-ui",
 			},
 		},
 	},
