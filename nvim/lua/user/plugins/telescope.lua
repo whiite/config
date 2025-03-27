@@ -117,6 +117,7 @@ telescope.setup({
 		},
 		live_grep = {
 			file_ignore_patterns = list_extend(file_ignore_common, { ".*-lock%..+$", ".%.lock.?$" }),
+			additional_args = { "--hidden" },
 		},
 		lsp_references = {
 			theme = "cursor",
