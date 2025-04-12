@@ -389,75 +389,77 @@ require("lazy").setup({
 	},
 
 	-- Color schemes
-	{
-		"folke/tokyonight.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			require("tokyonight").setup({
-				style = "night", -- "storm" | "moon" | "night" | "day"
-				styles = {
-					sidebars = "dark",
-				},
-				lualine_bold = true,
-				transparent = false,
-				-- borderless telescope
-				on_highlights = function(hl, c)
-					local prompt = "#2d3149"
-					hl.TelescopeNormal = {
-						bg = c.bg_dark,
-						fg = c.fg_dark,
-					}
-					hl.TelescopeBorder = {
-						bg = c.bg_dark,
-						fg = c.bg_dark,
-					}
-					hl.TelescopePromptNormal = {
-						bg = prompt,
-					}
-					hl.TelescopePromptBorder = {
-						bg = prompt,
-						fg = prompt,
-					}
-					hl.TelescopePromptTitle = {
-						bg = prompt,
-						fg = prompt,
-					}
-					hl.TelescopePreviewTitle = {
-						bg = c.bg_dark,
-						fg = c.bg_dark,
-					}
-					hl.TelescopeResultsTitle = {
-						bg = c.bg_dark,
-						fg = c.bg_dark,
-					}
-				end,
-			})
-			require("user.utils.colorscheme").set_colorscheme("tokyonight")
-		end,
-	},
 	-- {
-	-- 	"rebelot/kanagawa.nvim",
+	-- 	"folke/tokyonight.nvim",
+	-- 	lazy = false,
+	-- 	priority = 1000,
 	-- 	config = function()
-	-- 		require("kanagawa").setup({
-	-- 			theme = "wave", -- wave | dragon | lotus
-	-- 			overrides = function(colors)
-	-- 				local theme = colors.theme
-	-- 				return {
-	-- 					-- Block style telescope
-	-- 					TelescopeTitle = { fg = theme.ui.special, bold = true },
-	-- 					TelescopePromptNormal = { bg = theme.ui.bg_p1 },
-	-- 					TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
-	-- 					TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
-	-- 					TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
-	-- 					TelescopePreviewNormal = { bg = theme.ui.bg_dim },
-	-- 					TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
+	-- 		require("tokyonight").setup({
+	-- 			style = "storm", -- "storm" | "moon" | "night" | "day"
+	-- 			styles = {
+	-- 				sidebars = "dark",
+	-- 			},
+	-- 			lualine_bold = true,
+	-- 			transparent = false,
+	-- 			-- borderless telescope
+	-- 			on_highlights = function(hl, c)
+	-- 				local prompt = "#2d3149"
+	-- 				hl.TelescopeNormal = {
+	-- 					bg = c.bg_dark,
+	-- 					fg = c.fg_dark,
+	-- 				}
+	-- 				hl.TelescopeBorder = {
+	-- 					bg = c.bg_dark,
+	-- 					fg = c.bg_dark,
+	-- 				}
+	-- 				hl.TelescopePromptNormal = {
+	-- 					bg = prompt,
+	-- 				}
+	-- 				hl.TelescopePromptBorder = {
+	-- 					bg = prompt,
+	-- 					fg = prompt,
+	-- 				}
+	-- 				hl.TelescopePromptTitle = {
+	-- 					bg = prompt,
+	-- 					fg = prompt,
+	-- 				}
+	-- 				hl.TelescopePreviewTitle = {
+	-- 					bg = c.bg_dark,
+	-- 					fg = c.bg_dark,
+	-- 				}
+	-- 				hl.TelescopeResultsTitle = {
+	-- 					bg = c.bg_dark,
+	-- 					fg = c.bg_dark,
 	-- 				}
 	-- 			end,
 	-- 		})
-	-- 		require("user.utils.colorscheme").set_colorscheme("kanagawa")
+	-- 		-- require("user.utils.colorscheme").set_colorscheme("tokyonight")
 	-- 	end,
 	-- },
+	{
+		"rebelot/kanagawa.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("kanagawa").setup({
+				theme = "wave", -- wave | dragon | lotus
+				overrides = function(colors)
+					local theme = colors.theme
+					return {
+						-- Block style telescope
+						TelescopeTitle = { fg = theme.ui.special, bold = true },
+						TelescopePromptNormal = { bg = theme.ui.bg_p1 },
+						TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
+						TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
+						TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
+						TelescopePreviewNormal = { bg = theme.ui.bg_dim },
+						TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
+					}
+				end,
+			})
+			require("user.utils.colorscheme").set_colorscheme("kanagawa")
+		end,
+	},
 
 	-- Debugging
 	{
