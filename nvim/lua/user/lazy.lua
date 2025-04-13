@@ -670,6 +670,36 @@ require("lazy").setup({
 		},
 	},
 
+	-- AI
+	{
+		"yetone/avante.nvim",
+		event = "VeryLazy",
+		lazy = false,
+		version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.opts = {
+		build = "make",
+		dependencies = {
+			"stevearc/dressing.nvim",
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			{
+				"MeanderingProgrammer/render-markdown.nvim",
+				opts = {
+					file_types = { "markdown", "Avante" },
+				},
+				ft = { "markdown", "Avante" },
+			},
+		},
+		opts = {
+			provider = "ollama",
+			behaviour = {
+				enable_cursor_planning_mode = true,
+			},
+			ollama = {
+				model = "qwen2.5-coder:7b",
+			},
+		},
+	},
+
 	-- LSP
 	{ "neovim/nvim-lspconfig", lazy = true }, -- enable LSP
 	{
