@@ -372,16 +372,6 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"Fildo7525/pretty_hover",
-		lazy = true,
-		enabled = false,
-		event = "LspAttach",
-		config = function()
-			require("pretty_hover").setup()
-			vim.lsp.buf.hover = require("pretty_hover").hover
-		end,
-	},
-	{
 		"folke/todo-comments.nvim",
 		event = "LspAttach",
 		dependencies = { "nvim-lua/plenary.nvim" },
@@ -673,7 +663,6 @@ require("lazy").setup({
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
 			"MunifTanjim/nui.nvim",
-			"3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
 		},
 		keys = {
 			{ "<leader>e", "<cmd>Neotree toggle left<cr>", desc = "Explorer" },
