@@ -5,17 +5,15 @@ end
 
 return {
 	settings = {
-		yaml = {
-			schemaStore = {
-				enable = true,
-			},
-			format = {
-				enable = false,
-				bracketSpacing = true,
-			},
-			keyOrdering = false,
-			validate = true,
-			completion = true,
+		schemaStore = {
+			enable = true,
 		},
+		format = {
+			enable = false,
+			bracketSpacing = true,
+		},
+		keyOrdering = false,
+		validate = true,
+		completion = true,
 	},
 }
