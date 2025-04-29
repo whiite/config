@@ -267,6 +267,7 @@ require("lazy").setup({
 			fuzzy = { implementation = "prefer_rust_with_warning" },
 			cmdline = {
 				enabled = true,
+				keymap = { preset = "super-tab" },
 				completion = {
 					menu = {
 						auto_show = true,
@@ -485,7 +486,7 @@ require("lazy").setup({
 				{
 					type = "pwa-node",
 					request = "launch",
-					name = "Launch JS-Debug",
+					name = "Debug file",
 					cwd = "${workspaceFolder}",
 					program = "${file}",
 				},
