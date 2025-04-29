@@ -466,7 +466,31 @@ require("lazy").setup({
 		},
 		dependencies = { "williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim" },
 		config = function()
-			require("user.plugins.nvim-dap")
+			vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "Error", linehl = "", numhl = "" })
+			local dap = require("dap")
+			dap.adapters["pwa-node"] = {
+				type = "server",
+				host = "localhost",
+				port = "${port}",
+				executable = {
+					command = "node",
+					args = {
+						require("mason-registry").get_package("js-debug-adapter"):get_install_path()
+							.. "/js-debug/src/dapDebugServer.js",
+						"${port}",
+					},
+				},
+			}
+			dap.configurations.typescript = {
+				{
+					type = "pwa-node",
+					request = "launch",
+					name = "Launch JS-Debug",
+					cwd = "${workspaceFolder}",
+					program = "${file}",
+				},
+			}
+			dap.configurations.javascript = dap.configurations.typescript
 		end,
 		keys = {
 			{
