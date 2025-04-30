@@ -950,7 +950,7 @@ require("lazy").setup({
 	-- Git
 	{
 		"lewis6991/gitsigns.nvim",
-		event = { "BufReadPre", "BufNewFile" },
+		lazy = false,
 		opts = {
 			watch_gitdir = {
 				interval = 1000,
@@ -971,14 +971,14 @@ require("lazy").setup({
 			{
 				"<leader>gj",
 				function()
-					require("gitsigns").next_hunk()
+					require("gitsigns").nav_hunk("next")
 				end,
 				desc = "Next Hunk",
 			},
 			{
 				"<leader>gk",
 				function()
-					require("gitsigns").prev_hunk()
+					require("gitsigns").nav_hunk("prev")
 				end,
 				desc = "Prev Hunk",
 			},
@@ -1015,14 +1015,7 @@ require("lazy").setup({
 				function()
 					require("gitsigns").stage_hunk()
 				end,
-				desc = "Stage Hunk",
-			},
-			{
-				"<leader>gu",
-				function()
-					require("gitsigns").undo_stage_hunk()
-				end,
-				desc = "Undo Stage Hunk",
+				desc = "Stage Hunk Toggle",
 			},
 			{ "<leader>go", "<cmd>Telescope git_status<cr>", desc = "Open changed file" },
 			{ "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" },
