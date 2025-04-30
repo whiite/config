@@ -199,7 +199,6 @@ require("lazy").setup({
 		lazy = true,
 		cmd = "Silicon",
 		opts = {
-			font = "Fira Code=34",
 			theme = "Dracula",
 			background = "#333",
 			no_window_controls = true,
