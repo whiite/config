@@ -481,6 +481,15 @@ require("lazy").setup({
 					},
 				},
 			}
+			dap.adapters.chrome = {
+				type = "executable",
+				command = "node",
+				args = {
+					require("mason-registry").get_package("chrome-debug-adapter"):get_install_path()
+						.. "/out/src/chromeDebug.js",
+				},
+			}
+
 			dap.configurations.typescript = {
 				{
 					type = "pwa-node",
@@ -489,8 +498,21 @@ require("lazy").setup({
 					cwd = "${workspaceFolder}",
 					program = "${file}",
 				},
+				{
+					type = "chrome",
+					request = "attach",
+					name = "Chrome attach",
+					program = "${file}",
+					cwd = vim.fn.getcwd(),
+					sourceMaps = true,
+					protocol = "inspector",
+					port = 9222,
+					webRoot = "${workspaceFolder}",
+				},
 			}
 			dap.configurations.javascript = dap.configurations.typescript
+			dap.configurations.javascriptreact = dap.configurations.typescript
+			dap.configurations.typescriptreact = dap.configurations.typescript
 		end,
 		keys = {
 			{
