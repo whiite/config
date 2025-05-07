@@ -250,7 +250,7 @@ require("lazy").setup({
 			},
 
 			-- (Default) Only show the documentation popup when manually triggered
-			completion = { documentation = { auto_show = false } },
+			completion = { documentation = { auto_show = true } },
 
 			-- Default list of enabled providers defined so that you can extend it
 			-- elsewhere in your config, without redefining it, due to `opts_extend`
@@ -464,7 +464,7 @@ require("lazy").setup({
 			"DapStepOut",
 			"DapTerminate",
 		},
-		dependencies = { "williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim" },
+		dependencies = { "mason-org/mason.nvim", "mason-org/mason-lspconfig.nvim" },
 		config = function()
 			vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "Error", linehl = "", numhl = "" })
 			local dap = require("dap")
@@ -475,8 +475,7 @@ require("lazy").setup({
 				executable = {
 					command = "node",
 					args = {
-						require("mason-registry").get_package("js-debug-adapter"):get_install_path()
-							.. "/js-debug/src/dapDebugServer.js",
+						"js-debug-adapter",
 						"${port}",
 					},
 				},
@@ -485,8 +484,7 @@ require("lazy").setup({
 				type = "executable",
 				command = "node",
 				args = {
-					require("mason-registry").get_package("chrome-debug-adapter"):get_install_path()
-						.. "/out/src/chromeDebug.js",
+					"chrome-debug-adapter",
 				},
 			}
 
@@ -547,14 +545,14 @@ require("lazy").setup({
 	},
 	{
 		"mrcjkb/rustaceanvim", -- Rust LSP and DAP support
+		dependencies = { "mason-org/mason.nvim" },
 		version = "^6",
 		lazy = false,
 		config = function()
 			vim.g.rustaceanvim = function()
 				local lsp_handlers = require("user.lsp.handlers")
 				-- debug setup
-				local extension_path = require("mason-registry").get_package("codelldb"):get_install_path()
-					.. "/extension"
+				local extension_path = vim.fn.expand("$MASON/share/codelldb") .. "/extension"
 				local codelldb_path = extension_path .. "/adapter/codelldb"
 				local liblldb_path = extension_path .. "/lldb/lib/liblldb.dylib"
 				local rust_config = require("rustaceanvim.config")
@@ -772,12 +770,15 @@ require("lazy").setup({
 	-- LSP
 	{ "neovim/nvim-lspconfig", lazy = true }, -- enable LSP
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
 		keys = {
 			{ "<leader>m", "<cmd>Mason<cr>", desc = "Open Mason installer" },
 		},
 	}, -- LSP/lint and debug manager
-	{ "williamboman/mason-lspconfig.nvim" }, -- lspconfig compatibility
+	{
+		"mason-org/mason-lspconfig.nvim",
+		dependencies = { "neovim/nvim-lspconfig" },
+	}, -- lspconfig compatibility
 	{
 		"nvimtools/none-ls.nvim", -- for formatters and linters
 		lazy = true,
