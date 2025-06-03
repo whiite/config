@@ -761,8 +761,10 @@ require("lazy").setup({
 			behaviour = {
 				enable_cursor_planning_mode = true,
 			},
-			ollama = {
-				model = "qwen2.5-coder:7b",
+			providers = {
+				ollama = {
+					model = "qwen2.5-coder:7b",
+				},
 			},
 		},
 	},
@@ -823,13 +825,15 @@ require("lazy").setup({
 	-- Treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
+		lazy = false,
+		branch = "main",
+		build = ":TSUpdate",
 		dependencies = {
 			-- extensions
 			"nvim-treesitter/nvim-treesitter-context",
 			"JoosepAlviste/nvim-ts-context-commentstring",
 			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
-		build = ":TSUpdate",
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				auto_install = true,
