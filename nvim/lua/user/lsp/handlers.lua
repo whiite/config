@@ -1,6 +1,17 @@
 -- 'M' nvim plugin convention
 local M = {}
 
+local border = {
+	{ "🭽", "FloatBorder" },
+	{ "▔", "FloatBorder" },
+	{ "🭾", "FloatBorder" },
+	{ "▕", "FloatBorder" },
+	{ "🭿", "FloatBorder" },
+	{ "▁", "FloatBorder" },
+	{ "🭼", "FloatBorder" },
+	{ "▏", "FloatBorder" },
+}
+
 M.setup = function()
 	-- Diagnostic sign setup
 	local signs = {
@@ -14,7 +25,7 @@ M.setup = function()
 		vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
 	end
 
-	local config = {
+	vim.diagnostic.config({
 		-- diagnostic text appears at the end of the line
 		virtual_text = {
 			severity = {
@@ -31,23 +42,11 @@ M.setup = function()
 		float = {
 			focusable = false,
 			style = "minimal",
-			border = "rounded",
-			source = "always",
+			-- border = border,
+			source = true,
 			header = "",
 			prefix = "",
 		},
-	}
-
-	vim.diagnostic.config(config)
-
-	-- Hover window settings
-	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-		border = "rounded",
-	})
-
-	-- Signature settings
-	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-		border = "rounded",
 	})
 
 	-- LSP bindings
@@ -96,7 +95,9 @@ local function lsp_keymaps(bufnr)
 		buffer = bufnr,
 	})
 	vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Show diagnostics" })
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover", buffer = bufnr })
+	vim.keymap.set("n", "K", function()
+		vim.lsp.buf.hover({ border = border })
+	end, { desc = "Hover", buffer = bufnr })
 	vim.keymap.set(
 		"n",
 		"gi",
@@ -114,7 +115,8 @@ local function lsp_keymaps(bufnr)
 
 	local diagnostic_severity = { min = vim.diagnostic.severity.INFO }
 	vim.keymap.set("n", "<leader>lk", function()
-		vim.diagnostic.goto_prev({
+		vim.diagnostic.jump({
+			count = -1,
 			severity = diagnostic_severity,
 		})
 	end, {
@@ -122,7 +124,8 @@ local function lsp_keymaps(bufnr)
 		buffer = bufnr,
 	})
 	vim.keymap.set("n", "<leader>lj", function()
-		vim.diagnostic.goto_next({
+		vim.diagnostic.jump({
+			count = 1,
 			severity = diagnostic_severity,
 		})
 	end, {
@@ -130,18 +133,20 @@ local function lsp_keymaps(bufnr)
 		buffer = bufnr,
 	})
 	vim.keymap.set("n", "<leader>lK", function()
-		vim.diagnostic.goto_next({
+		vim.diagnostic.jump({
+			count = -1,
 			severity = diagnostic_severity,
-			cursor_position = { 0, 0 },
+			pos = { 0, 0 },
 		})
 	end, {
 		desc = "First diagnostic",
 		buffer = bufnr,
 	})
 	vim.keymap.set("n", "<leader>lJ", function()
-		vim.diagnostic.goto_prev({
+		vim.diagnostic.jump({
+			count = 1,
 			severity = diagnostic_severity,
-			cursor_position = { 0, 0 },
+			pos = { 0, 0 },
 		})
 	end, {
 		desc = "Last diagnostic",
@@ -189,15 +194,5 @@ M.on_attach = function(client, bufnr)
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
 end
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not status_ok then
-	return M
-end
-
--- cmp hook to enable LSP capabilities
-M.capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
 return M

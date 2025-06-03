@@ -176,7 +176,7 @@ local schemas = {
 	},
 }
 
-local opts = {
+vim.lsp.config("jsonls", {
 	settings = {
 		json = {
 			schemas = schemas,
@@ -191,6 +191,4 @@ local opts = {
 			},
 		},
 	},
-}
-
-return opts
+})

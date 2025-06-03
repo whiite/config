@@ -1,9 +1,4 @@
-local status_ok, lspconfig = pcall(require, "lspconfig")
-if not status_ok then
-	return
-end
-
-return {
+vim.lsp.config("yamlls", {
 	settings = {
 		schemaStore = {
 			enable = true,
@@ -16,4 +11,4 @@ return {
 		validate = true,
 		completion = true,
 	},
-}
+})
