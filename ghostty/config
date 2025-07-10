@@ -7,6 +7,10 @@ macos-titlebar-style = tabs
 font-family = "Fira Code"
 font-size = 12
 
+# Quick terminal
+quick-terminal-position = "top"
+quick-terminal-animation-duration = 0.05
+
 # Bindings
 keybind = global:cmd+ctrl+t=toggle_quick_terminal
 
