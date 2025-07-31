@@ -122,6 +122,11 @@ telescope.setup({
 		lsp_references = {
 			theme = "cursor",
 			show_line = false,
+			layout_config = {
+				width = 0.7,
+				height = 0.5,
+				preview_cutoff = 60,
+			},
 		},
 		lsp_definitions = {
 			theme = "ivy",
