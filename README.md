@@ -11,7 +11,7 @@ the contents of this repo into the right place
 
 ### Manual
 
-Will need to install `stow` then:
+Easiest way is with [`stow`](https://www.gnu.org/software/stow/) then:
 
 ```bash
 # Ensure ~/.config exists if not already
@@ -27,7 +27,7 @@ Unsure why but on MacOS the lazygit config may be needed in a different director
 cp lazygit/config.yaml ~/Library/Application\ Support/lazygit/config.yml
 ```
 
-Configs for lazygit, neovim and kitty depend are setup to use nerd font icons.
+Configs for lazygit, neovim and kitty are setup to use nerd font icons which can be installed
 
 Homebrew install
 
