@@ -11,7 +11,7 @@ the contents of this repo into the right place
 
 ### Manual
 
-Easiest way is with [`stow`](https://www.gnu.org/software/stow/) then:
+Easiest way is with [`stow`](https://www.gnu.org/software/stow/):
 
 ```bash
 # Ensure ~/.config exists if not already
