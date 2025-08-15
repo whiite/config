@@ -6,3 +6,5 @@ nvim/plugin/packer_compiled.lua
 
 # Shell
 fish/fish_variables
+fish/completions/docker.fish
+fish/completions/tailscale.fish
