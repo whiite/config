@@ -466,7 +466,6 @@ require("lazy").setup({
 		},
 		dependencies = { "mason-org/mason.nvim", "mason-org/mason-lspconfig.nvim" },
 		config = function()
-			vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "Error", linehl = "", numhl = "" })
 			local dap = require("dap")
 			dap.adapters["pwa-node"] = {
 				type = "server",

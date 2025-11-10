@@ -13,44 +13,7 @@ local border = {
 }
 
 M.setup = function()
-	-- Diagnostic sign setup
-	local signs = {
-		{ name = "DiagnosticSignError", text = "" },
-		{ name = "DiagnosticSignWarn", text = "" },
-		{ name = "DiagnosticSignInfo", text = "" },
-		{ name = "DiagnosticSignHint", text = "󰌶" },
-	}
-
-	for _, sign in ipairs(signs) do
-		vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-	end
-
-	vim.diagnostic.config({
-		-- diagnostic text appears at the end of the line
-		virtual_text = {
-			severity = {
-				min = vim.diagnostic.severity.INFO,
-			},
-		},
-		-- show signs
-		signs = {
-			active = signs,
-		},
-		update_in_insert = true,
-		underline = true,
-		severity_sort = true,
-		float = {
-			focusable = false,
-			style = "minimal",
-			-- border = border,
-			source = true,
-			header = "",
-			prefix = "",
-		},
-	})
-
 	-- LSP bindings
-
 	vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, { desc = "Code Action" })
 	vim.keymap.set("n", "<leader>ld", "<cmd>Telescope lsp_document_diagnostics<cr>", { desc = "Document Diagnostics" })
 	vim.keymap.set(

@@ -8,30 +8,52 @@ vim.lsp.config("*", {
 	capabilities = vim.lsp.protocol.make_client_capabilities(),
 })
 
+vim.diagnostic.config({
+	-- diagnostic text appears at the end of the line
+	virtual_text = {
+		severity = {
+			min = vim.diagnostic.severity.INFO,
+		},
+	},
+	-- show signs
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "",
+			[vim.diagnostic.severity.WARN] = "",
+			[vim.diagnostic.severity.INFO] = "",
+			[vim.diagnostic.severity.HINT] = "󰌶",
+			DapBreakpoint = ""
+		}
+	},
+	update_in_insert = true,
+	underline = true,
+	severity_sort = true,
+	float = {
+		focusable = false,
+		style = "minimal",
+		-- border = border,
+		source = true,
+		header = "",
+		prefix = "",
+	},
+})
+
+
 -- Useful for allowing plugins to configure and setup a server instead
 local server_exclude = {
 	"rust_analyzer", -- Handled by rustaceanvim
 }
--- LSPs requiring the lspconfig[server_name].setup(...)
-local server_legacy = {
-	-- "angularls",
-}
 
 local server_list = vim.tbl_filter(function(item)
-	return not (vim.tbl_contains(server_exclude, item) or vim.tbl_contains(server_legacy, item))
+	return not (vim.tbl_contains(server_exclude, item))
 end, mason_lspconfig.get_installed_servers())
-
-for _, server_name in pairs(server_legacy) do
-	require("lspconfig")[server_name].setup({
-		on_attach = on_attach,
-		capabilities = vim.lsp.protocol.make_client_capabilities(),
-	})
-end
 
 for _, server_name in pairs(server_list) do
 	local server_settings_path = "user.lsp.settings." .. server_name
 	pcall(require, server_settings_path)
 end
+
+
 -- vim.lsp.enable(server_list)
 require("user.lsp.settings.null-ls").setup(on_attach)
 require("user.lsp.handlers").setup()
