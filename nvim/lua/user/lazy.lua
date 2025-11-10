@@ -189,10 +189,11 @@ require("lazy").setup({
 	{ "tpope/vim-sleuth", event = { "BufReadPre", "BufNewFile" } }, -- Auto detect indentation and tabstop (tab/space)
 	{
 		"ggandor/leap.nvim", -- Fast movement by using 's'/'S' followed by characters you wish to leap to
-		event = { "BufReadPre", "BufNewFile" },
-		config = function()
-			require("leap").add_default_mappings()
-		end,
+		lazy = false,
+		keys = {
+			{"s", '<Plug>(leap)', desc = "Leap to", mode = {'n', 'x', 'o'}},
+			{"S", '<Plug>(leap-from-window)', desc = "Leap backward to", mode = 'n'},
+		},
 	},
 	{
 		"michaelrommel/nvim-silicon",
@@ -736,38 +737,6 @@ require("lazy").setup({
 		},
 	},
 
-	-- AI
-	{
-		"yetone/avante.nvim",
-		event = "VeryLazy",
-		lazy = false,
-		version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.opts = {
-		build = "make",
-		dependencies = {
-			"stevearc/dressing.nvim",
-			"nvim-lua/plenary.nvim",
-			"MunifTanjim/nui.nvim",
-			{
-				"MeanderingProgrammer/render-markdown.nvim",
-				opts = {
-					file_types = { "markdown", "Avante" },
-				},
-				ft = { "markdown", "Avante" },
-			},
-		},
-		opts = {
-			provider = "ollama",
-			behaviour = {
-				enable_cursor_planning_mode = true,
-			},
-			providers = {
-				ollama = {
-					model = "qwen2.5-coder:7b",
-				},
-			},
-		},
-	},
-
 	-- LSP
 	{ "neovim/nvim-lspconfig", lazy = true }, -- enable LSP
 	{
@@ -782,7 +751,7 @@ require("lazy").setup({
 	}, -- lspconfig compatibility
 	{
 		"nvimtools/none-ls.nvim", -- for formatters and linters
-		lazy = true,
+		event = "VeryLazy",
 		dependencies = { "nvim-lua/plenary.nvim", "davidmh/cspell.nvim" },
 	},
 	{
@@ -820,7 +789,6 @@ require("lazy").setup({
 			},
 		},
 	}, -- typings for neovim within lua files
-	{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
 	-- Treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
