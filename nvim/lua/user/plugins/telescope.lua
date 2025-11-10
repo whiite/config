@@ -7,7 +7,7 @@ local actions = require("telescope.actions")
 local themes = require("telescope.themes")
 local action_layout = require("telescope.actions.layout")
 
-local file_ignore_common = { "^%.git/", "node_modules", "target", "%.yarn/" }
+local file_ignore_common = { "^%.git/", "node_modules", "target", "%.yarn/", "dist" }
 
 ---@param t1 table
 ---@param t2 table
@@ -113,7 +113,9 @@ telescope.setup({
 		-- Now the picker_config_key will be applied every time you call this
 		-- builtin picker
 		find_files = {
+			follow = true,
 			hidden = true,
+			no_ignore = true,
 		},
 		live_grep = {
 			file_ignore_patterns = list_extend(file_ignore_common, { ".*-lock%..+$", ".%.lock.?$" }),
