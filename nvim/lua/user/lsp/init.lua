@@ -2,6 +2,8 @@ require("mason").setup()
 local mason_lspconfig = require("mason-lspconfig")
 mason_lspconfig.setup()
 
+vim.keymap.set("n", "<leader>F", "<cmd>Format<cr>", { desc = "Format buffer", buffer = bufnr })
+
 local on_attach = require("user.lsp.handlers").on_attach
 vim.lsp.config("*", {
 	on_attach = on_attach,
@@ -52,8 +54,7 @@ for _, server_name in pairs(server_list) do
 	local server_settings_path = "user.lsp.settings." .. server_name
 	pcall(require, server_settings_path)
 end
+vim.lsp.enable(server_list)
 
-
--- vim.lsp.enable(server_list)
 require("user.lsp.settings.null-ls").setup(on_attach)
 require("user.lsp.handlers").setup()

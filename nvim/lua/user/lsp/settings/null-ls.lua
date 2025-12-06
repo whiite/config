@@ -26,12 +26,9 @@ function M.setup(on_attach)
 			-- Formatters
 			formatting.prettierd.with({
 				condition = function(utils)
-					return not utils.root_has_file("deno.json")
+					return not utils.root_has_file("deno.json") and utils.root_has_file_matches(".prettierrc.*")
 				end,
 			}),
-			formatting.black.with({ extra_args = { "--fast" } }),
-			formatting.stylua,
-			formatting.fish_indent,
 
 			-- Diagnostics
 			cspell.diagnostics.with(cspell_config),

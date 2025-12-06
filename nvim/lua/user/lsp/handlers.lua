@@ -115,39 +115,18 @@ local function lsp_keymaps(bufnr)
 		desc = "Last diagnostic",
 		buffer = bufnr,
 	})
-
-	vim.api.nvim_create_user_command("Format", function()
-		vim.lsp.buf.format({ async = true })
-	end, {
-		nargs = "*",
-		desc = "Format the current file using the language server",
-	})
-	vim.keymap.set("n", "<leader>F", "<cmd>Format<cr>", { desc = "Format buffer", buffer = bufnr })
 end
 
 local format_exclude = {
 	"ts_ls",
-	"lua_ls",
 	"jsonls",
 	"html",
 	"somesass_ls",
 }
 
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 M.on_attach = function(client, bufnr)
 	if vim.tbl_contains(format_exclude, client.name) then
 		client.server_capabilities.documentFormattingProvider = false
-	end
-
-	if client:supports_method("textDocument/formatting") then
-		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			group = augroup,
-			buffer = bufnr,
-			callback = function()
-				vim.lsp.buf.format({ bufnr = bufnr })
-			end,
-		})
 	end
 
 	if client.name == "angularls" then

@@ -30,7 +30,7 @@ require("lazy").setup({
 				},
 				disable_filetype = { "TelescopePrompt", "spectre_panel" }, -- find file type with: `echo &ft`
 				fast_wrap = {
-					map = "<M-e>", -- 'M' = modifier = alt
+					map = "<M-e>",                             -- 'M' = modifier = alt
 					chars = { "{", "[", "(", '"', "'", "`", "<" },
 					pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
 					offset = 0, -- Offset from pattern match
@@ -144,15 +144,15 @@ require("lazy").setup({
 			},
 		},
 		keys = {
-			{ "<leader>c", "<cmd>bprevious<bar>bdelete!#<cr>", desc = "Close Buffer" },
+			{ "<leader>c",  "<cmd>bprevious<bar>bdelete!#<cr>", desc = "Close Buffer" },
 			{
 				"<leader>C",
 				"<cmd>%bdelete<cr>",
 				desc = "Close All Buffers",
 			},
 			{ "<leader>bc", "<cmd>bprevious<bar>bdelete!#<cr>", desc = "Close current buffer" },
-			{ "<leader>bC", "<cmd>%bdelete<cr>", desc = "Close All Buffers" },
-			{ "<leader>bo", "<cmd>BufferLineCloseOthers<cr>", desc = "Close All Other Buffers" },
+			{ "<leader>bC", "<cmd>%bdelete<cr>",                desc = "Close All Buffers" },
+			{ "<leader>bo", "<cmd>BufferLineCloseOthers<cr>",   desc = "Close All Other Buffers" },
 			{
 				"<leader>bf",
 				function()
@@ -162,9 +162,9 @@ require("lazy").setup({
 				end,
 				desc = "Find buffer",
 			},
-			{ "<leader>bp", "<cmd>BufferLinePick<CR>", desc = "Pick buffer" },
-			{ "<leader>bP", "<cmd>BufferLineTogglePin<CR>", desc = "Pin buffer" },
-			{ "<leader>bL", "<cmd>BufferLineCloseLeft<CR>", desc = "Close left buffers" },
+			{ "<leader>bp", "<cmd>BufferLinePick<CR>",       desc = "Pick buffer" },
+			{ "<leader>bP", "<cmd>BufferLineTogglePin<CR>",  desc = "Pin buffer" },
+			{ "<leader>bL", "<cmd>BufferLineCloseLeft<CR>",  desc = "Close left buffers" },
 			{ "<leader>bR", "<cmd>BufferLineCloseRight<CR>", desc = "Close right buffers" },
 		},
 	},
@@ -185,14 +185,14 @@ require("lazy").setup({
 			centered_peeking = true, -- Peeked line will be centered relative to window
 		},
 	},
-	{ "tpope/vim-surround", event = { "BufReadPre", "BufNewFile" } }, -- Easily modify surrounding characters
-	{ "tpope/vim-sleuth", event = { "BufReadPre", "BufNewFile" } }, -- Auto detect indentation and tabstop (tab/space)
+	{ "tpope/vim-surround",   event = { "BufReadPre", "BufNewFile" } }, -- Easily modify surrounding characters
+	{ "tpope/vim-sleuth",     event = { "BufReadPre", "BufNewFile" } }, -- Auto detect indentation and tabstop (tab/space)
 	{
-		"ggandor/leap.nvim", -- Fast movement by using 's'/'S' followed by characters you wish to leap to
+		"ggandor/leap.nvim",                                         -- Fast movement by using 's'/'S' followed by characters you wish to leap to
 		lazy = false,
 		keys = {
-			{"s", '<Plug>(leap)', desc = "Leap to", mode = {'n', 'x', 'o'}},
-			{"S", '<Plug>(leap-from-window)', desc = "Leap backward to", mode = 'n'},
+			{ "s", '<Plug>(leap)',             desc = "Leap to",          mode = { 'n', 'x', 'o' } },
+			{ "S", '<Plug>(leap-from-window)', desc = "Leap backward to", mode = 'n' },
 		},
 	},
 	{
@@ -211,7 +211,7 @@ require("lazy").setup({
 			end,
 		},
 		keys = {
-			{ "<leader>S", ":Silicon<cr>", desc = "Screenshot selected", mode = "v" },
+			{ "<leader>S", ":Silicon<cr>",     desc = "Screenshot selected", mode = "v" },
 			{ "<leader>S", "<cmd>Silicon<cr>", desc = "Screenshot file" },
 		},
 	},
@@ -521,12 +521,12 @@ require("lazy").setup({
 				desc = "Breakpoint toggle",
 			},
 			{ "<leader>db", "<cmd>DapToggleBreakpoint<cr>", desc = "Breakpoint toggle" },
-			{ "<leader>dc", "<cmd>DapContinue<cr>", desc = "Continue" },
-			{ "<leader>dr", "<cmd>DapToggleRepl<cr>", desc = "REPL Toggle" },
-			{ "<leader>do", "<cmd>DapStepOver<cr>", desc = "Step over" },
-			{ "<leader>di", "<cmd>DapStepInto<cr>", desc = "Step into" },
-			{ "<leader>dO", "<cmd>DapStepOut<cr>", desc = "Step out" },
-			{ "<leader>dq", "<cmd>DapTerminate<cr>", desc = "Stop/Terminate" },
+			{ "<leader>dc", "<cmd>DapContinue<cr>",         desc = "Continue" },
+			{ "<leader>dr", "<cmd>DapToggleRepl<cr>",       desc = "REPL Toggle" },
+			{ "<leader>do", "<cmd>DapStepOver<cr>",         desc = "Step over" },
+			{ "<leader>di", "<cmd>DapStepInto<cr>",         desc = "Step into" },
+			{ "<leader>dO", "<cmd>DapStepOut<cr>",          desc = "Step out" },
+			{ "<leader>dq", "<cmd>DapTerminate<cr>",        desc = "Stop/Terminate" },
 		},
 	},
 	{
@@ -641,7 +641,7 @@ require("lazy").setup({
 				end,
 				desc = "Resume Telescope",
 			},
-			{ "<leader>fc", "<cmd>TodoTelescope<cr>", desc = "Find todo comments" },
+			{ "<leader>fc", "<cmd>TodoTelescope<cr>",                                 desc = "Find todo comments" },
 			{
 				"<leader>f>",
 				function()
@@ -733,7 +733,7 @@ require("lazy").setup({
 		},
 		keys = {
 			{ "<leader>e", "<cmd>Neotree toggle left<cr>", desc = "Explorer" },
-			{ "<leader>E", "<cmd>Neotree focus<cr>", desc = "Focus on explorer" },
+			{ "<leader>E", "<cmd>Neotree focus<cr>",       desc = "Focus on explorer" },
 		},
 	},
 
@@ -748,20 +748,69 @@ require("lazy").setup({
 	{
 		"mason-org/mason-lspconfig.nvim",
 		dependencies = { "neovim/nvim-lspconfig" },
-	}, -- lspconfig compatibility
+	},                      -- lspconfig compatibility
 	{
 		"nvimtools/none-ls.nvim", -- for formatters and linters
 		event = "VeryLazy",
 		dependencies = { "nvim-lua/plenary.nvim", "davidmh/cspell.nvim" },
 	},
 	{
+		"stevearc/conform.nvim",
+		config = function()
+			require("conform").setup({
+				formatters = {
+					deno_fmt_markdown = {
+						inherit = "deno_fmt",
+						append_args = { "--indent-width", "4" },
+					},
+				},
+				formatters_by_ft = {
+					lua = { "stylua", lsp_format = "fallback" },
+					markdown = { "deno_fmt" },
+					fish = { "fish_indent" },
+					javascript = { "prettierd" },
+					typescript = { "prettierd" }
+				},
+				format_on_save = function(bufnr)
+					-- Disable with a global or buffer-local variable
+					if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+						return
+					end
+					return { timeout_ms = 500, lsp_format = "fallback" }
+				end,
+			})
+			vim.api.nvim_create_user_command("Format", function()
+				require("conform").format({ lsp_format = "fallback" })
+			end, {
+				desc = "Format buffer"
+			})
+			vim.api.nvim_create_user_command("FormatDisable", function(args)
+				if args.bang then
+					-- FormatDisable! will disable formatting just for this buffer
+					vim.b.disable_autoformat = true
+				else
+					vim.g.disable_autoformat = true
+				end
+			end, {
+				desc = "Disable autoformat-on-save",
+				bang = true,
+			})
+			vim.api.nvim_create_user_command("FormatEnable", function()
+				vim.b.disable_autoformat = false
+				vim.g.disable_autoformat = false
+			end, {
+				desc = "Re-enable autoformat-on-save",
+			})
+		end
+	},
+	{
 		"folke/trouble.nvim",
 		opts = {},
 		cmd = "Trouble",
 		keys = {
-			{ "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Toggle diagnostics" },
+			{ "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",              desc = "Toggle diagnostics" },
 			{ "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Toggle buffer diagnostics" },
-			{ "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)" },
+			{ "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>",      desc = "Symbols (Trouble)" },
 			{
 				"<leader>xl",
 				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
@@ -942,8 +991,8 @@ require("lazy").setup({
 	}, -- rainbow parenthesis
 	{
 		dir = (vim.env.GHOSTTY_RESOURCES_DIR or "") .. "/../vim/vimfiles",
-		lazy = false, -- Ensures it loads for Ghostty config detection
-		name = "ghostty", -- Avoids the name being "vimfiles"
+		lazy = false,                          -- Ensures it loads for Ghostty config detection
+		name = "ghostty",                      -- Avoids the name being "vimfiles"
 		cond = vim.env.GHOSTTY_RESOURCES_DIR ~= nil, -- Only load if Ghostty is installed
 	},
 
@@ -1017,10 +1066,10 @@ require("lazy").setup({
 				end,
 				desc = "Stage Hunk Toggle",
 			},
-			{ "<leader>go", "<cmd>Telescope git_status<cr>", desc = "Open changed file" },
+			{ "<leader>go", "<cmd>Telescope git_status<cr>",   desc = "Open changed file" },
 			{ "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" },
-			{ "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Checkout commit" },
-			{ "<leader>gd", "<cmd>Gitsigns diffthis<cr>", desc = "Diff this" },
+			{ "<leader>gc", "<cmd>Telescope git_commits<cr>",  desc = "Checkout commit" },
+			{ "<leader>gd", "<cmd>Gitsigns diffthis<cr>",      desc = "Diff this" },
 		},
 	}, -- git info in the gutter (like VSCode)
 	{
@@ -1031,12 +1080,12 @@ require("lazy").setup({
 		keys = {
 			{ "<leader>gCj", "<cmd>GitConflictNextConflict<cr>", desc = "Next conflict" },
 			{ "<leader>gCk", "<cmd>GitConflictPrevConflict<cr>", desc = "Previous conflict" },
-			{ "<leader>gCo", "<cmd>GitConflictChooseOurs<cr>", desc = "Choose ours" },
+			{ "<leader>gCo", "<cmd>GitConflictChooseOurs<cr>",   desc = "Choose ours" },
 			{ "<leader>gCt", "<cmd>GitConflictChooseTheirs<cr>", desc = "Choose theirs" },
-			{ "<leader>gCb", "<cmd>GitConflictChooseBoth<cr>", desc = "Choose both" },
-			{ "<leader>gCn", "<cmd>GitConflictChooseNone<cr>", desc = "Choose none" },
-			{ "<leader>gCB", "<cmd>GitConflictChooseBase<cr>", desc = "Choose base" },
-			{ "<leader>gCr", "<cmd>GitConflictRefresh<cr>", desc = "Refresh" },
+			{ "<leader>gCb", "<cmd>GitConflictChooseBoth<cr>",   desc = "Choose both" },
+			{ "<leader>gCn", "<cmd>GitConflictChooseNone<cr>",   desc = "Choose none" },
+			{ "<leader>gCB", "<cmd>GitConflictChooseBase<cr>",   desc = "Choose base" },
+			{ "<leader>gCr", "<cmd>GitConflictRefresh<cr>",      desc = "Refresh" },
 		},
 	}, -- show and resolve git conflicts within files
 })
