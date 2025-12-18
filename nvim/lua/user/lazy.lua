@@ -752,7 +752,60 @@ require("lazy").setup({
 	{
 		"nvimtools/none-ls.nvim", -- for formatters and linters
 		event = "VeryLazy",
-		dependencies = { "nvim-lua/plenary.nvim", "davidmh/cspell.nvim" },
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
+	{
+		"stevearc/conform.nvim",
+		config = function()
+			require("conform").setup({
+				formatters = {
+					prettierd = {
+						inherit = "prettierd",
+						condition = function(self, ctx)
+							return not require('conform.util').root_file(
+								{ "deno.json", "deno.jsonc" }
+							)
+						end
+					}
+				},
+				formatters_by_ft = {
+					lua = { "stylua", lsp_format = "fallback" },
+					markdown = { "deno_fmt" },
+					fish = { "fish_indent" },
+					javascript = { "prettierd" },
+					typescript = { "prettierd" }
+				},
+				format_on_save = function(bufnr)
+					-- Disable with a global or buffer-local variable
+					if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+						return
+					end
+					return { timeout_ms = 500, lsp_format = "fallback" }
+				end,
+			})
+			vim.api.nvim_create_user_command("Format", function()
+				require("conform").format({ lsp_format = "fallback" })
+			end, {
+				desc = "Format buffer"
+			})
+			vim.api.nvim_create_user_command("FormatDisable", function(args)
+				if args.bang then
+					-- FormatDisable! will disable formatting just for this buffer
+					vim.b.disable_autoformat = true
+				else
+					vim.g.disable_autoformat = true
+				end
+			end, {
+				desc = "Disable autoformat-on-save",
+				bang = true,
+			})
+			vim.api.nvim_create_user_command("FormatEnable", function()
+				vim.b.disable_autoformat = false
+				vim.g.disable_autoformat = false
+			end, {
+				desc = "Re-enable autoformat-on-save",
+			})
+		end
 	},
 	{
 		"stevearc/conform.nvim",
