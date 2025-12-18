@@ -7,8 +7,6 @@ local M = {}
 
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
 local diagnostics = null_ls.builtins.diagnostics
--- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/code_actions
-local actions = null_ls.builtins.code_actions
 
 function M.setup(on_attach)
 	null_ls.setup({
@@ -16,9 +14,6 @@ function M.setup(on_attach)
 		sources = {
 			-- Diagnostics
 			diagnostics.actionlint,
-
-			-- Actions
-			actions.gitsigns,
 		},
 		on_attach = on_attach,
 	})
