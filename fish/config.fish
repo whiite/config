@@ -17,3 +17,4 @@ set fish_cursor_insert block blink
 zoxide init fish | source
 fzf --fish | source
 era completion fish | source
+direnv hook fish | source
