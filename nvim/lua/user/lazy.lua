@@ -748,12 +748,7 @@ require("lazy").setup({
 	{
 		"mason-org/mason-lspconfig.nvim",
 		dependencies = { "neovim/nvim-lspconfig" },
-	},                      -- lspconfig compatibility
-	{
-		"nvimtools/none-ls.nvim", -- for formatters and linters
-		event = "VeryLazy",
-		dependencies = { "nvim-lua/plenary.nvim" },
-	},
+	}, -- lspconfig compatibility
 	{
 		"stevearc/conform.nvim",
 		config = function()
@@ -772,8 +767,8 @@ require("lazy").setup({
 					lua = { "stylua", lsp_format = "fallback" },
 					markdown = { "deno_fmt" },
 					fish = { "fish_indent" },
-					javascript = { "prettierd" },
-					typescript = { "prettierd" }
+					javascript = { "prettierd", lsp_format = "fallback" },
+					typescript = { "prettierd", lsp_format = "fallback" }
 				},
 				format_on_save = function(bufnr)
 					-- Disable with a global or buffer-local variable

@@ -56,5 +56,4 @@ for _, server_name in pairs(server_list) do
 end
 vim.lsp.enable(server_list)
 
-require("user.lsp.settings.null-ls").setup(on_attach)
 require("user.lsp.handlers").setup()
