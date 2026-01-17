@@ -217,6 +217,10 @@ if.app-id = 'com.apple.finder'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
+if.app-id = 'net.ankiweb.dtop'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
 if.app-id = 'net.kovidgoyal.kitty'
 run = 'move-node-to-workspace T'   # mnemonics T - Terminal
 
