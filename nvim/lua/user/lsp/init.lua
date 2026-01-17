@@ -55,5 +55,6 @@ for _, server_name in pairs(server_list) do
 	pcall(require, server_settings_path)
 end
 vim.lsp.enable(server_list)
+vim.lsp.enable('actionsls')
 
 require("user.lsp.handlers").setup()
