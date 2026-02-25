@@ -1,6 +1,6 @@
 # Style
 theme = nightfox
-shell-integration-features = no-cursor
+shell-integration-features = no-cursor,ssh-env,ssh-terminfo
 macos-titlebar-style = tabs
 
 # Font & Cursor
