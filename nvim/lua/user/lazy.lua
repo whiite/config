@@ -768,7 +768,8 @@ require("lazy").setup({
 					markdown = { "deno_fmt" },
 					fish = { "fish_indent" },
 					javascript = { "prettierd", lsp_format = "fallback" },
-					typescript = { "prettierd", lsp_format = "fallback" }
+					typescript = { "prettierd", lsp_format = "fallback" },
+					json = { "deno_fmt", lsp_format = "prefer" }
 				},
 				format_on_save = function(bufnr)
 					-- Disable with a global or buffer-local variable
