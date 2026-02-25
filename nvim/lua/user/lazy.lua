@@ -188,7 +188,7 @@ require("lazy").setup({
 	{ "tpope/vim-surround",   event = { "BufReadPre", "BufNewFile" } }, -- Easily modify surrounding characters
 	{ "tpope/vim-sleuth",     event = { "BufReadPre", "BufNewFile" } }, -- Auto detect indentation and tabstop (tab/space)
 	{
-		"ggandor/leap.nvim",                                         -- Fast movement by using 's'/'S' followed by characters you wish to leap to
+		url = "https://codeberg.org/andyg/leap.nvim",                -- Fast movement by using 's'/'S' followed by characters you wish to leap to
 		lazy = false,
 		keys = {
 			{ "s", '<Plug>(leap)',             desc = "Leap to",          mode = { 'n', 'x', 'o' } },
