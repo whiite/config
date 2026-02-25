@@ -12,7 +12,9 @@ function fish_user_key_bindings
     bind --mode insert ctrl-n down-or-search # Use default binding 
     bind --mode default ctrl-n down-or-search
 end
+
 set fish_cursor_insert block blink
+set fish_function_path (path resolve $__fish_config_dir/functions/*/) $fish_function_path
 
 zoxide init fish | source
 fzf --fish | source
