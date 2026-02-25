@@ -231,7 +231,7 @@ require("lazy").setup({
 		---@type blink.cmp.Config
 		opts = {
 			-- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
-			-- 'super-tab' for mappings similar to vscode (tab to accept)
+			-- 'super-tab' tab to accept
 			-- 'enter' for enter to accept
 			-- 'none' for no mappings
 			--
@@ -350,7 +350,7 @@ require("lazy").setup({
 		"karb94/neoscroll.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {
-			easing = "linear", -- linear, quadratic, cubic, quartic, quintic, circular, sine
+			easing = "sine", -- linear, quadratic, cubic, quartic, quintic, circular, sine
 			respect_scrolloff = true,
 		},
 	},
@@ -1120,7 +1120,7 @@ require("lazy").setup({
 			{ "<leader>gc", "<cmd>Telescope git_commits<cr>",  desc = "Checkout commit" },
 			{ "<leader>gd", "<cmd>Gitsigns diffthis<cr>",      desc = "Diff this" },
 		},
-	}, -- git info in the gutter (like VSCode)
+	}, -- git info in the gutter
 	{
 		"akinsho/git-conflict.nvim",
 		version = "*",
