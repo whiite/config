@@ -328,22 +328,25 @@ require("lazy").setup({
 		"catgoose/nvim-colorizer.lua",
 		event = "BufReadPre",
 		opts = {
-			filetypes = {
-				"javascript",
-				"typescript",
-				sass = {
-					names = true,
-				},
-				scss = {
-					names = true,
-				},
-				css = {
-					names = true,
-				},
-				html = {},
-				svg = {},
+			filetypes = { "*" },
+			options = {
+				parsers = {
+					names = { enable = false },
+					hex = {
+						default = true, -- default value for format keys (see above)
+						rgb = false, -- #RGB
+						rgba = false, -- #RGBA
+						rrggbb = false, -- #RRGGBB
+						rrggbbaa = false, -- #RRGGBBAA
+						aarrggbb = false, -- 0xAARRGGBB
+					},
+					rgb = { enable = true },
+					hsl = { enable = true },
+					oklch = { enable = true },
+					tailwind = { enable = true, lsp = true, update_names = true },
+					sass = { enable = true },
+				}
 			},
-			user_default_options = { names = false, css = true },
 		},
 	},
 	{
