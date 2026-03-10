@@ -434,6 +434,17 @@ require("lazy").setup({
 		config = function()
 			require("kanagawa").setup({
 				theme = "wave", -- wave | dragon | lotus
+				colors = {
+					theme = {
+						all = {
+							ui = {
+								bg_gutter = "none"
+							}
+						}
+					}
+				},
+				dimInactive = false,
+				transparent = true,
 				overrides = function(colors)
 					local theme = colors.theme
 					return {
