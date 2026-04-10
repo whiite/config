@@ -1,7 +1,7 @@
 local options = {
 	backup = false, -- creates a backup file
 	swapfile = false, -- creates a swapfile
-	clipboard = "unnamedplus", -- allows neovim to access the system clipboard
+	clipboard = "unnamed,unnamedplus", -- allows neovim to access the system clipboard
 	cmdheight = 2, -- more space in the neovim command line for displaying messages
 	completeopt = { "menuone", "noselect" }, -- mostly just for cmp
 	conceallevel = 0, -- so that `` is visible in markdown files
@@ -43,6 +43,9 @@ local options = {
 -- disable netrw
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+vim.g.health = { style = "float" }
+vim.opt.winborder = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
 
 vim.opt.shortmess:append("c")
 
