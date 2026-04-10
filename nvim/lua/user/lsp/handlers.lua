@@ -22,11 +22,11 @@ M.setup = function()
 		"<cmd>Telescope lsp_workspace_diagnostics<cr>",
 		{ desc = "Workspace Diagnostics" }
 	)
-	vim.keymap.set("n", "<leader>li", "<cmd>LspInfo<cr>", { desc = "Info" })
+	vim.keymap.set("n", "<leader>li", "<cmd>checkhealth vim.lsp<cr>", { desc = "Info" })
 	vim.keymap.set("n", "<leader>ll", vim.lsp.codelens.run, { desc = "CodeLens Action" })
 	vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist, { desc = "Quickfix" })
 	vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, { desc = "Rename" })
-	vim.keymap.set("n", "<leader>lR", "<cmd>LspRestart<cr>", { desc = "Restart Language Servers" })
+	vim.keymap.set("n", "<leader>lR", "<cmd>lsp restart<cr>", { desc = "Restart Language Servers" })
 	vim.keymap.set("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<cr>", { desc = "Document Symbols" })
 	vim.keymap.set(
 		"n",
