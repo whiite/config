@@ -23,16 +23,15 @@ quick-terminal-animation-duration = 0.05
 keybind = global:cmd+ctrl+t=toggle_quick_terminal
 
 ## Movement
-# NOTE: `all:` prefix here ensures these take precedence over built-in shortcuts
-keybind = super+alt+left=goto_split:left
-keybind = all:super+alt+h=goto_split:left
+keybind = super+shift+left=goto_split:left
+keybind = super+shift+h=goto_split:left
 
-keybind = super+alt+right=goto_split:right
-keybind = all:super+alt+l=goto_split:right
+keybind = super+shift+right=goto_split:right
+keybind = super+shift+l=goto_split:right
 
-keybind = super+alt+up=goto_split:up
-keybind = all:super+alt+k=goto_split:up
+keybind = super+shift+up=goto_split:up
+keybind = super+shift+k=goto_split:up
 
-keybind = super+alt+down=goto_split:down
-keybind = all:super+alt+j=goto_split:down
+keybind = super+shift+down=goto_split:down
+keybind = super+shift+j=goto_split:down
 
