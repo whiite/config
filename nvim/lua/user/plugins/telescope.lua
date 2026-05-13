@@ -7,7 +7,7 @@ local actions = require("telescope.actions")
 local themes = require("telescope.themes")
 local action_layout = require("telescope.actions.layout")
 
-local file_ignore_common = { "^%.git/", "node_modules", "target", "%.yarn/", "dist" }
+local file_ignore_common = { "^%.git/", "node_modules", "target", "%.yarn/", "dist", "build", "%.svelte%-kit/" }
 
 ---@param t1 table
 ---@param t2 table

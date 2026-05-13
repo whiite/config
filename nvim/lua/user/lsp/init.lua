@@ -24,8 +24,8 @@ vim.diagnostic.config({
 			[vim.diagnostic.severity.WARN] = "",
 			[vim.diagnostic.severity.INFO] = "",
 			[vim.diagnostic.severity.HINT] = "󰌶",
-			DapBreakpoint = ""
-		}
+			DapBreakpoint = "",
+		},
 	},
 	update_in_insert = true,
 	underline = true,
@@ -39,7 +39,6 @@ vim.diagnostic.config({
 		prefix = "",
 	},
 })
-
 
 -- Useful for allowing plugins to configure and setup a server instead
 local server_exclude = {
@@ -55,6 +54,6 @@ for _, server_name in pairs(server_list) do
 	pcall(require, server_settings_path)
 end
 vim.lsp.enable(server_list)
-vim.lsp.enable('actionsls')
+vim.lsp.enable("actionsls")
 
 require("user.lsp.handlers").setup()
