@@ -250,7 +250,7 @@ require("lazy").setup({
 			},
 
 			-- (Default) Only show the documentation popup when manually triggered
-			completion = { menu = { border = "none" }, documentation = { auto_show = true, border = "none" } },
+			completion = { menu = { border = "none" }, documentation = { auto_show = true } },
 
 			signature = { window = { border = "none" } },
 
