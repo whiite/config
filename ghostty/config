@@ -1,7 +1,7 @@
 # Style
 theme = nightfox
-background-opacity = 0.7
-background-blur = 20
+background-opacity = 0.85
+background-blur = 10
 macos-titlebar-style = tabs
 macos-window-buttons = hidden
 
