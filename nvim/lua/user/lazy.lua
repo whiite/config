@@ -185,7 +185,12 @@ require("lazy").setup({
 		},
 	},
 	{ "tpope/vim-surround", event = { "BufReadPre", "BufNewFile" } }, -- Easily modify surrounding characters
-	{ "tpope/vim-sleuth", event = { "BufReadPre", "BufNewFile" } }, -- Auto detect indentation and tabstop (tab/space)
+	{ "nmac427/guess-indent.nvim", opts = {
+		filetype_exclude = {
+			"Neotree",
+			"ToggleTerm",
+		},
+	} }, -- Auto detect indentation and tabstop (tab/space)
 	{
 		url = "https://codeberg.org/andyg/leap.nvim", -- Fast movement by using 's'/'S' followed by characters you wish to leap to
 		lazy = false,
@@ -703,7 +708,7 @@ require("lazy").setup({
 					leave_dirs_open = false,
 				},
 				use_libuv_file_watcher = true,
-				group_empty_dirs = true,
+				group_empty_dirs = false,
 			},
 			event_handlers = {
 				{
