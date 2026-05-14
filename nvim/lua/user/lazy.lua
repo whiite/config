@@ -731,6 +731,8 @@ require("lazy").setup({
 			},
 			window = {
 				mappings = {
+					["<S-CR>"] = "open_with_window_picker",
+					["w"] = "open_with_window_picker",
 					["h"] = function(state)
 						local node = state.tree:get_node()
 						if node.type == "directory" and node:is_expanded() then
@@ -756,10 +758,33 @@ require("lazy").setup({
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
 			"MunifTanjim/nui.nvim",
+			"s1n7ax/nvim-window-picker",
 		},
 		keys = {
 			{ "<leader>e", "<cmd>Neotree toggle left<cr>", desc = "Explorer" },
 			{ "<leader>E", "<cmd>Neotree focus<cr>", desc = "Focus on explorer" },
+		},
+	},
+	{
+		"s1n7ax/nvim-window-picker",
+		version = "2.*",
+		opts = {
+			hint = "floating-big-letter",
+			-- selection_chars = 'FJDKSLA;CMRUEIWOQP', -- qwerty
+			-- selection_chars = "TNSERIAOCMPLFUWYQ:", -- colemak
+			selection_chars = "1234567890", -- numerical
+			show_prompt = false,
+			filter_rules = {
+				include_current_win = true,
+				autoselect_one = true,
+				-- filter using buffer options
+				bo = {
+					-- if the file type is one of following, the window will be ignored
+					filetype = { "neo-tree", "neo-tree-popup", "notify", "telescope" },
+					-- if the buffer type is one of following, the window will be ignored
+					buftype = { "terminal", "quickfix" },
+				},
+			},
 		},
 	},
 
