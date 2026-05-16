@@ -15,25 +15,15 @@ local border = {
 M.setup = function()
 	-- LSP bindings
 	vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, { desc = "Code Action" })
-	vim.keymap.set("n", "<leader>ld", "<cmd>Telescope lsp_document_diagnostics<cr>", { desc = "Document Diagnostics" })
-	vim.keymap.set(
-		"n",
-		"<leader>lw",
-		"<cmd>Telescope lsp_workspace_diagnostics<cr>",
-		{ desc = "Workspace Diagnostics" }
-	)
+	vim.keymap.set("n", "<leader>ld", require("fzf-lua").lsp_document_diagnostics, { desc = "Document Diagnostics" })
+	vim.keymap.set("n", "<leader>lw", require("fzf-lua").lsp_workspace_diagnostics, { desc = "Workspace Diagnostics" })
 	vim.keymap.set("n", "<leader>li", "<cmd>checkhealth vim.lsp<cr>", { desc = "Info" })
 	vim.keymap.set("n", "<leader>ll", vim.lsp.codelens.run, { desc = "CodeLens Action" })
 	vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist, { desc = "Quickfix" })
 	vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, { desc = "Rename" })
 	vim.keymap.set("n", "<leader>lR", "<cmd>lsp restart<cr>", { desc = "Restart Language Servers" })
-	vim.keymap.set("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<cr>", { desc = "Document Symbols" })
-	vim.keymap.set(
-		"n",
-		"<leader>lS",
-		"<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
-		{ desc = "Workspace Symbols" }
-	)
+	vim.keymap.set("n", "<leader>ls", require("fzf-lua").lsp_document_symbols, { desc = "Document Symbols" })
+	vim.keymap.set("n", "<leader>lS", require("fzf-lua").lsp_workspace_symbols, { desc = "Workspace Symbols" })
 end
 
 -- Highlights tokens under the cursor
@@ -53,7 +43,7 @@ end
 -- Keymaps specifically for LSP
 local function lsp_keymaps(bufnr)
 	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration", buffer = true })
-	vim.keymap.set("n", "gd", require("telescope.builtin").lsp_definitions, {
+	vim.keymap.set("n", "gd", require("fzf-lua").lsp_definitions, {
 		desc = "Go to definition",
 		buffer = bufnr,
 	})
@@ -67,11 +57,11 @@ local function lsp_keymaps(bufnr)
 		vim.lsp.buf.implementation,
 		{ desc = "Show all implementations for symbol", buffer = bufnr }
 	)
-	vim.keymap.set("n", "gs", require("telescope.builtin").lsp_definitions, {
+	vim.keymap.set("n", "gs", require("fzf-lua").lsp_definitions, {
 		desc = "Go to definition",
 		buffer = bufnr,
 	})
-	vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, {
+	vim.keymap.set("n", "gr", require("fzf-lua").lsp_references, {
 		desc = "Find all references to symbol",
 		buffer = bufnr,
 	})

@@ -27,7 +27,7 @@ require("lazy").setup({
 					javascript = { "string", "template_string" },
 					java = false,
 				},
-				disable_filetype = { "TelescopePrompt", "spectre_panel" }, -- find file type with: `echo &ft`
+				disable_filetype = { "spectre_panel" }, -- find file type with: `echo &ft`
 				fast_wrap = {
 					map = "<M-e>", -- 'M' = modifier = alt
 					chars = { "{", "[", "(", '"', "'", "`", "<" },
@@ -155,9 +155,7 @@ require("lazy").setup({
 			{
 				"<leader>bf",
 				function()
-					require("telescope.builtin").buffers(
-						require("telescope.themes").get_dropdown({ previewer = false })
-					)
+					require("fzf-lua").buffers()
 				end,
 				desc = "Find buffer",
 			},
@@ -401,37 +399,6 @@ require("lazy").setup({
 	-- 			},
 	-- 			lualine_bold = true,
 	-- 			transparent = false,
-	-- 			-- borderless telescope
-	-- 			on_highlights = function(hl, c)
-	-- 				local prompt = "#2d3149"
-	-- 				hl.TelescopeNormal = {
-	-- 					bg = c.bg_dark,
-	-- 					fg = c.fg_dark,
-	-- 				}
-	-- 				hl.TelescopeBorder = {
-	-- 					bg = c.bg_dark,
-	-- 					fg = c.bg_dark,
-	-- 				}
-	-- 				hl.TelescopePromptNormal = {
-	-- 					bg = prompt,
-	-- 				}
-	-- 				hl.TelescopePromptBorder = {
-	-- 					bg = prompt,
-	-- 					fg = prompt,
-	-- 				}
-	-- 				hl.TelescopePromptTitle = {
-	-- 					bg = prompt,
-	-- 					fg = prompt,
-	-- 				}
-	-- 				hl.TelescopePreviewTitle = {
-	-- 					bg = c.bg_dark,
-	-- 					fg = c.bg_dark,
-	-- 				}
-	-- 				hl.TelescopeResultsTitle = {
-	-- 					bg = c.bg_dark,
-	-- 					fg = c.bg_dark,
-	-- 				}
-	-- 			end,
 	-- 		})
 	-- 		-- require("user.utils.colorscheme").set_colorscheme("tokyonight")
 	-- 	end,
@@ -457,15 +424,6 @@ require("lazy").setup({
 				overrides = function(colors)
 					local theme = colors.theme
 					return {
-						-- Block style telescope
-						TelescopeTitle = { fg = theme.ui.special, bold = true },
-						TelescopePromptNormal = { bg = theme.ui.bg_p1 },
-						TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
-						TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
-						TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
-						TelescopePreviewNormal = { bg = theme.ui.bg_dim },
-						TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
-
 						-- Preserve transparency
 						NormalFloat = { bg = "none" },
 						FloatBorder = { bg = "none" },
@@ -614,78 +572,102 @@ require("lazy").setup({
 		end,
 	},
 
-	-- Telescope
+	-- Search
 	{
-		"nvim-telescope/telescope.nvim", -- fuzzy file/text finder UI
-		lazy = true,
-		event = { "BufReadPre", "BufNewFile" },
-		cmd = "Telescope",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-			"nvim-telescope/telescope-ui-select.nvim",
+		"ibhagwan/fzf-lua",
+		-- optional for icon support
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		-- or if using mini.icons/mini.nvim
+		-- dependencies = { "nvim-mini/mini.icons" },
+		---@module "fzf-lua"
+		---@type fzf-lua.Config|{}
+		---@diagnostic disable: missing-fields
+		opts = {
+			keymap = {
+				builtin = {
+					true, -- inherit defaults
+					["<C-U>"] = "preview-page-up",
+					["<C-D>"] = "preview-page-down",
+					["<C-P>"] = "toggle-preview",
+					["<C-C>"] = "abort",
+				},
+			},
+			defaults = {
+				hidden = true,
+				follow = true,
+				no_ignore = true,
+				file_ignore_patterns = {
+					"^%.git/",
+					"node_modules",
+					"target",
+					"%.yarn/",
+					"dist",
+					"build",
+					"%.svelte%-kit/",
+				},
+			},
+			grep = {
+				file_ignore_patterns = {
+					"^%.git/",
+					"node_modules",
+					"target",
+					"%.yarn/",
+					"dist",
+					"build",
+					"%.svelte%-kit/",
+					".*-lock%..+$",
+					".%.lock.?$",
+				},
+			},
+			lsp = {
+				code_actions = {
+					previewer = "codeaction_native",
+				},
+			},
 		},
-		config = function()
-			require("user.plugins.telescope")
-		end,
+		---@diagnostic enable: missing-fields
 		keys = {
 			{
 				"<leader>ff",
 				function()
-					require("telescope.builtin").find_files()
+					require("fzf-lua").files()
 				end,
 				desc = "Find files",
 			},
 			{
 				"<leader>fg",
 				function()
-					require("telescope.builtin").git_files()
+					require("fzf-lua").git_files()
 				end,
 				desc = "Find git files",
 			},
 			{
-				"<leader>ft",
-				function()
-					require("telescope.builtin").live_grep(require("telescope.themes").get_ivy())
-				end,
-				desc = "Find text",
-			},
-			{ "<leader>fT", "<cmd>lua require('telescope.builtin').treesitter()<cr>", desc = "Find in treesitter" },
-			{
 				"<leader>fb",
 				function()
-					require("telescope.builtin").git_branches()
+					require("fzf-lua").git_branches()
 				end,
 				desc = "Find branch",
 			},
 			{
-				"<leader>fs",
+				"<leader>ft",
 				function()
-					require("telescope.builtin").git_status()
+					require("fzf-lua").live_grep()
 				end,
-				desc = "Find git status files",
+				desc = "Find text",
 			},
 			{
 				"<leader>fR",
 				function()
-					require("telescope.builtin").resume()
+					require("fzf-lua").resume()
 				end,
-				desc = "Resume Telescope",
-			},
-			{ "<leader>fc", "<cmd>TodoTelescope<cr>", desc = "Find todo comments" },
-			{
-				"<leader>f>",
-				function()
-					require("telescope.builtin").commands()
-				end,
-				desc = "Find commands",
+				desc = "Resume find",
 			},
 			{
-				"<leader>fC",
+				"<leader>fs",
 				function()
-					require("telescope.builtin").colorscheme()
+					require("fzf-lua").git_status()
 				end,
-				desc = "Find colorscheme",
+				desc = "Find git status files",
 			},
 		},
 	},
@@ -785,7 +767,7 @@ require("lazy").setup({
 				-- filter using buffer options
 				bo = {
 					-- if the file type is one of following, the window will be ignored
-					filetype = { "neo-tree", "neo-tree-popup", "notify", "telescope" },
+					filetype = { "neo-tree", "neo-tree-popup", "notify" },
 					-- if the buffer type is one of following, the window will be ignored
 					buftype = { "terminal", "quickfix" },
 				},
@@ -1136,9 +1118,6 @@ require("lazy").setup({
 				end,
 				desc = "Stage Hunk Toggle",
 			},
-			{ "<leader>go", "<cmd>Telescope git_status<cr>", desc = "Open changed file" },
-			{ "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" },
-			{ "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Checkout commit" },
 			{ "<leader>gd", "<cmd>Gitsigns diffthis<cr>", desc = "Diff this" },
 		},
 	}, -- git info in the gutter
