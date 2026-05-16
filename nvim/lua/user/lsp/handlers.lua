@@ -14,7 +14,7 @@ local border = {
 
 M.setup = function()
 	-- LSP bindings
-	vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, { desc = "Code Action" })
+	vim.keymap.set("n", "<leader>la", require("fzf-lua").lsp_code_actions, { desc = "Code Action" })
 	vim.keymap.set("n", "<leader>ld", require("fzf-lua").lsp_document_diagnostics, { desc = "Document Diagnostics" })
 	vim.keymap.set("n", "<leader>lw", require("fzf-lua").lsp_workspace_diagnostics, { desc = "Workspace Diagnostics" })
 	vim.keymap.set("n", "<leader>li", "<cmd>checkhealth vim.lsp<cr>", { desc = "Info" })
