@@ -268,7 +268,20 @@ require("lazy").setup({
 			-- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
 			--
 			-- See the fuzzy documentation for more information
-			fuzzy = { implementation = "prefer_rust_with_warning" },
+			fuzzy = {
+				implementation = "prefer_rust_with_warning",
+				sorts = {
+					function(a, b)
+						if (a.client_name == nil or b.client_name == nil) or (a.client_name == b.client_name) then
+							return
+						end
+						return b.client_name == "emmet_ls"
+					end,
+					-- default sorts
+					"score",
+					"sort_text",
+				},
+			},
 			cmdline = {
 				enabled = true,
 				keymap = { preset = "super-tab" },
@@ -284,39 +297,23 @@ require("lazy").setup({
 
 	-- Prettier UI
 	{
-		"lukas-reineke/indent-blankline.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		main = "ibl",
-		opts = {},
-		config = function()
-			local highlight = {
-				"RainbowRed",
-				"RainbowYellow",
-				"RainbowBlue",
-				"RainbowOrange",
-				"RainbowGreen",
-				"RainbowViolet",
-				"RainbowCyan",
-			}
-			local hooks = require("ibl.hooks")
-			-- create the highlight groups in the highlight setup hook, so they are reset
-			-- every time the colorscheme changes
-			hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-				vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
-				vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-				vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
-				vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-				vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
-				vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-				vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
-			end)
-
-			vim.g.rainbow_delimiters = { highlight = highlight }
-			require("ibl").setup({ scope = { highlight = highlight } })
-
-			hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
-		end,
-	}, -- Indent guides and invisible character support
+		"saghen/blink.indent",
+		--- @module 'blink.indent'
+		--- @type blink.indent.Config
+		opts = {
+			scope = {
+				highlights = {
+					"BlinkIndentViolet",
+					"BlinkIndentBlue",
+					"BlinkIndentCyan",
+					"BlinkIndentRed",
+					-- "BlinkIndentOrange",
+					-- "BlinkIndentYellow",
+					-- "BlinkIndentGreen",
+				},
+			},
+		},
+	},
 	{
 		"b0o/incline.nvim",
 		event = "VeryLazy",
@@ -574,6 +571,65 @@ require("lazy").setup({
 
 	-- Search
 	{
+		"dmtrKovalenko/fff.nvim",
+		build = function()
+			-- downloads a prebuilt binary or falls back to cargo build
+			require("fff.download").download_or_build_binary()
+		end,
+		opts = {
+			prompt = "> ",
+			title = "Find Files",
+			layout = {
+				prompt_position = "top",
+			},
+			git = {
+				status_text_color = true,
+			},
+			grep = {
+				modes = { "plain", "regex", "fuzzy" },
+			},
+			keymaps = {
+				close = "<C-C>",
+				cycle_previous_query = "<C-R>",
+			},
+			debug = {
+				show_scores = false,
+			},
+		},
+		lazy = false, -- the plugin lazy-initialises itself
+		keys = {
+			{
+				"<leader>ff",
+				function()
+					require("fff").find_files()
+				end,
+				desc = "Find files",
+			},
+			{
+				"<leader>ft",
+				function()
+					require("fff").live_grep({ query = "!*.lock !*-lock " })
+				end,
+				desc = "Find text",
+			},
+			{
+				"<leader>fg",
+				function()
+					require("fff").find_files({ query = "git: " })
+				end,
+				desc = "Find git status files",
+			},
+			{
+				"<leader>fr",
+				function()
+					require("fff").scan_files()
+					require("fff").refresh_git_status()
+				end,
+				desc = "Scan and refresh files",
+			},
+		},
+	},
+	{
 		"ibhagwan/fzf-lua",
 		-- optional for icon support
 		dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -588,86 +644,14 @@ require("lazy").setup({
 					true, -- inherit defaults
 					["<C-U>"] = "preview-page-up",
 					["<C-D>"] = "preview-page-down",
-					["<C-P>"] = "toggle-preview",
+					["<C-V>"] = "toggle-preview",
 					["<C-C>"] = "abort",
-				},
-			},
-			defaults = {
-				hidden = true,
-				follow = true,
-				no_ignore = true,
-				file_ignore_patterns = {
-					"^%.git/",
-					"node_modules",
-					"target",
-					"%.yarn/",
-					"dist",
-					"build",
-					"%.svelte%-kit/",
-				},
-			},
-			grep = {
-				file_ignore_patterns = {
-					"^%.git/",
-					"node_modules",
-					"target",
-					"%.yarn/",
-					"dist",
-					"build",
-					"%.svelte%-kit/",
-					".*-lock%..+$",
-					".%.lock.?$",
 				},
 			},
 			lsp = {
 				code_actions = {
 					previewer = "codeaction_native",
 				},
-			},
-		},
-		---@diagnostic enable: missing-fields
-		keys = {
-			{
-				"<leader>ff",
-				function()
-					require("fzf-lua").files()
-				end,
-				desc = "Find files",
-			},
-			{
-				"<leader>fg",
-				function()
-					require("fzf-lua").git_files()
-				end,
-				desc = "Find git files",
-			},
-			{
-				"<leader>fb",
-				function()
-					require("fzf-lua").git_branches()
-				end,
-				desc = "Find branch",
-			},
-			{
-				"<leader>ft",
-				function()
-					require("fzf-lua").live_grep()
-				end,
-				desc = "Find text",
-			},
-			{
-				"<leader>fR",
-				function()
-					require("fzf-lua").resume()
-				end,
-				desc = "Resume find",
-			},
-			{
-				"<leader>fs",
-				function()
-					require("fzf-lua").git_status()
-				end,
-				desc = "Find git status files",
 			},
 		},
 	},
