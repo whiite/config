@@ -156,14 +156,16 @@ require("lazy").setup({
 			"ToggleTerm",
 		},
 	} }, -- Auto detect indentation and tabstop (tab/space)
-	{
-		url = "https://codeberg.org/andyg/leap.nvim", -- Fast movement by using 's'/'S' followed by characters you wish to leap to
-		lazy = false,
-		keys = {
-			{ "s", "<Plug>(leap)", desc = "Leap to", mode = { "n", "x", "o" } },
-			{ "S", "<Plug>(leap-from-window)", desc = "Leap backward to", mode = "n" },
-		},
-	},
+
+	-- {
+	-- 	url = "https://codeberg.org/andyg/leap.nvim", -- Fast movement by using 's'/'S' followed by characters you wish to leap to
+	-- 	lazy = false,
+	-- 	keys = {
+	-- 		{ "s", "<Plug>(leap)", desc = "Leap to", mode = { "n", "x", "o" } },
+	-- 		{ "S", "<Plug>(leap-from-window)", desc = "Leap backward to", mode = "n" },
+	-- 	},
+	-- },
+
 	{
 		"michaelrommel/nvim-silicon",
 		lazy = true,
@@ -525,14 +527,6 @@ require("lazy").setup({
 					},
 				}
 			end
-		end,
-	},
-	{
-		"saecki/crates.nvim", -- Manage Rust dependencies inside Cargo.toml
-		tag = "stable",
-		event = { "BufRead Cargo.toml" },
-		config = function()
-			require("crates").setup()
 		end,
 	},
 
