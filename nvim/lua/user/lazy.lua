@@ -43,39 +43,6 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"numToStr/Comment.nvim", -- Easily comment lines
-		lazy = true,
-		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			"JoosepAlviste/nvim-ts-context-commentstring",
-		},
-		opts = function()
-			return {
-				pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
-			}
-		end,
-		keys = {
-			{
-				"<C-/>",
-				function()
-					require("Comment.api").toggle.linewise.current()
-				end,
-				desc = "Toggle comment",
-				mode = { "n", "i" },
-			},
-		},
-	},
-	{
-		"JoosepAlviste/nvim-ts-context-commentstring",
-		lazy = true,
-		opts = function()
-			vim.g.skip_ts_context_commentstring_module = true
-			return {
-				enable_autocmd = false,
-			}
-		end,
-	},
-	{
 		"nvim-lualine/lualine.nvim", -- Status line at the bottom of the window
 		version = "*",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
