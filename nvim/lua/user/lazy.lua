@@ -540,6 +540,7 @@ require("lazy").setup({
 		opts = {
 			prompt = "> ",
 			title = "Find Files",
+			follow_symlinks = true,
 			layout = {
 				prompt_position = "top",
 			},
