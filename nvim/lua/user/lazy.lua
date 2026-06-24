@@ -691,33 +691,10 @@ require("lazy").setup({
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
 			"MunifTanjim/nui.nvim",
-			"s1n7ax/nvim-window-picker",
 		},
 		keys = {
 			{ "<leader>e", "<cmd>Neotree toggle left<cr>", desc = "Explorer" },
 			{ "<leader>E", "<cmd>Neotree focus<cr>", desc = "Focus on explorer" },
-		},
-	},
-	{
-		"s1n7ax/nvim-window-picker",
-		version = "2.*",
-		opts = {
-			hint = "floating-big-letter",
-			-- selection_chars = 'FJDKSLA;CMRUEIWOQP', -- qwerty
-			-- selection_chars = "TNSERIAOCMPLFUWYQ:", -- colemak
-			selection_chars = "1234567890", -- numerical
-			show_prompt = false,
-			filter_rules = {
-				include_current_win = true,
-				autoselect_one = true,
-				-- filter using buffer options
-				bo = {
-					-- if the file type is one of following, the window will be ignored
-					filetype = { "neo-tree", "neo-tree-popup", "notify" },
-					-- if the buffer type is one of following, the window will be ignored
-					buftype = { "terminal", "quickfix" },
-				},
-			},
 		},
 	},
 
@@ -755,57 +732,8 @@ require("lazy").setup({
 					markdown = { "deno_fmt" },
 					fish = { "fish_indent" },
 					javascript = { "prettierd", lsp_format = "fallback" },
-					typescript = { "prettierd", lsp_format = "fallback" },
+					typescript = { "prettierd", lsp_format = "prefer" },
 					json = { "deno_fmt", lsp_format = "prefer" },
-				},
-				format_on_save = function(bufnr)
-					-- Disable with a global or buffer-local variable
-					if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-						return
-					end
-					return { timeout_ms = 500, lsp_format = "fallback" }
-				end,
-			})
-			vim.api.nvim_create_user_command("Format", function()
-				require("conform").format({ lsp_format = "fallback" })
-			end, {
-				desc = "Format buffer",
-			})
-			vim.api.nvim_create_user_command("FormatDisable", function(args)
-				if args.bang then
-					-- FormatDisable! will disable formatting just for this buffer
-					vim.b.disable_autoformat = true
-				else
-					vim.g.disable_autoformat = true
-				end
-			end, {
-				desc = "Disable autoformat-on-save",
-				bang = true,
-			})
-			vim.api.nvim_create_user_command("FormatEnable", function()
-				vim.b.disable_autoformat = false
-				vim.g.disable_autoformat = false
-			end, {
-				desc = "Re-enable autoformat-on-save",
-			})
-		end,
-	},
-	{
-		"stevearc/conform.nvim",
-		config = function()
-			require("conform").setup({
-				formatters = {
-					deno_fmt_markdown = {
-						inherit = "deno_fmt",
-						append_args = { "--indent-width", "4" },
-					},
-				},
-				formatters_by_ft = {
-					lua = { "stylua", lsp_format = "fallback" },
-					markdown = { "deno_fmt" },
-					fish = { "fish_indent" },
-					javascript = { "prettierd" },
-					typescript = { "prettierd" },
 				},
 				format_on_save = function(bufnr)
 					-- Disable with a global or buffer-local variable
