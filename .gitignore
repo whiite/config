@@ -8,3 +8,4 @@ nvim/plugin/packer_compiled.lua
 fish/fish_variables
 fish/completions/docker.fish
 fish/completions/tailscale.fish
+fish/functions/*/
