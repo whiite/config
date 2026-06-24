@@ -267,3 +267,7 @@ run = 'move-node-to-workspace M'
 [[on-window-detected]]
 if.app-id = 'com.apple.mail'     # mnemonics E - Email
 run = 'move-node-to-workspace E'
+
+[[on-window-detected]]
+if.app-id = 'com.electron.ollama'
+run = 'move-node-to-workspace O'
