@@ -217,7 +217,7 @@ if.app-id = 'com.apple.finder'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
-if.app-id = 'net.ankiweb.dtop'
+if.app-id = 'net.ankiweb.anki'
 run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
