@@ -375,7 +375,7 @@ require("lazy").setup({
 		priority = 1000,
 		config = function()
 			require("kanagawa").setup({
-				theme = "wave", -- wave | dragon | lotus
+				theme = "dragon", -- wave | dragon | lotus
 				colors = {
 					theme = {
 						all = {
@@ -597,25 +597,25 @@ require("lazy").setup({
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		-- or if using mini.icons/mini.nvim
 		-- dependencies = { "nvim-mini/mini.icons" },
-		---@module "fzf-lua"
-		---@type fzf-lua.Config|{}
-		---@diagnostic disable: missing-fields
-		opts = {
-			keymap = {
-				builtin = {
-					true, -- inherit defaults
-					["<C-U>"] = "preview-page-up",
-					["<C-D>"] = "preview-page-down",
-					["<C-V>"] = "toggle-preview",
-					["<C-C>"] = "abort",
+		config = function()
+			require("fzf-lua").setup({
+				keymap = {
+					builtin = {
+						true, -- inherit defaults
+						["<C-U>"] = "preview-page-up",
+						["<C-D>"] = "preview-page-down",
+						["<C-V>"] = "toggle-preview",
+						["<C-C>"] = "abort",
+					},
 				},
-			},
-			lsp = {
-				code_actions = {
-					previewer = "codeaction_native",
+				lsp = {
+					code_actions = {
+						previewer = "codeaction_native",
+					},
 				},
-			},
-		},
+			})
+			require("fzf-lua").register_ui_select()
+		end,
 	},
 
 	-- File explorer
