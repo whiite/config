@@ -1,7 +1,7 @@
 local options = {
 	backup = false, -- creates a backup file
 	swapfile = false, -- creates a swapfile
-	clipboard = "unnamed,unnamedplus", -- allows neovim to access the system clipboard
+	clipboard = "unnamedplus", -- allows neovim to access the system clipboard
 	cmdheight = 2, -- more space in the neovim command line for displaying messages
 	completeopt = { "menuone", "noselect" }, -- mostly just for cmp
 	conceallevel = 0, -- so that `` is visible in markdown files
@@ -46,6 +46,21 @@ vim.g.loaded_netrwPlugin = 1
 
 vim.g.health = { style = "float" }
 vim.opt.winborder = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+
+-- Shared clipboard over SSH (via OSC 52)
+if vim.env.SSH_CONNECTION ~= nil then
+	vim.g.clipboard = {
+		name = "OSC 52",
+		copy = {
+			["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+			["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+		},
+		paste = {
+			["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+			["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+		},
+	}
+end
 
 vim.opt.shortmess:append("c")
 
