@@ -15,7 +15,6 @@ vim.keymap.set("n", "<leader>p", "<cmd>Lazy<cr>", { desc = "Plugins" })
 
 require("lazy").setup({
 	-- General --
-	{ "nvim-lua/plenary.nvim" }, -- Useful lua functions used by lots of plugins
 	{
 		"windwp/nvim-autopairs", -- Autopairs, integrates with both cmp and treesitter
 		event = "InsertEnter",
@@ -532,13 +531,12 @@ require("lazy").setup({
 
 	-- Search
 	{
-		"dmtrKovalenko/fff.nvim",
+		"dmtrKovalenko/fff",
 		build = function()
 			-- downloads a prebuilt binary or falls back to cargo build
 			require("fff.download").download_or_build_binary()
 		end,
 		opts = {
-			prompt = "> ",
 			title = "Find Files",
 			follow_symlinks = true,
 			layout = {
@@ -570,9 +568,17 @@ require("lazy").setup({
 			{
 				"<leader>ft",
 				function()
-					require("fff").live_grep({ query = "!*.lock !*-lock " })
+					require("fff").live_grep({ query = "!*.lock !-lock. " })
 				end,
 				desc = "Find text",
+			},
+			{
+				"<leader>fs",
+				function()
+					require("fff").live_grep_under_cursor()
+				end,
+				desc = "Find selection (word in normal mode)",
+				mode = { "n", "x" },
 			},
 			{
 				"<leader>fg",
