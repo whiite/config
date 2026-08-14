@@ -45,15 +45,21 @@ local server_exclude = {
 	"rust_analyzer", -- Handled by rustaceanvim
 }
 
+-- List of servers installed outside of Mason
+local server_native = {
+	"harper_ls", -- Unsupported in NixOS
+}
+
 local server_list = vim.tbl_filter(function(item)
 	return not (vim.tbl_contains(server_exclude, item))
 end, mason_lspconfig.get_installed_servers())
 
-for _, server_name in pairs(server_list) do
+for _, server_name in pairs(vim.tbl_extend("keep", server_list, server_native)) do
 	local server_settings_path = "user.lsp.settings." .. server_name
 	pcall(require, server_settings_path)
 end
 vim.lsp.enable(server_list)
+vim.lsp.enable(server_native)
 vim.lsp.enable("actionsls")
 
 require("user.lsp.handlers").setup()
