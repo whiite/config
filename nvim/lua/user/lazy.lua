@@ -537,6 +537,7 @@ require("lazy").setup({
 			require("fff.download").download_or_build_binary()
 		end,
 		opts = {
+			prompt = "> ",
 			title = "Find Files",
 			follow_symlinks = true,
 			layout = {
