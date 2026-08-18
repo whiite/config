@@ -149,12 +149,7 @@ require("lazy").setup({
 		},
 	},
 	{ "tpope/vim-surround", event = { "BufReadPre", "BufNewFile" } }, -- Easily modify surrounding characters
-	{ "nmac427/guess-indent.nvim", opts = {
-		filetype_exclude = {
-			"Neotree",
-			"ToggleTerm",
-		},
-	} }, -- Auto detect indentation and tabstop (tab/space)
+	{ "tpope/vim-sleuth", event = { "BufReadPre", "BufNewFile" } }, -- Auto detect indentation and tabstop
 
 	-- {
 	-- 	url = "https://codeberg.org/andyg/leap.nvim", -- Fast movement by using 's'/'S' followed by characters you wish to leap to
@@ -730,7 +725,7 @@ require("lazy").setup({
 					prettierd = {
 						inherit = "prettierd",
 						condition = function(self, ctx)
-							return not require("conform.util").root_file({ "deno.json", "deno.jsonc" })
+							return not require("conform.util").root_file({ "biome.json", "deno.json", "deno.jsonc" })
 						end,
 					},
 				},
@@ -738,8 +733,8 @@ require("lazy").setup({
 					lua = { "stylua", lsp_format = "fallback" },
 					markdown = { "deno_fmt" },
 					fish = { "fish_indent" },
-					javascript = { "prettierd", lsp_format = "fallback" },
-					typescript = { "prettierd", lsp_format = "prefer" },
+					javascript = { "prettierd", "biome", lsp_format = "fallback" },
+					typescript = { "prettierd", lsp_format = "fallback" },
 					json = { "deno_fmt", lsp_format = "prefer" },
 				},
 				format_on_save = function(bufnr)
