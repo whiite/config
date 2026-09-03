@@ -495,7 +495,7 @@ require("lazy").setup({
 	{
 		"mrcjkb/rustaceanvim", -- Rust LSP and DAP support
 		dependencies = { "mason-org/mason.nvim" },
-		version = "^6",
+		version = "^9",
 		lazy = false,
 		config = function()
 			vim.g.rustaceanvim = function()
@@ -509,11 +509,21 @@ require("lazy").setup({
 					server = {
 						on_attach = lsp_handlers.on_attach,
 						capabilities = lsp_handlers.capabilities,
-						settings = function(project_root)
-							local ra = require("rustaceanvim.config.server")
-							return ra.load_rust_analyzer_settings(project_root, {
-								settings_file_pattern = "rust-analyzer.json",
-							})
+						settings = function(project_root, default_settings)
+							local settings = vim.deepcopy(default_settings)
+
+							local rust_analyzer_files =
+								vim.fs.find("rust-analyzer.json", { upward = true, path = project_root })
+							if #rust_analyzer_files > 0 then
+								local content = vim.fn.readfile(rust_analyzer_files[1])
+								local ok, project_settings =
+									pcall(vim.json.decode, table.concat(content, ""), { skip_comments = true })
+								if ok then
+									settings = vim.tbl_deep_extend("force", settings or {}, project_settings)
+								end
+							end
+
+							return settings
 						end,
 					},
 					dap = {
