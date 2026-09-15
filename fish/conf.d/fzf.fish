@@ -1,6 +1,4 @@
-set FZF_CTRL_T_COMMAND """
-rg --files --hidden
-"""
+set FZF_CTRL_T_COMMAND "rg --files --hidden"
 
 set FZF_CTRL_T_OPTS """
 --preview 'bat -n --color=always {}'
