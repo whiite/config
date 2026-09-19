@@ -1,7 +1,7 @@
 # Style
 theme = catppuccin mocha
 background-opacity = 0.7
-background-blur = 10
+background-blur = macos-glass-clear 
 
 macos-titlebar-style = tabs
 macos-window-buttons = hidden
