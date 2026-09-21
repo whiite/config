@@ -735,7 +735,11 @@ require("lazy").setup({
 					prettierd = {
 						inherit = "prettierd",
 						condition = function(self, ctx)
-							return not require("conform.util").root_file({ "biome.json", "deno.json", "deno.jsonc" })
+							return require("conform.util").root_file({
+								".prettierrc",
+								".prettierrc.yaml",
+								".prettierrc.json",
+							}) ~= nil
 						end,
 					},
 				},
@@ -744,7 +748,7 @@ require("lazy").setup({
 					markdown = { "deno_fmt" },
 					fish = { "fish_indent" },
 					javascript = { "prettierd", "biome", lsp_format = "fallback" },
-					typescript = { "prettierd", lsp_format = "fallback" },
+					typescript = { "prettierd", "biome", lsp_format = "fallback" },
 					json = { "deno_fmt", lsp_format = "prefer" },
 				},
 				format_on_save = function(bufnr)
