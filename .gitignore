@@ -9,3 +9,8 @@ fish/fish_variables
 fish/completions/*.fish
 !fish/completions/srcd.fish
 fish/functions/*/
+
+# OpenTofu/Terraform
+terraform.tfvars
+terraform.tfstate*
+.terraform
