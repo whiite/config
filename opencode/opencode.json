@@ -1,0 +1,40 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "ollama/glm-5.3-flash:cloud",
+  "small_model": "ollama/gemma4:31b-cloud",
+  "lsp": true,
+  "agent": {
+    "plan": {
+      "model": "ollama/glm-5.2:cloud"
+    },
+    "build": {
+      "model": "ollama/deepseek-v4.1-flash:cloud"
+    }
+  },
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama local",
+      "options": {
+        "baseURL": "http://eldin:11434/v1"
+      },
+      "models": {
+        "gemma4:31b-cloud": {
+          "name": "Gemma4 Cloud"
+        },
+        "glm-5.2:cloud": {
+          "name": "GLM-5.2"
+        },
+        "glm-5.3:cloud": {
+          "name": "GLM-5.3"
+        },
+        "glm-5.3-flash:cloud": {
+          "name": "GLM-5.3 Flash"
+        },
+        "deepseek-v4.1-flash:cloud": {
+          "name": "Deepseek v4.1 Flash"
+        }
+      }
+    }
+  }
+}
