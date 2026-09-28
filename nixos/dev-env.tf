@@ -116,12 +116,10 @@ provider "tailscale" {
 }
 
 locals {
-  nixos_flake_file = "${path.module}/flake.nix"
-  nixos_lock_file  = "${path.module}/flake.lock"
-  # hardware-configuration.nix lives alongside the flake so the deployed flake
-  # tree is self-contained. It is installed outside the /etc/nixos bind mount
-  # to avoid pulling the shared repo (and .terraform) into the Nix store.
-  nixos_hardware_file = "${path.module}/hardware-configuration.nix"
+  nixos_flake_file    = "${path.module}/flake.nix"
+  nixos_lock_file     = "${path.module}/flake.lock"
+  nixos_disko_file    = "${path.module}/disko.nix"
+  nixos_hardware_file = "${path.module}/hardware.nix"
   remote_flake_dir    = "/etc/nixos-flake"
 }
 
@@ -142,6 +140,7 @@ resource "terraform_data" "nixos_apply" {
   triggers_replace = [
     filesha256(local.nixos_flake_file),
     filesha256(local.nixos_lock_file),
+    filesha256(local.nixos_disko_file),
     filesha256(local.nixos_hardware_file),
     tailscale_tailnet_key.vm_auth.id,
   ]
@@ -153,7 +152,7 @@ resource "terraform_data" "nixos_apply" {
     password = var.remote_password
   }
 
-  # 1. Copy the flake + hardware config across (runs as the SSH user, so /tmp first)
+  # 1. Copy nix files
   provisioner "file" {
     source      = local.nixos_flake_file
     destination = "/tmp/flake.nix"
@@ -165,8 +164,13 @@ resource "terraform_data" "nixos_apply" {
   }
 
   provisioner "file" {
+    source      = local.nixos_disko_file
+    destination = "/tmp/disko.nix"
+  }
+
+  provisioner "file" {
     source      = local.nixos_hardware_file
-    destination = "/tmp/hardware-configuration.nix"
+    destination = "/tmp/hardware.nix"
   }
 
   # 2. Provision the auth key, install the flake and rebuild
@@ -184,9 +188,10 @@ resource "terraform_data" "nixos_apply" {
       "sudo mkdir -p ${local.remote_flake_dir}",
       "sudo install -m 0644 /tmp/flake.nix ${local.remote_flake_dir}/flake.nix",
       "sudo install -m 0644 /tmp/flake.lock ${local.remote_flake_dir}/flake.lock",
-      "sudo install -m 0644 /tmp/hardware-configuration.nix ${local.remote_flake_dir}/hardware-configuration.nix",
+      "sudo install -m 0644 /tmp/disko.nix ${local.remote_flake_dir}/disko.nix",
+      "sudo install -m 0644 /tmp/hardware.nix ${local.remote_flake_dir}/hardware.nix",
       "sudo nixos-rebuild switch --flake path:${local.remote_flake_dir}#nixos",
-      "rm -f /tmp/flake.nix /tmp/flake.lock /tmp/hardware-configuration.nix",
+      "rm -f /tmp/flake.nix /tmp/flake.lock /tmp/disko.nix /tmp/hardware.nix",
     ]
   }
 }

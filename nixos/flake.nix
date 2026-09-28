@@ -132,7 +132,6 @@
                 docker
                 deno
                 nodejs
-                tmux
                 unstable.atuin
                 unstable.tree-sitter
                 unstable.opencode
@@ -188,6 +187,10 @@
               interactiveShellInit = ''
                 atuin init fish | source
               '';
+            };
+
+            programs.tmux = {
+              enable = true;
             };
 
             # List services that you want to enable:
