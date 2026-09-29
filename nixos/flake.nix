@@ -85,7 +85,6 @@
 
             # Select internationalisation properties.
             i18n.defaultLocale = "en_GB.UTF-8";
-
             i18n.extraLocaleSettings = {
               LC_ADDRESS = "en_GB.UTF-8";
               LC_IDENTIFICATION = "en_GB.UTF-8";
@@ -215,6 +214,9 @@
               };
             };
 
+            # Stop docker running until needed
+            systemd.services.docker.wantedBy = lib.mkForce [];
+
             # Open ports in the firewall.
             # networking.firewall.allowedTCPPorts = [ ... ];
             networking.firewall.allowedUDPPorts = [
@@ -231,12 +233,6 @@
               authKeyFile = "/etc/tailscale-authkey";
               extraUpFlags = ["--ssh"];
             };
-
-            # Clipboard implementation
-            services.clipcat.enable = true;
-
-            # Enables clipboard sharing via UTM and Apple backend
-            services.spice-vdagentd.enable = true;
 
             # Create src directory on boot
             systemd.tmpfiles.rules = [
