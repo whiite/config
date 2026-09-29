@@ -48,6 +48,7 @@ local server_exclude = {
 -- List of servers installed outside of Mason
 local server_native = {
 	"harper_ls", -- Unsupported in NixOS
+	"denols",
 }
 
 local server_list = vim.tbl_filter(function(item)
