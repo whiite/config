@@ -1,11 +1,11 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "ollama/glm-5.3-flash:cloud",
+  "model": "ollama/deepseek-v4.1-flash:cloud",
   "small_model": "ollama/gemma4:31b-cloud",
   "lsp": true,
   "agent": {
     "plan": {
-      "model": "ollama/glm-5.2:cloud"
+      "model": "ollama/glm-5.3:cloud"
     },
     "build": {
       "model": "ollama/deepseek-v4.1-flash:cloud"
