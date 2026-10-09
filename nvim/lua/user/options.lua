@@ -25,6 +25,7 @@ local options = {
 	expandtab = false, -- convert tabs to spaces
 	shiftwidth = 4, -- the number of spaces inserted for each indentation
 	tabstop = 4, -- insert 2 spaces for a tab
+	softtabstop = 4,
 	cursorline = true, -- highlight the current line
 	number = true, -- set numbered lines
 	relativenumber = true, -- set relative numbered lines
@@ -67,6 +68,20 @@ vim.opt.shortmess:append("c")
 for k, v in pairs(options) do
 	vim.opt[k] = v
 end
+
+-- Autoreload files
+vim.g.autoread = true
+-- Triger `autoread` when files changes on disk
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+	pattern = "*",
+	command = "if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif",
+})
+
+-- Notification after file change
+vim.api.nvim_create_autocmd({ "FileChangedShellPost" }, {
+	pattern = "*",
+	command = "echohl WarningMsg | echo 'File changed on disk. Buffer reloaded.' | echohl None",
+})
 
 vim.cmd("set whichwrap+=<,>,[,],h,l")
 vim.cmd([[set iskeyword+=-]])
