@@ -213,8 +213,18 @@
 
             programs.tmux = {
               enable = true;
+              package = unstable.tmux;
+              plugins = with pkgs.tmuxPlugins; [
+                resurrect
+                continuum
+              ];
+              # runs after the plugin run-shell lines
+              extraConfig = ''
+                set -g @continuum-restore 'on'
+                set -g @continuum-save-interval '15'
+                set -g @resurrect-capture-pane-contents 'on'
+              '';
             };
-
             # List services that you want to enable:
 
             # Enable the OpenSSH daemon.
