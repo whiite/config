@@ -67,6 +67,16 @@
             # Use latest kernel.
             boot.kernelPackages = pkgs.linuxPackages_latest;
 
+            # Disable lockup watchdogs - redundant in a VM and add per-CPU timer
+            # wakeups that prevent cores entering a deep idle state
+            boot.kernelParams = ["nmi_watchdog=0"];
+            boot.kernel.sysctl = {
+              "kernel.nmi_watchdog" = 0;
+              "kernel.watchdog" = 0;
+              "kernel.soft_watchdog" = 0;
+              "kernel.hardlockup_all_cpu_backtrace" = 0;
+            };
+
             # Cross compilation support
             boot.binfmt.emulatedSystems = ["x86_64-linux"];
             boot.binfmt.preferStaticEmulators = true;
@@ -77,8 +87,21 @@
             # networking.proxy.default = "http://user:password@proxy:port/";
             # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-            # Enable networking
-            networking.networkmanager.enable = true;
+            # VM Networking
+            networking.networkmanager.enable = false;
+            networking.useNetworkd = true;
+            networking.useDHCP = false;
+            systemd.network = {
+              enable = true;
+              networks."10-enp0s1" = {
+                matchConfig.Name = "enp0s1";
+                networkConfig = {
+                  DHCP = "yes";
+                  MulticastDNS = "yes"; # resolve + announce nixos.local (NM parity)
+                };
+                dhcpV4Config.RouteMetric = 1024;
+              };
+            };
 
             # Set your time zone.
             time.timeZone = "Europe/London";
@@ -113,7 +136,7 @@
             users.users."${username}" = {
               isNormalUser = true;
               description = "Liam";
-              extraGroups = ["networkmanager" "wheel" "docker"];
+              extraGroups = ["wheel" "docker"];
               openssh.authorizedKeys.keys = [
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP0aaD+MZTqOBQo7DrTg1ODCxPrflpdJL9PdoZxKo2CD NixOS VM"
               ];
@@ -216,6 +239,18 @@
 
             # Stop docker running until needed
             systemd.services.docker.wantedBy = lib.mkForce [];
+
+            services.journald = {
+              storage = "volatile";
+              # Cap RAM usage so the volatile journal can't crowd out the VM's RAM
+              extraConfig = "RuntimeMaxUse=64M";
+            };
+
+            # Rotate logs daily instead of hourly — one host-visible wakeup per day
+            # instead of 24. Persistent: catch up at next boot if VM was suspended
+            # at midnight (suspends are common on a laptop-hosted VM).
+            systemd.services.logrotate.startAt = lib.mkForce "daily";
+            systemd.timers.logrotate.timerConfig.Persistent = true;
 
             # Open ports in the firewall.
             # networking.firewall.allowedTCPPorts = [ ... ];
