@@ -726,6 +726,17 @@ require("lazy").setup({
 	{
 		"mason-org/mason-lspconfig.nvim",
 		dependencies = { "neovim/nvim-lspconfig" },
+		opts = {
+			ensure_installed = {
+				"bashls",
+				"cssls",
+				"eslint",
+				"svelte",
+				"tailwindcss",
+				"ts_ls",
+				"tofu_ls",
+			},
+		},
 	}, -- lspconfig compatibility
 	{
 		"stevearc/conform.nvim",
@@ -832,6 +843,29 @@ require("lazy").setup({
 					-- Enable treesitter-based indentation
 					vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 				end,
+			})
+		end,
+		config = function()
+			-- Skip in headless mode (CI/Docker); async installs would be killed on exit
+			if #vim.api.nvim_list_uis() == 0 then
+				return
+			end
+
+			require("nvim-treesitter").install({
+				"bash",
+				"css",
+				"fish",
+				"go",
+				"hcl",
+				"html",
+				"javascript",
+				"json",
+				"nix",
+				"svelte",
+				"terraform",
+				"toml",
+				"typescript",
+				"yaml",
 			})
 		end,
 	},
