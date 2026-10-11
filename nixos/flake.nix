@@ -323,7 +323,7 @@
             systemd.tmpfiles.rules = [
               "d /home/${username}/src 0755 ${username} users -"
               "d /home/${username}/.config 0755 ${username} users -"
-              # nixos-rebuild's default flake path.
+              # symlink `/etc/nixos` (nixos-rebuild default path) -> `~/src/config/nixos`
               "L+ /etc/nixos - - - - /home/${username}/src/config/nixos"
             ];
 

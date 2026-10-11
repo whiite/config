@@ -10,15 +10,33 @@ contents of this repo into the right place
 
 ## Setup
 
+### NixOS VM
+
+The NixOS VM (declared within `nixos/`) sets up this repo automatically on first
+boot and stows it into `~/.config`. `/etc/nixos` is symlinked to
+`~/src/config/nixos`, so a bare `nixos-rebuild switch` works. See
+[`nixos/README.md`](nixos/README.md).
+
 ### Manual
 
-Easiest way is with [`stow`](https://www.gnu.org/software/stow/):
+The easiest way is [`just`](https://github.com/casey/just), which wraps the
+[`stow`](https://www.gnu.org/software/stow/) command:
 
 ```bash
-# Ensure ~/.config exists if not already
+# Restow this repo into ~/.config (works from any directory)
+just stow
+```
+
+`just unstow` removes every symlink it manages (e.g. when decommissioning a
+machine). The same `justfile` works on macOS and NixOS; on macOS install the
+prerequisites with `brew install stow just`.
+
+Without `just`, run stow directly from the root of this repo:
+
+```bash
+# Ensure ~/.config exists if not already
 mkdir ~/.config
 
-# Within the root of this repo run:
 stow -vR --target $HOME/.config .
 ```
 
