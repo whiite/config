@@ -184,6 +184,8 @@
               fish
               curl
               git
+              git-lfs
+              stow
               bat
               jq
               ripgrep
@@ -224,6 +226,44 @@
                 set -g @continuum-save-interval '15'
                 set -g @resurrect-capture-pane-contents 'on'
               '';
+            };
+
+            # VM specific git settings at /etc/gitconfig
+            # Config repo gitconfig takes precedence for keys defined in both
+            programs.git = {
+              enable = true;
+              config = {
+                init.defaultBranch = "main";
+                user = {
+                  name = "Liam Moore";
+                  email = "liamail4@gmail.com";
+                  signingkey = "/home/${username}/.ssh/id_ed25519_signing";
+                };
+                commit.gpgsign = true;
+                gpg = {
+                  format = "ssh";
+                  "ssh".allowedSignersFile = "~/.ssh/allowed-signers";
+                };
+                log.showSignature = false;
+                credential = {
+                  helper = "store";
+                  "github.com".useHttpPath = true;
+                  "https://github.com".helper = [
+                    ""
+                    "!/usr/bin/env gh auth git-credential"
+                  ];
+                  "https://gist.github.com".helper = [
+                    ""
+                    "!/usr/bin/env gh auth git-credential"
+                  ];
+                };
+                filter.lfs = {
+                  clean = "git-lfs clean -- %f";
+                  smudge = "git-lfs smudge -- %f";
+                  process = "git-lfs filter-process";
+                  required = true;
+                };
+              };
             };
             # List services that you want to enable:
 
@@ -279,52 +319,39 @@
               extraUpFlags = ["--ssh"];
             };
 
-            # Create src directory on boot
+            # config repo setup - stowed into ~/.config 
             systemd.tmpfiles.rules = [
               "d /home/${username}/src 0755 ${username} users -"
+              "d /home/${username}/.config 0755 ${username} users -"
+              # nixos-rebuild's default flake path.
+              "L+ /etc/nixos - - - - /home/${username}/src/config/nixos"
             ];
 
-            # Shared directory
-            fileSystems."/mnt/shared" = {
-              fsType = "virtiofs";
-              device = "share";
-              options = [
-                "nofail"
-                "users"
-                "exec"
-                "x-systemd.automount"
-              ];
-            };
-
-            # Bind mount nix configuration
-            fileSystems."/etc/nixos" = {
-              fsType = "none";
-              device = "/mnt/shared/config/nixos";
-              depends = [
-                "/mnt/shared/config/nixos"
-              ];
-              options = [
-                "bind"
-              ];
-            };
-
-            # .config overlay
-            # inits with host .config but isolates changes to the VM
-            fileSystems."/home/${username}/.config" = {
-              fsType = "overlay";
-              device = "overlay";
-              depends = [
-                "/mnt/shared/config"
-              ];
-              options = [
-                "userxattr"
-                "users"
-              ];
-              overlay = {
-                lowerdir = ["/mnt/shared/config"];
-                upperdir = "/home/${username}/.config.nixos";
-                workdir = "/workdir/dot-config";
+            # Clone the dotfiles repo on first boot if missing, then stow it into
+            # ~/.config. No auto-pull: run `git -C ~/src/config pull` when wanted.
+            # ConditionPathIsMountPoint skips the one-off migration run, where
+            # the old overlay is still mounted over ~/.config.
+            systemd.services.dotfiles-stow = {
+              description = "Clone dotfiles repo and stow into ~/.config";
+              wantedBy = ["multi-user.target"];
+              after = ["network-online.target"];
+              wants = ["network-online.target"];
+              unitConfig.ConditionPathIsMountPoint = "!/home/${username}/.config";
+              path = with pkgs; [git stow openssh];
+              serviceConfig = {
+                Type = "oneshot";
+                User = username;
+                Group = "users";
+                RemainAfterExit = true;
               };
+              script = ''
+                set -eu
+                repo="$HOME/src/config"
+                if [ ! -d "$repo/.git" ]; then
+                  git clone git@gitlab.com:monokuro/config.git "$repo"
+                fi
+                stow --dir="$repo" --target="$HOME/.config" --restow .
+              '';
             };
 
             # This value determines the NixOS release from which the default
