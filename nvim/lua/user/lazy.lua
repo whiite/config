@@ -868,6 +868,7 @@ require("lazy").setup({
 				"hcl",
 				"html",
 				"javascript",
+				"jsdoc",
 				"json",
 				"nix",
 				"svelte",
