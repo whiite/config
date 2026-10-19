@@ -39,6 +39,7 @@
               inherit system;
               config = pkgs.config;
             };
+            docker-agent = pkgs.callPackage ./docker-agent.nix {};
           in {
             nix.settings = {
               # Allows for cross compilation of nix flakes
@@ -152,6 +153,7 @@
                 just
                 rustup
                 docker
+                docker-agent
                 deno
                 nodejs
                 unstable.atuin
@@ -172,6 +174,7 @@
               EDITOR = "nvim";
               PATH = ["$HOME/go/bin"];
               ATUIN_CONFIG = "$HOME/.config/atuin/config.toml";
+              TELEMETRY_ENABLED = "false";
             };
 
             # List packages installed in system profile. To search, run:
@@ -323,6 +326,11 @@
             systemd.tmpfiles.rules = [
               "d /home/${username}/src 0755 ${username} users -"
               "d /home/${username}/.config 0755 ${username} users -"
+              # docker-agent CLI plugin: docker searches ~/.docker/cli-plugins,
+              # so symlink the store binary there to make `docker agent` work.
+              "d /home/${username}/.docker 0755 ${username} users -"
+              "d /home/${username}/.docker/cli-plugins 0755 ${username} users -"
+              "L+ /home/${username}/.docker/cli-plugins/docker-agent - - - - ${docker-agent}/bin/docker-agent"
               # symlink `/etc/nixos` (nixos-rebuild default path) -> `~/src/config/nixos`
               "L+ /etc/nixos - - - - /home/${username}/src/config/nixos"
             ];
