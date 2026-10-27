@@ -740,6 +740,7 @@ require("lazy").setup({
 				"bashls",
 				"cssls",
 				"eslint",
+				"jsonls",
 				"svelte",
 				"tailwindcss",
 				"ts_ls",
