@@ -678,10 +678,10 @@ require("lazy").setup({
 					event = "neo_tree_popup_input_ready",
 					---@param args { bufnr: integer, winid: integer }
 					handler = function(args)
-					  vim.cmd("stopinsert")
-					  vim.keymap.set("i", "<esc>", vim.cmd.stopinsert, { noremap = true, buffer = args.bufnr })
+						vim.cmd("stopinsert")
+						vim.keymap.set("i", "<esc>", vim.cmd.stopinsert, { noremap = true, buffer = args.bufnr })
 					end,
-				}
+				},
 			},
 			window = {
 				mappings = {
@@ -755,12 +755,12 @@ require("lazy").setup({
 				formatters = {
 					prettierd = {
 						inherit = "prettierd",
+						-- prettierd's own cwd() resolves the prettier root by searching upward
+						-- for any prettier config file (or a package.json with a "prettier"
+						-- key), returning nil when there is none. Reusing it here keeps the
+						-- condition in sync with the config files prettier itself accepts.
 						condition = function(self, ctx)
-							return require("conform.util").root_file({
-								".prettierrc",
-								".prettierrc.yaml",
-								".prettierrc.json",
-							}) ~= nil
+							return require("conform.formatters.prettierd").cwd(self, ctx) ~= nil
 						end,
 					},
 				},
@@ -768,8 +768,8 @@ require("lazy").setup({
 					lua = { "stylua", lsp_format = "fallback" },
 					markdown = { "deno_fmt" },
 					fish = { "fish_indent" },
-					javascript = { "prettierd", "biome", lsp_format = "fallback" },
-					typescript = { "prettierd", "biome", lsp_format = "fallback" },
+					javascript = { "prettierd", "biome", lsp_format = "fallback", stop_after_first = true },
+					typescript = { "prettierd", "biome", lsp_format = "fallback", stop_after_first = true },
 					json = { "deno_fmt", lsp_format = "prefer" },
 				},
 				format_on_save = function(bufnr)
