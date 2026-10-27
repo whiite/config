@@ -49,6 +49,8 @@ local server_exclude = {
 local server_native = {
 	"harper_ls", -- Unsupported in NixOS
 	"denols",
+	"nil_ls",
+	"lua_ls",
 }
 
 local server_list = vim.tbl_filter(function(item)
