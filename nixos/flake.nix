@@ -8,370 +8,392 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = {
-    nixpkgs,
-    nixpkgs-unstable,
-    disko,
-    ...
-  }: let
-    username = "liam";
-    system = "aarch64-linux";
-  in {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      inherit system;
+  outputs =
+    {
+      nixpkgs,
+      nixpkgs-unstable,
+      disko,
+      ...
+    }:
+    let
+      username = "liam";
+      system = "aarch64-linux";
+    in
+    {
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        inherit system;
 
-      modules = [
-        # Hardware bits not covered by disko (initrd modules, hostPlatform).
-        ./hardware.nix
-        # Declaratively manage the disk layout; generates fileSystems config.
-        disko.nixosModules.disko
-        ./disko.nix
+        modules = [
+          # Hardware bits not covered by disko (initrd modules, hostPlatform).
+          ./hardware.nix
+          # Declaratively manage the disk layout; generates fileSystems config.
+          disko.nixosModules.disko
+          ./disko.nix
 
-        (
-          {
-            lib,
-            pkgs,
-            ...
-          }: let
-            # Pull unstable packages in from the locked flake input rather than
-            # fetching a tarball at evaluation time.
-            unstable = import nixpkgs-unstable {
-              inherit system;
-              config = pkgs.config;
-            };
-            docker-agent = pkgs.callPackage ./docker-agent.nix {};
-          in {
-            nix.settings = {
-              # Allows for cross compilation of nix flakes
-              trusted-users = [username];
-              experimental-features = ["nix-command" "flakes"];
-            };
-            # Workarounds for aarch64 qemu-user-static build failures:
-            # https://github.com/NixOS/nixpkgs/issues/392673
-            nixpkgs.overlays = [
-              (final: previous:
-                lib.optionalAttrs previous.stdenv.hostPlatform.isStatic {
-                  nettle = previous.nettle.overrideAttrs {
-                    CCPIC = "-fPIC";
+          (
+            {
+              lib,
+              pkgs,
+              ...
+            }:
+            let
+              # Pull unstable packages in from the locked flake input rather than
+              # fetching a tarball at evaluation time.
+              unstable = import nixpkgs-unstable {
+                inherit system;
+                config = pkgs.config;
+              };
+              docker-agent = pkgs.callPackage ./docker-agent.nix { };
+            in
+            {
+              nix.settings = {
+                # Allows for cross compilation of nix flakes
+                trusted-users = [ username ];
+                experimental-features = [
+                  "nix-command"
+                  "flakes"
+                ];
+              };
+              # Workarounds for aarch64 qemu-user-static build failures:
+              # https://github.com/NixOS/nixpkgs/issues/392673
+              nixpkgs.overlays = [
+                (
+                  final: previous:
+                  lib.optionalAttrs previous.stdenv.hostPlatform.isStatic {
+                    nettle = previous.nettle.overrideAttrs {
+                      CCPIC = "-fPIC";
+                    };
+                    # https://github.com/NixOS/nixpkgs/issues/366902
+                    qemu-user = previous.qemu-user.overrideAttrs (old: {
+                      configureFlags = old.configureFlags ++ [ "--disable-pie" ];
+                    });
+                  }
+                )
+              ];
+
+              # Bootloader.
+              boot.loader.systemd-boot.enable = true;
+              boot.loader.efi.canTouchEfiVariables = true;
+
+              # Use latest kernel.
+              boot.kernelPackages = pkgs.linuxPackages_latest;
+
+              # Disable lockup watchdogs - redundant in a VM and add per-CPU timer
+              # wakeups that prevent cores entering a deep idle state
+              boot.kernelParams = [ "nmi_watchdog=0" ];
+              boot.kernel.sysctl = {
+                "kernel.nmi_watchdog" = 0;
+                "kernel.watchdog" = 0;
+                "kernel.soft_watchdog" = 0;
+                "kernel.hardlockup_all_cpu_backtrace" = 0;
+              };
+
+              # Cross compilation support
+              boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
+              boot.binfmt.preferStaticEmulators = true;
+
+              networking.hostName = "nixos";
+
+              # Configure network proxy if necessary
+              # networking.proxy.default = "http://user:password@proxy:port/";
+              # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+              # VM Networking
+              networking.networkmanager.enable = false;
+              networking.useNetworkd = true;
+              networking.useDHCP = false;
+              systemd.network = {
+                enable = true;
+                networks."10-enp0s1" = {
+                  matchConfig.Name = "enp0s1";
+                  networkConfig = {
+                    DHCP = "yes";
+                    MulticastDNS = "yes"; # resolve + announce nixos.local (NM parity)
                   };
-                  # https://github.com/NixOS/nixpkgs/issues/366902
-                  qemu-user = previous.qemu-user.overrideAttrs (old: {
-                    configureFlags = old.configureFlags ++ ["--disable-pie"];
-                  });
-                })
-            ];
-
-            # Bootloader.
-            boot.loader.systemd-boot.enable = true;
-            boot.loader.efi.canTouchEfiVariables = true;
-
-            # Use latest kernel.
-            boot.kernelPackages = pkgs.linuxPackages_latest;
-
-            # Disable lockup watchdogs - redundant in a VM and add per-CPU timer
-            # wakeups that prevent cores entering a deep idle state
-            boot.kernelParams = ["nmi_watchdog=0"];
-            boot.kernel.sysctl = {
-              "kernel.nmi_watchdog" = 0;
-              "kernel.watchdog" = 0;
-              "kernel.soft_watchdog" = 0;
-              "kernel.hardlockup_all_cpu_backtrace" = 0;
-            };
-
-            # Cross compilation support
-            boot.binfmt.emulatedSystems = ["x86_64-linux"];
-            boot.binfmt.preferStaticEmulators = true;
-
-            networking.hostName = "nixos";
-
-            # Configure network proxy if necessary
-            # networking.proxy.default = "http://user:password@proxy:port/";
-            # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-            # VM Networking
-            networking.networkmanager.enable = false;
-            networking.useNetworkd = true;
-            networking.useDHCP = false;
-            systemd.network = {
-              enable = true;
-              networks."10-enp0s1" = {
-                matchConfig.Name = "enp0s1";
-                networkConfig = {
-                  DHCP = "yes";
-                  MulticastDNS = "yes"; # resolve + announce nixos.local (NM parity)
+                  dhcpV4Config.RouteMetric = 1024;
                 };
-                dhcpV4Config.RouteMetric = 1024;
               };
-            };
 
-            # Set your time zone.
-            time.timeZone = "Europe/London";
+              # Set your time zone.
+              time.timeZone = "Europe/London";
 
-            # Select internationalisation properties.
-            i18n.defaultLocale = "en_GB.UTF-8";
-            i18n.extraLocaleSettings = {
-              LC_ADDRESS = "en_GB.UTF-8";
-              LC_IDENTIFICATION = "en_GB.UTF-8";
-              LC_MEASUREMENT = "en_GB.UTF-8";
-              LC_MONETARY = "en_GB.UTF-8";
-              LC_NAME = "en_GB.UTF-8";
-              LC_NUMERIC = "en_GB.UTF-8";
-              LC_PAPER = "en_GB.UTF-8";
-              LC_TELEPHONE = "en_GB.UTF-8";
-              LC_TIME = "en_GB.UTF-8";
-            };
+              # Select internationalisation properties.
+              i18n.defaultLocale = "en_GB.UTF-8";
+              i18n.extraLocaleSettings = {
+                LC_ADDRESS = "en_GB.UTF-8";
+                LC_IDENTIFICATION = "en_GB.UTF-8";
+                LC_MEASUREMENT = "en_GB.UTF-8";
+                LC_MONETARY = "en_GB.UTF-8";
+                LC_NAME = "en_GB.UTF-8";
+                LC_NUMERIC = "en_GB.UTF-8";
+                LC_PAPER = "en_GB.UTF-8";
+                LC_TELEPHONE = "en_GB.UTF-8";
+                LC_TIME = "en_GB.UTF-8";
+              };
 
-            # Configure keymap in X11
-            services.xserver.xkb = {
-              layout = "gb";
-              variant = "colemak";
-            };
+              # Configure keymap in X11
+              services.xserver.xkb = {
+                layout = "gb";
+                variant = "colemak";
+              };
 
-            # Configure console keymap
-            console.keyMap = "uk";
+              # Configure console keymap
+              console.keyMap = "uk";
 
-            # Don't require password for sudo
-            security.sudo.wheelNeedsPassword = false;
+              # Don't require password for sudo
+              security.sudo.wheelNeedsPassword = false;
 
-            # Define a user account. Don't forget to set a password with ‘passwd’.
-            users.users."${username}" = {
-              isNormalUser = true;
-              description = "Liam";
-              extraGroups = ["wheel" "docker"];
-              openssh.authorizedKeys.keys = [
-                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP0aaD+MZTqOBQo7DrTg1ODCxPrflpdJL9PdoZxKo2CD NixOS VM"
-              ];
-              packages = with pkgs; [
-                eza
-                zoxide
-                direnv
-                go
-                silicon
-                erdtree
-                delta
-                gh
-                just
-                rustup
-                docker
-                docker-agent
-                deno
-                nodejs
-                unstable.atuin
-                unstable.tree-sitter
-                unstable.opencode
+              # Define a user account. Don't forget to set a password with ‘passwd’.
+              users.users."${username}" = {
+                isNormalUser = true;
+                description = "Liam";
+                extraGroups = [
+                  "wheel"
+                  "docker"
+                ];
+                openssh.authorizedKeys.keys = [
+                  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP0aaD+MZTqOBQo7DrTg1ODCxPrflpdJL9PdoZxKo2CD NixOS VM"
+                ];
+                packages = with pkgs; [
+                  unstable.atuin
+                  unstable.tree-sitter
+                  unstable.opencode
+                  unstable.biome
+                  eza
+                  zoxide
+                  direnv
+                  go
+                  silicon
+                  erdtree
+                  delta
+                  gh
+                  just
+                  rustup
+                  docker
+                  docker-agent
+                  deno
+                  nodejs
+                  stylua
+                  lua-language-server
+                  unstable.nil
+                ];
+                shell = pkgs.fish;
+              };
+
+              virtualisation.docker.enable = true;
+
+              environment.sessionVariables = {
+                XDG_CACHE_HOME = "$HOME/.cache";
+                XDG_CONFIG_HOME = "$HOME/.config";
+                XDG_DATA_HOME = "$HOME/.local/share";
+                XDG_STATE_HOME = "$HOME/.local/state";
+                EDITOR = "nvim";
+                PATH = [ "$HOME/go/bin" ];
+                ATUIN_CONFIG = "$HOME/.config/atuin/config.toml";
+                TELEMETRY_ENABLED = "false";
+              };
+
+              # List packages installed in system profile. To search, run:
+              # $ nix search wget
+              environment.systemPackages = with pkgs; [
                 unstable.lazygit
+                unstable.neovim
+                openvpn
+                unzip
+                gcc
+                fish
+                curl
+                git
+                git-lfs
+                stow
+                bat
+                jq
+                ripgrep
+                fzf
+                clang
+                xclip
+                harper
+                kubectl
               ];
-              shell = pkgs.fish;
-            };
 
-            virtualisation.docker.enable = true;
+              # Some programs need SUID wrappers, can be configured further or are
+              # started in user sessions.
+              # programs.mtr.enable = true;
+              # programs.gnupg.agent = {
+              #   enable = true;
+              #   enableSSHSupport = true;
+              # };
+              programs.fish = {
+                enable = true;
+                shellInit = ''
+                  fish_add_path $HOME/go/bin
+                '';
+                interactiveShellInit = ''
+                  atuin init fish | source
+                '';
+              };
 
-            environment.sessionVariables = {
-              XDG_CACHE_HOME = "$HOME/.cache";
-              XDG_CONFIG_HOME = "$HOME/.config";
-              XDG_DATA_HOME = "$HOME/.local/share";
-              XDG_STATE_HOME = "$HOME/.local/state";
-              EDITOR = "nvim";
-              PATH = ["$HOME/go/bin"];
-              ATUIN_CONFIG = "$HOME/.config/atuin/config.toml";
-              TELEMETRY_ENABLED = "false";
-            };
+              programs.tmux = {
+                enable = true;
+                package = unstable.tmux;
+                plugins = with pkgs.tmuxPlugins; [
+                  resurrect
+                  continuum
+                ];
+                # runs after the plugin run-shell lines
+                extraConfig = ''
+                  set -g @continuum-restore 'on'
+                  set -g @continuum-save-interval '15'
+                  set -g @resurrect-capture-pane-contents 'on'
+                '';
+              };
 
-            # List packages installed in system profile. To search, run:
-            # $ nix search wget
-            environment.systemPackages = with pkgs; [
-              unstable.neovim
-              unstable.tailscale
-              unzip
-              gcc
-              fish
-              curl
-              git
-              git-lfs
-              stow
-              bat
-              jq
-              ripgrep
-              fzf
-              clang
-              xclip
-              harper
-              kubectl
-            ];
+              # VM specific git settings at /etc/gitconfig
+              # Config repo gitconfig takes precedence for keys defined in both
+              programs.git = {
+                enable = true;
+                config = {
+                  init.defaultBranch = "main";
+                  user = {
+                    name = "Liam Moore";
+                    email = "liamail4@gmail.com";
+                    signingkey = "/home/${username}/.ssh/id_ed25519_signing";
+                  };
+                  commit.gpgsign = true;
+                  gpg = {
+                    format = "ssh";
+                    "ssh".allowedSignersFile = "~/.ssh/allowed-signers";
+                  };
+                  log.showSignature = false;
+                  credential = {
+                    helper = "store";
+                    "github.com".useHttpPath = true;
+                    "https://github.com".helper = [
+                      ""
+                      "!/usr/bin/env gh auth git-credential"
+                    ];
+                    "https://gist.github.com".helper = [
+                      ""
+                      "!/usr/bin/env gh auth git-credential"
+                    ];
+                  };
+                  filter.lfs = {
+                    clean = "git-lfs clean -- %f";
+                    smudge = "git-lfs smudge -- %f";
+                    process = "git-lfs filter-process";
+                    required = true;
+                  };
+                };
+              };
+              # List services that you want to enable:
 
-            # Some programs need SUID wrappers, can be configured further or are
-            # started in user sessions.
-            # programs.mtr.enable = true;
-            # programs.gnupg.agent = {
-            #   enable = true;
-            #   enableSSHSupport = true;
-            # };
-            programs.fish = {
-              enable = true;
-              shellInit = ''
-                fish_add_path $HOME/go/bin
-              '';
-              interactiveShellInit = ''
-                atuin init fish | source
-              '';
-            };
+              # Enable the OpenSSH daemon.
+              services.openssh = {
+                enable = true;
+                settings = {
+                  PasswordAuthentication = false;
+                  KbdInteractiveAuthentication = false;
+                  PermitRootLogin = "no";
+                  AllowUsers = [ username ];
+                };
+              };
 
-            programs.tmux = {
-              enable = true;
-              package = unstable.tmux;
-              plugins = with pkgs.tmuxPlugins; [
-                resurrect
-                continuum
+              # Enable support for looking up `.local` hosts replacing avahi
+              services.resolved = {
+                enable = true;
+                settings.Resolve = {
+                  MulticastDNS = "yes";
+                  LLMNR = "yes";
+                };
+              };
+
+              # Stop docker running until needed
+              systemd.services.docker.wantedBy = lib.mkForce [ ];
+
+              services.journald = {
+                storage = "volatile";
+                # Cap RAM usage so the volatile journal can't crowd out the VM's RAM
+                extraConfig = "RuntimeMaxUse=64M";
+              };
+
+              # Rotate logs daily instead of hourly — one host-visible wakeup per day
+              # instead of 24. Persistent: catch up at next boot if VM was suspended
+              # at midnight (suspends are common on a laptop-hosted VM).
+              systemd.services.logrotate.startAt = lib.mkForce "daily";
+              systemd.timers.logrotate.timerConfig.Persistent = true;
+
+              # Open ports in the firewall.
+              # networking.firewall.allowedTCPPorts = [ ... ];
+              networking.firewall.allowedUDPPorts = [
+                5353 # Required for mDNS
               ];
-              # runs after the plugin run-shell lines
-              extraConfig = ''
-                set -g @continuum-restore 'on'
-                set -g @continuum-save-interval '15'
-                set -g @resurrect-capture-pane-contents 'on'
-              '';
-            };
+              # Or disable the firewall altogether.
+              # networking.firewall.enable = false;
 
-            # VM specific git settings at /etc/gitconfig
-            # Config repo gitconfig takes precedence for keys defined in both
-            programs.git = {
-              enable = true;
-              config = {
-                init.defaultBranch = "main";
-                user = {
-                  name = "Liam Moore";
-                  email = "liamail4@gmail.com";
-                  signingkey = "/home/${username}/.ssh/id_ed25519_signing";
-                };
-                commit.gpgsign = true;
-                gpg = {
-                  format = "ssh";
-                  "ssh".allowedSignersFile = "~/.ssh/allowed-signers";
-                };
-                log.showSignature = false;
-                credential = {
-                  helper = "store";
-                  "github.com".useHttpPath = true;
-                  "https://github.com".helper = [
-                    ""
-                    "!/usr/bin/env gh auth git-credential"
-                  ];
-                  "https://gist.github.com".helper = [
-                    ""
-                    "!/usr/bin/env gh auth git-credential"
-                  ];
-                };
-                filter.lfs = {
-                  clean = "git-lfs clean -- %f";
-                  smudge = "git-lfs smudge -- %f";
-                  process = "git-lfs filter-process";
-                  required = true;
-                };
+              # Enable tailscale - operator + up --ssh handled declaratively.
+              # The auth key is provisioned by OpenTofu at this path.
+              services.tailscale = {
+                enable = true;
+                package = unstable.tailscale;
+                extraSetFlags = [ "--operator=${username}" ];
+                authKeyFile = "/etc/tailscale-authkey";
+                extraUpFlags = [ "--ssh" ];
               };
-            };
-            # List services that you want to enable:
 
-            # Enable the OpenSSH daemon.
-            services.openssh = {
-              enable = true;
-              settings = {
-                PasswordAuthentication = false;
-                KbdInteractiveAuthentication = false;
-                PermitRootLogin = "no";
-                AllowUsers = [username];
+              # config repo setup - stowed into ~/.config
+              systemd.tmpfiles.rules = [
+                "d /home/${username}/src 0755 ${username} users -"
+                "d /home/${username}/.config 0755 ${username} users -"
+                # docker-agent CLI plugin: docker searches ~/.docker/cli-plugins,
+                # so symlink the store binary there to make `docker agent` work.
+                "d /home/${username}/.docker 0755 ${username} users -"
+                "d /home/${username}/.docker/cli-plugins 0755 ${username} users -"
+                "L+ /home/${username}/.docker/cli-plugins/docker-agent - - - - ${docker-agent}/bin/docker-agent"
+                # symlink `/etc/nixos` (nixos-rebuild default path) -> `~/src/config/nixos`
+                "L+ /etc/nixos - - - - /home/${username}/src/config/nixos"
+              ];
+
+              # Clone the dotfiles repo on first boot if missing, then stow it into
+              # ~/.config. No auto-pull: run `git -C ~/src/config pull` when wanted.
+              # ConditionPathIsMountPoint skips the one-off migration run, where
+              # the old overlay is still mounted over ~/.config.
+              systemd.services.dotfiles-stow = {
+                description = "Clone dotfiles repo and stow into ~/.config";
+                wantedBy = [ "multi-user.target" ];
+                after = [ "network-online.target" ];
+                wants = [ "network-online.target" ];
+                unitConfig.ConditionPathIsMountPoint = "!/home/${username}/.config";
+                path = with pkgs; [
+                  git
+                  stow
+                  openssh
+                ];
+                serviceConfig = {
+                  Type = "oneshot";
+                  User = username;
+                  Group = "users";
+                  RemainAfterExit = true;
+                };
+                script = ''
+                  set -eu
+                  repo="$HOME/src/config"
+                  if [ ! -d "$repo/.git" ]; then
+                    git clone git@gitlab.com:monokuro/config.git "$repo"
+                  fi
+                  stow --dir="$repo" --target="$HOME/.config" --restow .
+                '';
               };
-            };
 
-            # Enable support for looking up `.local` hosts replacing avahi
-            services.resolved = {
-              enable = true;
-              settings.Resolve = {
-                MulticastDNS = "yes";
-                LLMNR = "yes";
-              };
-            };
-
-            # Stop docker running until needed
-            systemd.services.docker.wantedBy = lib.mkForce [];
-
-            services.journald = {
-              storage = "volatile";
-              # Cap RAM usage so the volatile journal can't crowd out the VM's RAM
-              extraConfig = "RuntimeMaxUse=64M";
-            };
-
-            # Rotate logs daily instead of hourly — one host-visible wakeup per day
-            # instead of 24. Persistent: catch up at next boot if VM was suspended
-            # at midnight (suspends are common on a laptop-hosted VM).
-            systemd.services.logrotate.startAt = lib.mkForce "daily";
-            systemd.timers.logrotate.timerConfig.Persistent = true;
-
-            # Open ports in the firewall.
-            # networking.firewall.allowedTCPPorts = [ ... ];
-            networking.firewall.allowedUDPPorts = [
-              5353 # Required for mDNS
-            ];
-            # Or disable the firewall altogether.
-            # networking.firewall.enable = false;
-
-            # Enable tailscale - operator + up --ssh handled declaratively.
-            # The auth key is provisioned by OpenTofu at this path.
-            services.tailscale = {
-              enable = true;
-              extraSetFlags = ["--operator=${username}"];
-              authKeyFile = "/etc/tailscale-authkey";
-              extraUpFlags = ["--ssh"];
-            };
-
-            # config repo setup - stowed into ~/.config 
-            systemd.tmpfiles.rules = [
-              "d /home/${username}/src 0755 ${username} users -"
-              "d /home/${username}/.config 0755 ${username} users -"
-              # docker-agent CLI plugin: docker searches ~/.docker/cli-plugins,
-              # so symlink the store binary there to make `docker agent` work.
-              "d /home/${username}/.docker 0755 ${username} users -"
-              "d /home/${username}/.docker/cli-plugins 0755 ${username} users -"
-              "L+ /home/${username}/.docker/cli-plugins/docker-agent - - - - ${docker-agent}/bin/docker-agent"
-              # symlink `/etc/nixos` (nixos-rebuild default path) -> `~/src/config/nixos`
-              "L+ /etc/nixos - - - - /home/${username}/src/config/nixos"
-            ];
-
-            # Clone the dotfiles repo on first boot if missing, then stow it into
-            # ~/.config. No auto-pull: run `git -C ~/src/config pull` when wanted.
-            # ConditionPathIsMountPoint skips the one-off migration run, where
-            # the old overlay is still mounted over ~/.config.
-            systemd.services.dotfiles-stow = {
-              description = "Clone dotfiles repo and stow into ~/.config";
-              wantedBy = ["multi-user.target"];
-              after = ["network-online.target"];
-              wants = ["network-online.target"];
-              unitConfig.ConditionPathIsMountPoint = "!/home/${username}/.config";
-              path = with pkgs; [git stow openssh];
-              serviceConfig = {
-                Type = "oneshot";
-                User = username;
-                Group = "users";
-                RemainAfterExit = true;
-              };
-              script = ''
-                set -eu
-                repo="$HOME/src/config"
-                if [ ! -d "$repo/.git" ]; then
-                  git clone git@gitlab.com:monokuro/config.git "$repo"
-                fi
-                stow --dir="$repo" --target="$HOME/.config" --restow .
-              '';
-            };
-
-            # This value determines the NixOS release from which the default
-            # settings for stateful data, like file locations and database versions
-            # on your system were taken. It‘s perfectly fine and recommended to leave
-            # this value at the release version of the first install of this system.
-            # Before changing this value read the documentation for this option
-            # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-            system.stateVersion = "25.11"; # Did you read the comment?
-          }
-        )
-      ];
+              # This value determines the NixOS release from which the default
+              # settings for stateful data, like file locations and database versions
+              # on your system were taken. It‘s perfectly fine and recommended to leave
+              # this value at the release version of the first install of this system.
+              # Before changing this value read the documentation for this option
+              # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+              system.stateVersion = "25.11"; # Did you read the comment?
+            }
+          )
+        ];
+      };
     };
-  };
 }
