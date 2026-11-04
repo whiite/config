@@ -48,7 +48,7 @@ sync_frequency = "5m"
 
 ## which search mode to use for interactive search
 ## possible values: prefix, fulltext, fuzzy, daemon-fuzzy
-search_mode = "fuzzy"
+search_mode = "daemon-fuzzy"
 
 ## which search mode to use when atuin is invoked from a shell up-key binding
 ## the accepted values are identical to those of "search_mode"
@@ -403,3 +403,10 @@ autostart = true
 ## Syntax highlight commands in the search results, using the theme's colors.
 ## Not available on all platforms (e.g. Windows).
 # syntax_highlight = true
+
+[ai]
+## Enable Atuin AI (question-mark keybinding and `atuin ai`).
+enabled = true
+
+## Self-hosted Atuin AI server on the tailnet
+endpoint = "https://atuin-ai.snowy-powan.ts.net"

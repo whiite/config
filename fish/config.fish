@@ -11,6 +11,9 @@ function fish_user_key_bindings
     fish_vi_key_bindings --no-erase insert
     bind --mode insert ctrl-n down-or-search # Use default binding 
     bind --mode default ctrl-n down-or-search
+
+    # `atuin init fish` binds `?` only in the default keymap not vi mode
+    bind --mode insert "?" _atuin_ai_question_mark
 end
 
 set fish_cursor_insert block blink
