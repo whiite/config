@@ -19,7 +19,9 @@ end
 set fish_cursor_insert block blink
 set fish_function_path (path resolve $__fish_config_dir/functions/*/) $fish_function_path
 
-zoxide init fish | source
-fzf --fish | source
-era completion fish | source
-direnv hook fish | source
+# Shell integrations (optional: only initialise when the tool is installed)
+command -sq zoxide; and zoxide init fish | source
+command -sq fzf; and fzf --fish | source
+command -sq direnv; and direnv hook fish | source
+command -sq atuin; and atuin init fish | source
+
