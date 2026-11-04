@@ -166,6 +166,11 @@ on-window-detected = [
     run = "move-node-to-workspace O",
   },
   {
+    if = "test %{app-bundle-id} = com.spotify.client",
+    check-further-callbacks = true,
+    run = "move-node-to-workspace P",
+  },
+  {
     if = "test %{app-bundle-id} = net.kovidgoyal.kitty",
     check-further-callbacks = true,
     run = "move-node-to-workspace T",
@@ -180,6 +185,11 @@ on-window-detected = [
     check-further-callbacks = true,
     run = ["layout floating", "move-node-to-workspace T"],
   },
+  {
+    if = "test %{app-bundle-id} = com.superlogical.rex",
+    check-further-callbacks = true,
+    run = "move-node-to-workspace T",
+  }
 ]
 
 # 'main' binding mode declaration
