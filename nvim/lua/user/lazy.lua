@@ -874,6 +874,7 @@ require("lazy").setup({
 				"json",
 				"just",
 				"nix",
+				"ssh_config",
 				"svelte",
 				"terraform",
 				"toml",
