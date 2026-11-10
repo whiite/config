@@ -3,7 +3,31 @@ gui:
 git:
   diffRenderers:
     - colorArg: always
-      command: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+      command: >-
+        delta --dark --paging=never --line-numbers --hyperlinks
+        --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
 os:
   editPreset: "nvim-remote"
+  # NOTE: LLM generated solution to edit in the current neovim tab
+  # when attempting to edit from within a neovim session
+  edit: >-
+    begin;
+    if test -z "$NVIM"; nvim -- {{filename}};
+    else;
+    nvim --server "$NVIM" --remote-send
+    '<C-\><C-N>:if winnr("$")>1|close|endif<CR>:execute
+    "hide edit " .
+    fnameescape(trim({{filename}}, nr2char(34)))<CR>';
+    end;
+    end
+  editAtLine: >-
+    begin;
+    if test -z "$NVIM"; nvim +{{line}} -- {{filename}};
+    else;
+    nvim --server "$NVIM" --remote-send
+    '<C-\><C-N>:if winnr("$")>1|close|endif<CR>:execute
+    "hide edit " .
+    fnameescape(trim({{filename}}, nr2char(34)))<CR>{{line}}G';
+    end;
+    end
 promptToReturnFromSubprocess: false
