@@ -48,8 +48,14 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.health = { style = "float" }
 vim.opt.winborder = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
 
+vim.opt.shortmess:append("c")
+
+for k, v in pairs(options) do
+	vim.opt[k] = v
+end
+
 -- Shared clipboard over SSH (via OSC 52)
-if vim.env.SSH_CONNECTION ~= nil then
+if vim.env.SSH_CONNECTION ~= nil and vim.env.TERM ~= "xterm-rex" then
 	vim.g.clipboard = {
 		name = "OSC 52",
 		copy = {
@@ -61,12 +67,29 @@ if vim.env.SSH_CONNECTION ~= nil then
 			["*"] = require("vim.ui.clipboard.osc52").paste("*"),
 		},
 	}
-end
-
-vim.opt.shortmess:append("c")
-
-for k, v in pairs(options) do
-	vim.opt[k] = v
+elseif (vim.env.REX_SESSION ~= nil or vim.env.TERM == "xterm-rex") and vim.fn.executable("pbcopy") == 0 then
+	-- Rex panes on a remote host accept OSC 52 writes but never answer
+	-- read-back queries, so a normal OSC 52 provider (or nvim's
+	-- auto-detected one) hangs for ~10s on any paste. Mirror yanks instead,
+	-- and paste from the system clipboard with the terminal's own paste
+	-- (cmd-v in Rex). Skipped on macOS, where rex panes have pbcopy/pbpaste.
+	-- TERM=xterm-rex also catches ssh sessions started from a Rex pane
+	-- (TERM is forwarded over ssh, REX_SESSION is not).
+	--
+	-- TODO: undo this once Rex supports OSC 52 read-back (paste queries);
+	-- the plain OSC 52 provider above can then be used in Rex panes too.
+	vim.opt.clipboard = "" -- keep p/yank purely internal
+	local termfeatures = vim.g.termfeatures or {}
+	termfeatures.osc52 = false -- stop nvim probing for and using OSC 52
+	vim.g.termfeatures = termfeatures
+	vim.api.nvim_create_autocmd("TextYankPost", {
+		callback = function()
+			local event = vim.v.event
+			if event.operator == "y" then
+				require("vim.ui.clipboard.osc52").copy("+")(event.regcontents)
+			end
+		end,
+	})
 end
 
 -- Autoreload files
