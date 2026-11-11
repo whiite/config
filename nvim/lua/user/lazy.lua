@@ -341,7 +341,7 @@ require("lazy").setup({
 	},
 	{
 		"folke/todo-comments.nvim",
-		event = "LspAttach",
+		event = { "BufReadPre", "BufNewFile" },
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {},
 	},
