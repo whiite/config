@@ -739,6 +739,7 @@ require("lazy").setup({
 			ensure_installed = {
 				"bashls",
 				"cssls",
+				"docker_language_server",
 				"eslint",
 				"jsonls",
 				"just",
@@ -746,6 +747,7 @@ require("lazy").setup({
 				"tailwindcss",
 				"ts_ls",
 				"tofu_ls",
+				"yamlls",
 			},
 		},
 	}, -- lspconfig compatibility
