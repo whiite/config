@@ -51,6 +51,7 @@ local server_native = {
 	"denols",
 	"nil_ls",
 	"lua_ls",
+	"zls",
 }
 
 local server_list = vim.tbl_filter(function(item)

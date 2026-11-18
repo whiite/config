@@ -882,6 +882,7 @@ require("lazy").setup({
 				"toml",
 				"typescript",
 				"yaml",
+				"zig",
 			})
 		end,
 	},
