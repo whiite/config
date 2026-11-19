@@ -78,6 +78,9 @@
               # Bootloader.
               boot.loader.systemd-boot.enable = true;
               boot.loader.efi.canTouchEfiVariables = true;
+              # The ESP is only 1G; keep boot entries (and their kernel/initrd
+              # copies) for the 5 newest generations so it can't fill up.
+              boot.loader.systemd-boot.configurationLimit = 5;
 
               # Use latest kernel.
               boot.kernelPackages = pkgs.linuxPackages_latest;
