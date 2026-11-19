@@ -6,6 +6,7 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+    rex.url = "https://pkgs.superlogical.com/rex/nix/snapshot.tar.gz";
   };
 
   outputs =
@@ -13,6 +14,7 @@
       nixpkgs,
       nixpkgs-unstable,
       disko,
+      rex,
       ...
     }:
     let
@@ -29,6 +31,8 @@
           # Declaratively manage the disk layout; generates fileSystems config.
           disko.nixosModules.disko
           ./disko.nix
+          # Rex beta
+          rex.nixosModules.default
 
           (
             {
@@ -137,6 +141,12 @@
                 variant = "colemak";
               };
 
+              # Rex beta
+              services.rex.loginServer = {
+                enable = true;
+                accounts."${username}".principals = [ "tailscale:liamail4@gmail.com" ];
+                tailscaleServe.enable = true;
+              };
               # Configure console keymap
               console.keyMap = "uk";
 
@@ -150,6 +160,7 @@
                 extraGroups = [
                   "wheel"
                   "docker"
+                  "rex"
                 ];
                 openssh.authorizedKeys.keys = [
                   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP0aaD+MZTqOBQo7DrTg1ODCxPrflpdJL9PdoZxKo2CD NixOS VM"

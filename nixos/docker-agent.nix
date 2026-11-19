@@ -4,7 +4,7 @@
   fetchurl,
   autoPatchelfHook,
 }: let
-  version = "1.150.0";
+  version = "1.154.0";
 in
   stdenv.mkDerivation {
     pname = "docker-agent";
@@ -14,7 +14,7 @@ in
     # and re-run `nix store prefetch-file` on the new URL to bump.
     src = fetchurl {
       url = "https://github.com/docker/docker-agent/releases/download/v${version}/docker-agent-linux-arm64";
-      hash = "sha256-Eq4JOERTGmDzLDRPSvuQvJKgEOqEOKWnYLPnn46ByOc=";
+      hash = "sha256-bw6Kf6Ja2Q5UtjgbuBOHzlO8aSEQtoP3RBz8ecwtY0I=";
     };
 
     # No-op if the binary is fully static, but patches the interpreter if not.
