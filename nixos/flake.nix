@@ -159,7 +159,11 @@
               # Define a user account. Don't forget to set a password with ‘passwd’.
               users.users."${username}" = {
                 isNormalUser = true;
-                description = "Liam";
+                # NOTE: this becomes the account's GECOS field. tailscaled's
+                # serve authorization probe runs `sudo -U <gecos> -l tailscale`,
+                # so it must match the login name or `tailscale serve` returns
+                # 401 for the operator.
+                description = "${username}";
                 extraGroups = [
                   "wheel"
                   "docker"
@@ -173,13 +177,13 @@
                   unstable.tree-sitter
                   unstable.opencode
                   unstable.biome
+                  unstable.delta
                   eza
                   zoxide
                   direnv
                   go
                   silicon
                   erdtree
-                  delta
                   gh
                   just
                   rustup
@@ -353,6 +357,15 @@
                 authKeyFile = "/etc/tailscale-authkey";
                 extraUpFlags = [ "--ssh" ];
               };
+
+              # tailscaled's `serve` authorization probe runs
+              # `sudo -U <user> -l tailscale`; sudo resolves the bare
+              # "tailscale" via tailscaled's PATH, which on NixOS doesn't
+              # include the tailscale package (normally it's in /usr/bin).
+              # Add it so the probe succeeds; otherwise `tailscale serve`
+              # returns 401 for the operator whenever the serve config
+              # contains a path handler or Unix socket.
+              systemd.services.tailscaled.path = [ unstable.tailscale ];
 
               # config repo setup - stowed into ~/.config
               systemd.tmpfiles.rules = [
