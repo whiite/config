@@ -1,6 +1,17 @@
-rex.bind("cmd+e", "pane.zoom")
+---@diagnostic disable: undefined-global
 
--- Pane bindings
+-- Toggles --
+rex.bind("cmd+e", "pane.zoom")
+rex.bind("shift+cmd+/", "session.collapse")
+
+-- Tab bindings --
+rex.bind("ctrl+cmd+w", "client.tab.close")
+
+-- Pane bindings --
+-- Sizing
+rex.bind("cmd+b", "pane.balance")
+
+-- Moving
 rex.bind("shift+cmd+h", "pane.focus.left")
 rex.bind("shift+cmd+l", "pane.focus.right")
 rex.bind("shift+cmd+j", "pane.focus.down")
