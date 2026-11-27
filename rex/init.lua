@@ -11,7 +11,7 @@ rex.bind("ctrl+cmd+w", "client.tab.close")
 -- Sizing
 rex.bind("cmd+b", "pane.balance")
 
--- Moving
+-- Focusing
 rex.bind("shift+cmd+h", "pane.focus.left")
 rex.bind("shift+cmd+l", "pane.focus.right")
 rex.bind("shift+cmd+j", "pane.focus.down")
@@ -21,6 +21,17 @@ rex.bind("shift+cmd+left", "pane.focus.left")
 rex.bind("shift+cmd+right", "pane.focus.right")
 rex.bind("shift+cmd+down", "pane.focus.down")
 rex.bind("shift+cmd+up", "pane.focus.up")
+
+-- Moving
+rex.bind("ctrl+cmd+h", "pane.move.left")
+rex.bind("ctrl+cmd+j", "pane.move.down")
+rex.bind("ctrl+cmd+k", "pane.move.up")
+rex.bind("ctrl+cmd+l", "pane.move.right")
+
+rex.bind("ctrl+cmd+left", "pane.move.left")
+rex.bind("ctrl+cmd+right", "pane.move.right")
+rex.bind("ctrl+cmd+down", "pane.move.down")
+rex.bind("ctrl+cmd+up", "pane.move.up")
 
 local utils = require("utils")
 local shell = utils.shell
