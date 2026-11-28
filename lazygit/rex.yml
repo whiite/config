@@ -1,0 +1,4 @@
+# Rex overlay config
+os:
+  open: "rex open {{filename}}"
+  openLink: "rex open {{link}}"
