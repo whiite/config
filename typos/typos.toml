@@ -1,0 +1,15 @@
+[default]
+# NOTE: keep code to American English and exclude per file type
+locale = "en"
+
+[type.md]
+locale = "en-gb"
+# NOTE: ignore en-gb for code blocks
+extend-ignore-re = [
+	"(?s)```.*?```",
+	"`[^`\n]*`",
+]
+
+[type.plaintext]
+extend-glob = ["*.txt"]
+locale = "en-gb"
